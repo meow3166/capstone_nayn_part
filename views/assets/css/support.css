@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Nanum Gothic", sans-serif;
+}
+
+main {
+    width: 1275px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.line1 {
+    border-top: 3px solid #7e4f37;
+    margin: 15px 0;
+}
+
+.munhee {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+ul {
+    margin-bottom: 20px;
+    color: #555;
+    line-height: 1.6;
+     margin-left: 25px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0 40px;
+}
+
+.container a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card {
+    width: 160px;
+    height: 150px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    transition: all 0.3s ease;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+}
+
+.card:hover {
+    border-color: #7e4f37;
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.card .icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.card p {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* FAQ */
+.faq-section {
+    max-width: 1275px;
+    margin: 0 auto;
+}
+
+.faq-section h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 500;
+    color: #333;
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+    background: #fafafa;
+    border-left: 3px solid #7e4f37;
+}
+
+/* FAQ 열림 상태 */
+.faq-item.open .faq-answer {
+    display: block;
+}

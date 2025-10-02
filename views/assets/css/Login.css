@@ -1,0 +1,158 @@
+:root {
+    --fc-brand: #0B3D91;
+    --fc-text: #222;
+    --fc-muted: #666;
+    --fc-line: #dcdcdc;
+    --fc-btn: #bfbfbf;
+    --fc-btn-text: #1e1e1e;
+    --fc-radius: 14px;
+    --fc-field-h: 54px;
+    --fc-max-w: 560px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Noto Sans KR", sans-serif;
+    background: #fff;
+    color: var(--fc-text);
+}
+
+.fc-wrap {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px 16px;
+}
+
+.fc-card {
+    width: 100%;
+    max-width: var(--fc-max-w);
+}
+
+.fc-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.fc-logo img {
+    width: min(240px, 60vw);
+    height: auto;
+}
+
+.fc-form {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.fc-input {
+    height: var(--fc-field-h);
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    padding: 0 16px;
+    font-size: 16px;
+}
+
+.fc-input:focus {
+    border-color: #9a9a9a;
+    outline: none;
+}
+
+.fc-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--fc-muted);
+}
+
+.fc-btn {
+    height: 56px;
+    border: 1px solid #a8a8a8;
+    background: var(--fc-btn);
+    color: var(--fc-btn-text);
+    font-size: 22px;
+    letter-spacing: 2px;
+    border-radius: var(--fc-radius);
+    cursor: pointer;
+}
+
+.fc-links {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 12px 0 24px;
+    font-size: 14px;
+    color: var(--fc-muted);
+}
+
+.fc-links a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.fc-divider {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 18px;
+    margin: 18px 0;
+    font-size: 12px;
+    color: var(--fc-muted);
+}
+
+.fc-divider::before,
+.fc-divider::after {
+    content: "";
+    height: 1px;
+    background: var(--fc-line);
+}
+
+.fc-social {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 400px; /* 선택사항: 가로 폭 제한 */
+  margin: 0 auto;
+}
+
+.fc-sns {
+  aspect-ratio: 1 / 1;      /* 정사각형 비율 유지 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cfcfcf;
+  border-radius: 16px;
+  background: #fff;
+  transition: transform .05s ease, box-shadow .15s ease;
+}
+
+.fc-sns img {
+  width: 50%;  /* 아이콘 크기 (박스 크기의 절반 정도) */
+  height: auto;
+  object-fit: contain;
+}
+
+
+@media (max-width: 480px) {
+    .fc-btn {
+        font-size: 20px;
+    }
+
+    .fc-sns {
+        height: 66px;
+    }
+
+    .fc-sns img {
+        width: 36px;
+        height: 36px;
+    }
+}

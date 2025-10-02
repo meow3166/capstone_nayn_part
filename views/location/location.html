@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <title>메인페이지시작</title>
+        <link href="../assets/css/style.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="user-scalable=no, width=device-width">
+        <style>
+            
+        </style>
+        
+    </head>
+    <body>
+        <header>
+            <div class="header_top">
+                <div class="logo"><a href="../index.html"><img src="../assets/img/로고편집.png"></a></div>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="whether">
+                    <div class="whe_b">
+                        <P>2025년 9월 27일 날씨 : 기온 23℃ 강수확률 10% - 임시</P>
+                    </div>
+                </div>
+                <div class="member">
+                    <div class="login">
+                        <a href="#" class="login_button">관리자 로그인</a>
+                    </div>
+                    <!-- <div class="join">
+                        <a href="#" class="join_button">회원 가입</a>
+                    </div> -->
+                </div>
+            </div>
+            <div class="header_bottom">
+                <nav>
+                <ul class="mainmenu">
+                    <li>
+                        <a href="#"><span>선수단 정보</span></a>
+                        <ul class="sub">
+                            <li><a href="#">감독 / 코치</a></li>
+                            <li><a href="#">외야수</a></li>
+                            <li><a href="#">내야수</a></li>
+                            <li><a href="#">투수</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span>경기정보</span></a>
+                        <ul class="sub">
+                            <li><a href="#">경기일정</a></li>
+                            <li><a href="#">경기결과</a></li>
+                            <li><a href="#">경기요약</a></li>
+                            <li><a href="#">라인업</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span>야구규칙</span></a>
+                        <ul class="sub">
+                            <li><a href="#">공격</a></li>
+                            <li><a href="#">수비</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span>위치안내</span></a>
+                        <ul class="sub">
+                            <li><a href="#">오시는길</a></li>
+                            <li><a href="#">좌석</a></li>
+                            <li><a href="#">먹거리</a></li>
+                            <li><a href="#">화장실</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span>고객지원</span></a>
+                        <ul class="sub">
+                            <li><a href="#">공지사항</a></li>
+                            <li><a href="#">고객센터</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">1:1문의</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+        </header>
+        <main>
+           <p>위치안내 페이지</p>
+           <p>css - style_location.css 만들고 거기에 적용</p>
+           <p>각 메뉴로 이동해있을때 현재 위치한 메인 메뉴 글씨를 굵게 하고 싶은데 시간이 없음..</p>
+        </main>
+        <footer></footer>
+        <script>
+            // function toggleMenu() {
+            //     // document.querySelector(".member").classList.toggle("show");
+            // }
+            const hamburger = document.querySelector('.hamburger');
+            const mainmenu = document.querySelector('.mainmenu');
+
+            hamburger.addEventListener('click', () => {
+            mainmenu.classList.toggle('active');
+            });
+
+            // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
+            document.querySelectorAll('.mainmenu > li > a').forEach(item => {
+            item.addEventListener('click', e => {
+                if (window.innerWidth <= 768) { // 모바일일 때만
+                e.preventDefault(); // 링크 이동 방지
+                const parentLi = item.parentElement;
+
+                // 다른 li의 open 클래스 제거
+                document.querySelectorAll('.mainmenu > li').forEach(li => {
+                    if (li !== parentLi) {
+                    li.classList.remove('open');
+                    }
+                });
+
+                // 클릭한 li toggle
+                parentLi.classList.toggle('open');
+                }
+            });
+            });
+
+            
+
+           
+        </script>
+
+    </body>
+</html>
