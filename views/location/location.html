@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>메인페이지시작</title>
-        <link href="../assets/css/style.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <meta name="viewport" content="user-scalable=no, width=device-width">
-        <style>
-            
-        </style>
-        
-    </head>
-    <body>
-        <header>
-            <div class="header_top">
-                <div class="logo"><a href="../index.html"><img src="../assets/img/로고편집.png"></a></div>
-                <div class="hamburger" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="whether">
-                    <div class="whe_b">
-                        <P>2025년 9월 27일 날씨 : 기온 23℃ 강수확률 10% - 임시</P>
-                    </div>
-                </div>
-                <div class="member">
-                    <div class="login">
-                        <a href="#" class="login_button">관리자 로그인</a>
-                    </div>
-                    <!-- <div class="join">
-                        <a href="#" class="join_button">회원 가입</a>
-                    </div> -->
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>위치정보</title>
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <!-- 위치안내 페이지 css경로 -->
+    <link rel="stylesheet" href="../assets/css/location.css"> <!-- 공통 -->
+    <link rel="stylesheet" href="../assets/css/location_desktop.css" media="(min-width: 769px)"> <!-- 데탑 -->
+    <link rel="stylesheet" href="../assets/css/location_mobile.css" media="(max-width: 768px)"> <!-- 모바일 -->
+</head>
+
+<body>
+    <header>
+        <div class="header_top">
+            <div class="logo"><a href="../index.html"><img src="./assets/img/edited_logo.png" alt="FULL COUNT"></a>
+            </div>
+
+            <div class="hamburger" aria-label="메뉴 열기">
+                <span></span><span></span><span></span>
+            </div>
+
+            <div class="whether">
+                <div class="whe_b">
+                    <p>2025년 9월 27일 날씨 : 기온 23℃ 강수확률 10% - 임시</p>
                 </div>
             </div>
-            <div class="header_bottom">
-                <nav>
+
+            <div class="member">
+                <div class="login">
+                    <a href="#" class="login_button">관리자 로그인</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header_bottom">
+            <nav>
                 <ul class="mainmenu">
                     <li>
                         <a href="#"><span>선수단 정보</span></a>
@@ -63,11 +65,11 @@
                             <li><a href="#">수비</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="is-current">
                         <a href="#"><span>위치안내</span></a>
                         <ul class="sub">
                             <li><a href="#">오시는길</a></li>
-                            <li><a href="#">좌석</a></li>
+                            <li><a href="#">내부 지도</a></li>
                             <li><a href="#">먹거리</a></li>
                             <li><a href="#">화장실</a></li>
                         </ul>
@@ -78,54 +80,102 @@
                             <li><a href="#">공지사항</a></li>
                             <li><a href="#">고객센터</a></li>
                             <li><a href="#">FAQ</a></li>
-                            <li><a href="#">1:1문의</a></li>
                         </ul>
                     </li>
                 </ul>
             </nav>
+        </div>
+    </header>
+
+    <main class="page">
+        <!-- 좌측 레일(PC) -->
+        <aside class="rail" aria-label="빠른 찾기">
+            <button class="rail-btn" data-filter="route">
+                <span class="rail-ico">
+                    <img src="./assets/img/Directions_icon.png" alt="길 찾기 아이콘">
+                </span>
+                <span class="rail-copy"><strong>길 찾기</strong></span>
+            </button>
+
+            <button class="rail-btn" data-filter="food">
+                <span class="rail-ico">
+                    <img src="./assets/img/Food_icon.png" alt="먹거리 아이콘">
+                </span>
+                <span class="rail-copy"><strong>먹거리</strong></span>
+            </button>
+
+            <button class="rail-btn" data-filter="toilet">
+                <span class="rail-ico">
+                    <img src="./assets/img/toilet_icon.png" alt="화장실 아이콘">
+                </span>
+                <span class="rail-copy"><strong>화장실</strong></span>
+            </button>
+        </aside>
+        <!-- 검색/리스트 패널 -->
+        <section class="panel" aria-label="검색 및 결과">
+            <div class="search">
+                <!-- ⚠️ 여기 ID 바꿈 -->
+                <input id="q_m" type="search" placeholder="검색어를 입력하세요" aria-label="검색어">
+                <i class="icon-search" aria-hidden="true"></i>
+                <button class="btn-clear" id="btnClear_m" aria-label="검색어 지우기">×</button>
             </div>
-        </header>
-        <main>
-           <p>위치안내 페이지</p>
-           <p>css - style_location.css 만들고 거기에 적용</p>
-           <p>각 메뉴로 이동해있을때 현재 위치한 메인 메뉴 글씨를 굵게 하고 싶은데 시간이 없음..</p>
-        </main>
-        <footer></footer>
-        <script>
-            // function toggleMenu() {
-            //     // document.querySelector(".member").classList.toggle("show");
-            // }
-            const hamburger = document.querySelector('.hamburger');
-            const mainmenu = document.querySelector('.mainmenu');
 
-            hamburger.addEventListener('click', () => {
-            mainmenu.classList.toggle('active');
-            });
+            <!-- 변경 전: 하드코딩된 article들 전부 삭제/주석 -->
+            <div class="list" id="resultList" aria-live="polite"></div>
 
-            // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
-            document.querySelectorAll('.mainmenu > li > a').forEach(item => {
-            item.addEventListener('click', e => {
-                if (window.innerWidth <= 768) { // 모바일일 때만
-                e.preventDefault(); // 링크 이동 방지
-                const parentLi = item.parentElement;
+        </section>
 
-                // 다른 li의 open 클래스 제거
-                document.querySelectorAll('.mainmenu > li').forEach(li => {
-                    if (li !== parentLi) {
-                    li.classList.remove('open');
-                    }
-                });
+        <!-- 모바일 칩 -->
+        <section id="map">
+            <div class="map-inner"></div>
 
-                // 클릭한 li toggle
-                parentLi.classList.toggle('open');
-                }
-            });
-            });
+            <!-- 모바일에서 지도 위에 겹칠 오버레이 -->
+            <div class="m-overlay">
+                <section class="panel" aria-label="검색 및 결과">
+                    <div class="search">
+                        <input id="q" type="search" placeholder="검색어를 입력하세요" aria-label="검색어">
+                        <i class="icon-search" aria-hidden="true"></i>
+                        <button class="btn-clear" id="btnClear" aria-label="검색어 지우기">×</button>
+                    </div>
+                </section>
 
-            
+                <div class="chips" role="group" aria-label="빠른 찾기(모바일)">
+                    <button class="chip" data-filter="route"><img src="../assets/img/Directions_icon.png" alt=""><span>길
+                            찾기</span></button>
+                    <button class="chip" data-filter="food"><img src="../assets/img/Food_icon.png"
+                            alt=""><span>먹거리</span></button>
+                    <button class="chip" data-filter="toilet"><img src="../assets/img/toilet_icon.png"
+                            alt=""><span>화장실</span></button>
+                </div>
+            </div>
+        </section>
 
-           
-        </script>
+    </main>
 
-    </body>
+    <!-- 플로팅 챗봇 버튼(이미지 교체만 하면 됨) -->
+    <button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+        <img src="../assets/img/chatbot.png" alt="도움말 열기">
+    </button>
+
+    <!-- 모달 -->
+    <div class="modal" id="chatModal" role="dialog" aria-modal="true" aria-labelledby="chatTitle" hidden>
+        <div class="modal__backdrop" data-dismiss="modal"></div>
+        <div class="modal__dialog" role="document">
+            <header class="modal__header">
+                <h2 id="chatTitle">도움말 / 챗봇</h2>
+                <button class="modal__close" id="chatClose" aria-label="닫기">×</button>
+            </header>
+            <div class="modal__body">
+                <!-- 여기에 챗봇/도움말 위젯을 삽입 -->
+                <p>여기에 챗봇 또는 안내 내용을 넣으세요.</p>
+            </div>
+            <footer class="modal__footer">
+                <button class="modal__btn" data-dismiss="modal">닫기</button>
+            </footer>
+        </div>
+    </div>
+
+    <script src="../assets/js/locatino.js"></script>
+</body>
+
 </html>

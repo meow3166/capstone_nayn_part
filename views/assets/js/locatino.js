@@ -34,7 +34,7 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
 });
 
 // 더미 지도(배경만). 실제 API 붙이면 아래 블록 삭제.
-(function fakeMap(){
+(function fakeMap() {
   const el = document.getElementById('mapInner');
   if (!el) return;
   el.style.background = "repeating-linear-gradient(45deg,#eef1f3,#eef1f3 20px,#f7f9fb 20px,#f7f9fb 40px)";
@@ -53,28 +53,71 @@ const map = new kakao.maps.Map(document.getElementById('mapInner'), {
 // ===== 모달(fab) =====
 (() => {
   const modal = document.getElementById('chatModal');
-  const fab   = document.getElementById('fabBtn');
+  const fab = document.getElementById('fabBtn');
   const closeBtn = document.getElementById('chatClose');
 
-  function openModal(){
+  function openModal() {
     modal.hidden = false;
-    fab.setAttribute('aria-expanded','true');
+    fab.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    setTimeout(()=>closeBtn?.focus(), 0);
+    setTimeout(() => closeBtn?.focus(), 0);
   }
-  function closeModal(){
+  function closeModal() {
     modal.hidden = true;
-    fab.setAttribute('aria-expanded','false');
+    fab.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
     fab.focus();
   }
 
   fab?.addEventListener('click', openModal);
   closeBtn?.addEventListener('click', closeModal);
-  modal?.addEventListener('click', (e)=>{
+  modal?.addEventListener('click', (e) => {
     if (e.target.matches('[data-dismiss="modal"], .modal__backdrop')) closeModal();
   });
-  window.addEventListener('keydown', (e)=>{
+  window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal && !modal.hidden) closeModal();
   });
 })();
+
+// ---------------------------------------------------------------------------------------
+(function () {
+  const listEl = document.getElementById("resultList");
+  const badge = { food: "먹거리", toilet: "화장실" };
+
+  async function load() {
+    try {
+      listEl.innerHTML = '<p class="loading">불러오는 중...</p>';
+      const res = await fetch("/poi");
+      const rows = await res.json();
+
+      if (!rows || rows.length === 0) {
+        listEl.innerHTML = '<p class="empty">표시할 항목이 없습니다.</p>';
+        return;
+      }
+
+      listEl.innerHTML = rows.map(r => {
+        const imgStyle = r.image ? ` style="background-image:url('${r.image}');"` : "";
+        return `
+          <article class="item" data-type="${r.type}" data-id="${r.id}">
+            <div class="thumb"${imgStyle}></div>
+            <div class="meta">
+              <h4 class="name">${r.name}</h4>
+              <p class="desc">${r.items || ""}</p>
+            </div>
+            <span class="badge">${badge[r.type] || ""}</span>
+          </article>`;
+      }).join("");
+    } catch (e) {
+      console.error("load error:", e);
+      listEl.innerHTML = '<p class="error">목록을 불러오지 못했습니다.</p>';
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", load);
+  } else {
+    load();
+  }
+})();
+
+

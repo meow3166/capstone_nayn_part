@@ -1,0 +1,32 @@
+@media (min-width: 769px){
+  /* 헤더80 + 메뉴65 = 145px, 이미 변수 있으면 쓰세요 */
+  :root{ --offset-top: 145px; }
+
+  /* 레이아웃: 레일 / 패널 / 지도 */
+  .page{
+    height: calc(100dvh - var(--offset-top));
+    display: grid;
+    grid-template-columns: 92px 320px 1fr;
+    grid-template-rows: 1fr;
+    max-width: 1520px;
+    margin: 0 auto;
+    margin-top: 60px
+  }
+
+  .panel{
+    grid-column: 2;
+    grid-row: 1;
+    overflow-y: auto;
+  }
+
+  #map{
+    grid-column: 3;
+    grid-row: 1;
+    min-height: calc(100dvh - var(--offset-top));
+    position: relative;
+  }
+
+  /* ✅ 모바일용 오버레이/칩 PC에서 숨김 */
+  #map .m-overlay{ display:none !important; }
+  .chips{ display:none !important; }
+}

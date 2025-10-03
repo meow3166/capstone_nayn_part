@@ -1,0 +1,208 @@
+/* ===== mobile.css (≤768px): 지도 위 오버레이 버전 ===== */
+
+/* 검색바 높이 변수 */
+:root { --searchH: 56px; }
+
+/* 페이지: 지도 1칸만 */
+.page{
+  height: calc(100% - 58px);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;    /* 지도만 */
+  max-width: none;
+  margin: 0;
+}
+
+/* 좌측 레일 숨김 */
+.rail{ display: none; }
+
+/* 지도 컨테이너: 오버레이 기준 */
+#map{
+  grid-row: 1;
+  min-height: calc(100dvh - 58px);
+  position: relative;
+  z-index: 1;                 /* 지도는 아래 */
+}
+
+/* 오버레이 래퍼: 지도 전체 덮음 */
+#map .overlay{
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;       /* 기본은 통과 */
+}
+
+/* 오버레이 내부 요소는 이벤트 허용 */
+#map .overlay .panel,
+#map .overlay .chips{
+  pointer-events: auto;
+}
+
+/* 패널(검색바) : 상단 겹치기 */
+#map .overlay .panel{
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  overflow: visible;          /* 잘림 방지 */
+}
+
+/* 검색바 */
+.search{ position: relative; }
+.search input{
+  width: 100%;
+  height: var(--searchH);
+  padding: 0 48px 0 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 16px;
+}
+.icon-search{
+  position: absolute;
+  left: 16px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  border: 2px solid #333; border-radius: 50%;
+}
+.icon-search:after{
+  content: "";
+  position: absolute;
+  right: -7px; bottom: -6px;
+  width: 11px; height: 2px;
+  background: #333;
+  transform: rotate(45deg);
+}
+.btn-clear{
+  position: absolute;
+  right: 8px; top: 50%;
+  transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 22px; line-height: 36px;
+  cursor: pointer;
+}
+
+/* 힌트/리스트는 모바일 기본 숨김 (필요 시 JS로 토글) */
+.hint, .list{ display: none; }
+
+/* 칩: 검색바 바로 아래 겹치기 */
+#map .overlay .chips{
+  position: absolute;
+  left: 12px; right: 12px;
+  top: calc(12px + var(--searchH) + 12px);
+  display: flex; gap: 12px;
+  padding: 0;
+  background: transparent;
+  overflow: auto;             /* 가로 스크롤 허용 */
+  z-index: 21;
+}
+
+/* 정사각형 칩 */
+.chip{
+  width: 96px;
+  aspect-ratio: 1/1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  font-size: 13px;
+  white-space: nowrap;
+  box-shadow: 0 6px 12px rgba(0,0,0,.08);
+}
+.chip img{
+  width: 36px; height: 36px;
+  object-fit: contain; display: block;
+}
+
+/* 모달 폭/여백 보정 */
+.modal__dialog{ margin: 6vh auto 0; width: 92vw; }
+
+
+/* ===== 모바일 지도 오버레이 (m-overlay 맞춤 교정) ===== */
+:root { --searchH: 56px; }  /* 검색바 높이 */
+
+#map { 
+  position: relative !important;
+  min-height: calc(100dvh - 58px) !important; /* 헤더+메뉴 높이에 맞게 숫자 조정 가능 */
+  z-index: 1 !important;
+}
+
+/* 오버레이 래퍼 */
+#map .m-overlay{
+  position: absolute !important;
+  inset: 0 !important;               /* 지도 전체 덮기 */
+  z-index: 100 !important;
+  pointer-events: none !important;   /* 기본은 통과 */
+}
+
+/* 내부 요소만 클릭 허용 */
+#map .m-overlay .panel,
+#map .m-overlay .chips{
+  pointer-events: auto !important;
+}
+
+/* 검색바 패널 - 상단 고정 */
+#map .m-overlay .panel{
+  position: absolute !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: 12px !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;      /* 그림자/모서리 잘림 방지 */
+}
+
+/* 입력창/아이콘 크기 */
+.search input{
+  height: var(--searchH) !important;
+  padding: 0 48px 0 48px !important;
+  border-radius: 12px !important;
+  font-size: 16px !important;
+}
+.icon-search{
+  position: absolute !important;
+  left: 16px !important; top: 50% !important; transform: translateY(-50%) !important;
+  width: 22px !important; height: 22px !important; border: 2px solid #333 !important; border-radius: 50% !important;
+}
+.icon-search:after{
+  content:""; position:absolute; right:-7px; bottom:-6px; width:11px; height:2px; background:#333; transform:rotate(45deg);
+}
+.btn-clear{
+  position:absolute !important; right:8px !important; top:50% !important; transform:translateY(-50%) !important;
+  width:38px !important; height:38px !important; line-height:36px !important;
+  border:1px solid var(--line) !important; border-radius:50% !important; background:#fff !important;
+}
+
+/* 칩 - 검색바 바로 아래 */
+#map .m-overlay .chips{
+  position: absolute !important;
+  left: 12px !important;
+  right: 12px !important;
+  top: calc(12px + var(--searchH) + 12px) !important;
+  display: flex !important;          /* 공통에서 display:none 되어있을 수 있으니 강제 노출 */
+  gap: 12px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  overflow: auto !important;         /* 가로 스크롤 */
+  z-index: 101 !important;
+}
+
+/* 정사각 칩 + 아이콘 크기 */
+.chip{
+  width: 96px !important; aspect-ratio: 1 / 1 !important;
+  display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+  gap: 8px !important; background:#fff !important; border:1px solid var(--line) !important; border-radius:16px !important;
+  box-shadow:0 6px 12px rgba(0,0,0,.08) !important; font-size:13px !important; white-space:nowrap !important;
+}
+.chip img{ width:36px !important; height:36px !important; object-fit:contain !important; display:block !important; }
