@@ -1,0 +1,133 @@
+/* 공통 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+
+.schedule-main {
+  width: 1275px;
+  margin: 0 auto;
+  padding-top: 150px;
+}
+
+.tab-schedule {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.tab-schedule li {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  transition: all 0.2s ease;
+}
+
+.tab-schedule li.on,
+.tab-schedule li:hover {
+  background: #0b3d91;
+  color: white;
+}
+
+.tab-schedule img {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.tbl-type06 {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.tbl th,
+.tbl td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.tbl th {
+  background: #f5f6fa;
+  color: #333;
+  font-weight: bold;
+}
+
+.tbl .play em {
+  font-style: normal;
+  margin: 0 5px;
+}
+
+.win {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.lose {
+  color: #2980b9;
+  font-weight: bold;
+}
+
+/* 버튼 */
+.btn2 {
+  background: #0b3d91;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.btn2:hover {
+  background: #092b68;
+}
+
+/* ===================== */
+/* 📱 모바일 버전 스타일 */
+/* ===================== */
+@media (max-width: 768px) {
+  .schedule-main {
+    width: 95%;
+    padding-top: 120px;
+  }
+
+  .tab-schedule {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .tab-schedule li {
+    flex: 0 0 auto;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .tbl-type06 {
+    overflow-x: auto;
+  }
+
+  .tbl {
+    font-size: 13px;
+    min-width: 700px;
+  }
+
+  .tbl th,
+  .tbl td {
+    padding: 6px;
+  }
+}

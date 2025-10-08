@@ -1,0 +1,158 @@
+/* ================================
+   Inquiry_details 전용 (main.page-inquiry 기준)
+   ================================ */
+
+/* 헤더가 body에 80px 패딩을 이미 주고 있으므로
+   이 페이지에선 메뉴바 65px + 간격 20px = 총 85px만 추가 */
+main.page-inquiry {
+  width: 1275px;
+  margin: 0 auto;
+  margin-top: 15px; /* PC 기준 메뉴바와의 간격 포함 */
+}
+
+/* 제목/폼 포커스 시 헤더에 가려지지 않게 */
+main.page-inquiry h1,
+main.page-inquiry .form-group input,
+main.page-inquiry .form-group select,
+main.page-inquiry .form-group textarea {
+  scroll-margin-top: 90px;
+}
+
+/* 구분선 */
+main.page-inquiry .line1 {
+  border-top: 3px solid #7e4f37;
+  width: 100%;
+  margin: 10px 0;
+}
+
+/* 폼 래퍼 */
+main.page-inquiry .inquiry-form {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  overflow: visible;
+}
+
+/* 폼 그룹 */
+main.page-inquiry .form-group {
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+main.page-inquiry .form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #555;
+}
+
+/* 인풋/셀렉트/텍스트 공통 */
+main.page-inquiry .form-group input,
+main.page-inquiry .form-group select,
+main.page-inquiry .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* 포커스 */
+main.page-inquiry .form-group input:focus,
+main.page-inquiry .form-group select:focus,
+main.page-inquiry .form-group textarea:focus {
+  border-color: #935b3f;
+  outline: none;
+}
+
+/* 셀렉트 강화 */
+main.page-inquiry .form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 2px solid #70422c;
+  padding: 10px 38px 10px 12px;
+  position: relative;
+  z-index: 1100;
+  background-color: #fff;
+}
+
+/* 포커스 외곽선 */
+main.page-inquiry .form-group:has(select:focus)::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border: 2px solid #4e2f1f;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* 문의 내용 박스 고정 */
+main.page-inquiry .form-group textarea {
+  height: 220px;
+  resize: none;
+  line-height: 1.5;
+}
+
+/* 버튼 */
+main.page-inquiry .inquiry-form button {
+  width: 100%;
+  padding: 10px;
+  background: #ffdac8;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+main.page-inquiry .inquiry-form button:hover {
+  background: #ffefe8;
+}
+
+/* ================================
+   모바일 (≤768px)
+   ================================ */
+@media screen and (max-width: 768px) {
+  html { -webkit-text-size-adjust: 100%; }
+
+  /* 모바일은 메뉴바(65px) 숨김 → 20px만 띄움 */
+  main.page-inquiry {
+    width: 100%;
+    margin-top: 15px;  /* ← 핵심 수정 */
+    padding: 0 16px 40px;
+    box-sizing: border-box;
+  }
+
+  main.page-inquiry .inquiry-form {
+    max-width: none;
+    margin: 20px auto 40px;
+    padding: 16px;
+  }
+
+  main.page-inquiry .form-group { margin-bottom: 12px; }
+
+  main.page-inquiry .form-group label {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  main.page-inquiry .form-group input,
+  main.page-inquiry .form-group select,
+  main.page-inquiry .form-group textarea {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  main.page-inquiry .form-group textarea { height: 200px; }
+
+  main.page-inquiry .inquiry-form button {
+    font-size: 16px;
+    padding: 14px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,71 @@
+{%include "include/header.html"%}
+
+<main class="page-inquiry-history">
+    <div class="result">
+        <h1>문의 내역</h1>
+        <div class="line2"></div>
+        <table id="inquiryTable">
+            <thead>
+                <tr>
+                    <th>순번</th>
+                    <th>제목</th>
+                    <th>문의 내용</th>
+                    <th>문의유형</th>
+                    <th>이메일</th>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+    <!-- 플로팅 챗봇 버튼(이미지 교체만 하면 됨) -->
+    <button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+        <img src="../assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
+    </button>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        const table = document.getElementById("inquiryTable");
+        const tbody = table.querySelector("tbody");
+        const colCount = table.querySelectorAll("thead th").length;
+
+        try {
+            const res = await fetch("/api/inquiries");
+            const json = await res.json();
+
+            if (!json.ok || !json.data.length) {
+                tbody.innerHTML = `<tr><td colspan="${colCount}" class="empty-row">문의사항 없음</td></tr>`;
+                return;
+            }
+
+            const esc = (s) => String(s ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+
+            tbody.innerHTML = json.data.map(q => `
+      <tr>
+        <td>${q.id}</td>
+        <td>${esc(q.title)}</td>
+        <td>${esc(q.message)}</td>
+        <td>${esc(q.category)}</td>
+        <td>${esc(q.email)}</td>
+        <td>${esc(q.name)}</td>
+      </tr>
+    `).join('');
+        } catch (err) {
+            console.error(err);
+            tbody.innerHTML = `<tr><td colspan="${colCount}" class="empty-row">불러오기 오류</td></tr>`;
+        }
+    });
+</script>
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+
+</body>
+
+</html>

@@ -7,15 +7,13 @@
 }
 
 /* 헤더 높이만큼 본문 아래로 내리기 (겹침 방지) */
-:root { --header-h: 120px; }   /* 헤더 높이에 맞게 조정 */
-body { padding-top: var(--header-h); }
+:root { --header-h: 35px; }   /* 헤더 높이에 맞게 조정 */
 
 /* ================== 메인 영역 ================== */
 main {
     max-width: 1275px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 16px;
 }
 
 /* 구분선 */

@@ -1,0 +1,44 @@
+{% include "include/header.html" %}
+{% include "include/header.html" %}
+<main class="container" style="max-width:920px;padding:20px 12px;">
+  <h1 style="margin:10px 0 16px;font-size:22px;font-weight:800;">
+    {{ mode == 'create' ? '공지 등록' : '공지 수정' }}
+  </h1>
+
+  <form method="post" action="{{ mode == 'create' ? '/support/admin/announcements/new' : '/support/admin/announcements/' ~ item.notice_id ~ '/update' }}" style="display:grid;gap:10px;">
+    <label>제목
+      <input type="text" name="title" value="{{ item.title | default('') }}" required
+             style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;">
+    </label>
+
+    <label>카테고리
+      <input type="text" name="category" value="{{ item.category | default('일반') }}"
+             style="width:240px;padding:10px;border:1px solid #ddd;border-radius:6px;">
+    </label>
+
+    <label>상태
+      <input type="radio" name="status" value="PUBLISHED" {{ item.status == 'PUBLISHED' ? 'checked' : '' }}> PUBLISHED
+      <input type="radio" name="status" value="DRAFT" {{ item.status == 'DRAFT' ? 'checked' : '' }} style="margin-left:12px;"> DRAFT
+    </label>
+
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="is_pinned" value="1" {{ item.is_pinned ? 'checked' : '' }}>
+      상단 고정
+    </label>
+
+    <label>게시 시각(비우면 자동)
+      <input type="datetime-local" name="publish_at"
+             value="{{ item.publish_at ? (item.publish_at | date('YYYY-MM-DDTHH:mm')) : '' }}"
+             style="padding:10px;border:1px solid #ddd;border-radius:6px;">
+    </label>
+
+    <label>내용
+      <textarea name="content_md" rows="14" style="width:100%;padding:10px;border:1px solid #ddd;border-radius:6px;">{{ item.content_md | default('') }}</textarea>
+    </label>
+
+    <div style="display:flex;gap:10px;margin-top:6px;">
+      <button type="submit" style="padding:10px 16px;border:1px solid #0B3D91;border-radius:6px;background:#0B3D91;color:#fff;cursor:pointer;">저장</button>
+      <a href="/support/admin/announcements" style="padding:10px 16px;border:1px solid #ddd;border-radius:6px;text-decoration:none;">목록</a>
+    </div>
+  </form>
+</main>

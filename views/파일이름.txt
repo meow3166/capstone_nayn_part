@@ -3,3 +3,4 @@
 야구 규칙 → rules.html 
 위치 안내 → location.html 
 고객 지원 → support.html
+

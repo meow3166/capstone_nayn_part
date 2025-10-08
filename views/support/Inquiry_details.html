@@ -1,0 +1,87 @@
+{%include "include/header.html"%}
+
+<main class="page-inquiry">
+    <h1>1:1 문의하기</h1>
+    <div class="line1"></div>
+    <div class="inquiry-form">
+
+        <form id="inquiryForm" action="문의하기real.html" method="get">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" placeholder="이메일을 입력하세요" required>
+            </div>
+
+            <div class="form-group">
+                <label for="category">문의 유형</label>
+                <select id="category" name="category" required>
+                    <option value="">문의 유형을 선택하세요</option>
+                    <option value="챗봇/AI응답">챗봇/AI 응답 관련</option>
+                    <option value="구단/선수 정보">구단·선수 정보 문의</option>
+                    <option value="구장 안내">구장 안내 / 오시는 길 / 장소 등록</option>
+                    <option value="사이트 오류/버그">사이트 오류·버그 신고</option>
+                    <option value="건의사항">기능 제안 / 개선 건의</option>
+                    <option value="기타">기타 문의</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="messagetitle">제목</label>
+                <input type="text" id="messagetitle" name="messagetitle" placeholder="제목을 입력하세요" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" rows="5" placeholder="문의 내용을 작성하세요" required></textarea>
+            </div>
+
+            <button type="submit">문의하기</button>
+        </form>
+    </div>
+    <!-- 플로팅 챗봇 버튼(이미지 교체만 하면 됨) -->
+<button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+    <img src="../assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
+</button>
+</main>
+<script>
+    document.getElementById("inquiryForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const category = document.getElementById("category").value;
+        const messagetitle = document.getElementById("messagetitle").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !category || !messagetitle || !message) {
+            alert("모든 필드를 작성해주세요!");
+            return;
+        }
+
+        try {
+            const res = await fetch("/api/inquiries", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, category, messagetitle, message })
+            });
+
+            const json = await res.json();
+            if (!json.ok) throw new Error(json.error || "등록 실패");
+            alert("문의가 성공적으로 저장되었습니다!");
+            this.reset();
+        } catch (err) {
+            console.error(err);
+            alert("문의 제출 중 오류가 발생했습니다.");
+        }
+    });
+</script>
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+</body>
+
+</html>

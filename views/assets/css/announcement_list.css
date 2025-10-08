@@ -1,0 +1,47 @@
+/* === 공지 목록 페이지 전용 강제 리셋 === */
+.notice-wrap, .notice-wrap * {
+  writing-mode: horizontal-tb !important;
+  text-orientation: mixed !important;
+  transform: none !important;
+  letter-spacing: normal !important;
+}
+
+/* 전역 float, 정렬값 무력화 */
+.notice-wrap .page-head,
+.notice-wrap .pagination,
+.notice-wrap .notice-list,
+.notice-wrap form {
+  float: none !important;
+  clear: none !important;
+}
+
+/* 레이아웃 정리 */
+.notice-wrap { max-width: 960px; margin: 0 auto; padding: 20px 12px; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; margin: 10px 0 16px; }
+.page-title { margin: 0; font-size: 24px; font-weight: 800; }
+
+.notice-search { display: flex; gap: 10px; }
+.notice-search input { width: 320px; }
+
+/* 목록 */
+.notice-list { list-style: none; padding: 0; margin: 0; border-top: 1px solid #eee; }
+.notice-item { border-bottom: 1px solid #eee; padding: 16px 6px; }
+.notice-item a { display: block; text-decoration: none; color: inherit; }
+.notice-item .row { display: flex; justify-content: space-between; gap: 12px; }
+.notice-item .title-line { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+.notice-item .meta { color: #666; font-size: 13px; display: flex; gap: 10px; margin-top: 4px; }
+.notice-item .right { color: #666; font-size: 13px; white-space: nowrap; align-self: center; }
+
+/* 페이지네이션을 목록 '아래 중앙'에 고정 */
+.pagination {
+  display: flex; gap: 10px; align-items: center; justify-content: center;
+  margin: 18px 0; clear: both !important;
+}
+
+@media (max-width: 768px) {
+  .page-head { flex-direction: column; align-items: stretch; }
+  .notice-search input { width: 100%; }
+  .notice-item .row { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .notice-item .right { align-self: flex-end; }
+}
+

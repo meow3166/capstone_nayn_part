@@ -1,0 +1,96 @@
+/* ================================
+   문의내역 전용 (main.page-inquiry-history 기준)
+   다른 페이지 영향 없음
+   ================================ */
+
+main.page-inquiry-history {
+  width: 1275px;
+  margin: 0 auto;
+  margin-top: 20px;
+  /* 헤더/메뉴바 고려: 20px만 */
+}
+
+main.page-inquiry-history .result {
+  margin-top: 0;
+  text-align: left;
+}
+
+main.page-inquiry-history .result h1 {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+main.page-inquiry-history .line2 {
+  border-top: 3px solid #7e4f37;
+  width: 100%;
+  margin: 10px 0 20px;
+}
+
+main.page-inquiry-history .munheecontent {
+  width: 1275px;
+  text-align: center;
+  overflow-x: auto;
+  /* 모바일 넘침 방지 */
+}
+
+main.page-inquiry-history .munheecontent table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+  border: 1px solid #ddd;
+}
+
+main.page-inquiry-history .munheecontent th,
+main.page-inquiry-history .munheecontent td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+main.page-inquiry-history .munheecontent tr.mokcha th {
+  height: 40px;
+  background: #f8f8f8;
+  font-weight: 700;
+}
+
+main.page-inquiry-history .munheecontent tr:hover {
+  background: #faf3ef;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  main.page-inquiry-history {
+    width: 100%;
+    padding: 0 12px 40px;
+    box-sizing: border-box;
+  }
+
+  main.page-inquiry-history .result {
+    text-align: center;
+  }
+
+  main.page-inquiry-history .result h1 {
+    font-size: 20px;
+  }
+
+  main.page-inquiry-history .munheecontent {
+    width: 100%;
+  }
+
+  main.page-inquiry-history .munheecontent table {
+    font-size: 15px;
+    min-width: 600px;
+  }
+
+  main.page-inquiry-history .munheecontent th,
+  main.page-inquiry-history .munheecontent td {
+    padding: 10px 6px;
+  }
+}
+
+main.page-inquiry-history .empty-row {
+  padding: 28px 0;
+  text-align: center;
+  color: #777;
+  background: #fafafa;
+  font-size: 16px;
+}

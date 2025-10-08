@@ -1,0 +1,126 @@
+{% include "include/header.html" %}
+
+<main class="admin-lineup" style="width:min(1100px,95%);margin:120px auto 60px;padding:16px;">
+  <h1 style="margin-bottom:12px;">라인업 등록 (관리자용)</h1>
+
+  <form id="lineupForm" action="/gameinfo/lineup/save" method="POST" novalidate>
+    <!-- ========== 경기 정보 ========== -->
+    <fieldset style="margin-bottom:16px;padding:12px;border:1px solid #ddd;border-radius:10px;">
+      <legend><b>경기 정보</b></legend>
+
+      <label style="margin-right:16px;">
+        경기 날짜:
+        <input type="date" name="game_date" required>
+      </label>
+
+      <label style="margin-right:16px;">
+        경기 시간:
+        <input type="time" name="game_time" value="18:30" required>
+      </label>
+
+      <label style="margin-right:12px;">
+        구장:
+        <select name="venue" id="venueSelect" required>
+          <option value="">-- 구장 선택 --</option>
+          <option>대구 라이온즈 파크</option>
+          <option>수원 KT위즈파크</option>
+          <option>사직야구장</option>
+          <option>잠실야구장</option>
+          <option>창원NC파크</option>
+          <option>광주챔피언스필드</option>
+          <option>고척스카이돔</option>
+          <option>대전한화생명이글스파크</option>
+          <option>인천SSG랜더스필드</option>
+        </select>
+      </label>
+
+      <label style="margin-left:8px;">
+        <input type="checkbox" id="venueCustomToggle"> 직접입력
+      </label>
+      <input type="text" id="venueCustomInput" placeholder="구장 이름 직접 입력" style="margin-left:8px;display:none;">
+      <!-- 실제 제출값은 venue 에 들어가므로 JS가 select/value 동기화 -->
+    </fieldset>
+
+    <!-- ========== 팀 선택 ========== -->
+    <fieldset style="margin-bottom:16px;padding:12px;border:1px solid #ddd;border-radius:10px;">
+      <legend><b>팀 선택</b></legend>
+
+      <label style="margin-right:16px;">
+        홈팀:
+        <select name="home_team_id" required id="homeTeam">
+          <option value="">-- 팀 선택 --</option>
+          {% if teams %}
+          {% for t in teams %}<option value="{{ t.team_id }}">{{ t.team_name }}</option>{% endfor %}
+          {% else %}
+          <option value="1">삼성 라이온즈</option>
+          <option value="2">KT 위즈</option>
+          {% endif %}
+        </select>
+      </label>
+
+      <label>
+        원정팀:
+        <select name="away_team_id" required id="awayTeam">
+          <option value="">-- 팀 선택 --</option>
+          {% if teams %}
+          {% for t in teams %}<option value="{{ t.team_id }}">{{ t.team_name }}</option>{% endfor %}
+          {% else %}
+          <option value="1">삼성 라이온즈</option>
+          <option value="2">KT 위즈</option>
+          {% endif %}
+        </select>
+      </label>
+      <span style="margin-left:8px;color:#888;font-size:13px;">※ 같은 팀은 자동으로 비활성화됩니다</span>
+    </fieldset>
+
+    <!-- ========== 라인업 표 ========== -->
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <!-- 홈팀 -->
+      <fieldset style="flex:1 1 480px;padding:12px;border:1px solid #ddd;border-radius:10px;">
+        <legend><b>홈팀 라인업</b> <button type="button" id="copyHomeToAway" style="margin-left:8px;">홈 → 원정 복사</button>
+        </legend>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:#f7f7f7;">
+              <th style="border:1px solid #eee;padding:6px;">타순</th>
+              <th style="border:1px solid #eee;padding:6px;">선수명</th>
+              <th style="border:1px solid #eee;padding:6px;">포지션</th>
+            </tr>
+          </thead>
+          <tbody id="homeBody">
+            <!-- JS가 1~10(P) 행을 자동 생성 -->
+          </tbody>
+        </table>
+      </fieldset>
+
+      <!-- 원정팀 -->
+      <fieldset style="flex:1 1 480px;padding:12px;border:1px solid #ddd;border-radius:10px;">
+        <legend><b>원정팀 라인업</b> <button type="button" id="clearAll" style="margin-left:8px;">전체 초기화</button></legend>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr style="background:#f7f7f7;">
+              <th style="border:1px solid #eee;padding:6px;">타순</th>
+              <th style="border:1px solid #eee;padding:6px;">선수명</th>
+              <th style="border:1px solid #eee;padding:6px;">포지션</th>
+            </tr>
+          </thead>
+          <tbody id="awayBody">
+            <!-- JS가 1~10(P) 행을 자동 생성 -->
+          </tbody>
+        </table>
+      </fieldset>
+    </div>
+
+    <!-- ========== 하단 버튼 ========== -->
+    <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button type="submit" id="submitBtn">라인업 등록</button>
+      <button type="button" id="saveDraft">임시저장</button>
+      <button type="button" id="restoreDraft">임시저장 불러오기</button>
+      <button type="button" id="clearDraft">임시저장 삭제</button>
+    </div>
+  </form>
+</main>
+<script src="../assets/js/game_player_lineup_manager.js"></script>
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>

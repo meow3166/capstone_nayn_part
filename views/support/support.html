@@ -1,106 +1,64 @@
 {%include "include/header.html"%}
 
-    <!-- ================== MAIN ================== -->
-    <main>
+<!-- ================== MAIN ================== -->
+<main>
+    <div class="line1"></div>
+    <h1 class="munhee">문의하기</h1><br>
+
+    <ul>
+        <li>빠른 상담을 원하신다면 채팅문의를 이용해주세요.</li>
+        <li>운영시간 : 평일 10:00 ~ 18:00 (점심시간 12:00 ~ 13:00) / 주말 · 공휴일 휴무</li>
+    </ul><br>
+
+    <!-- 문의하기 카드 영역 -->
+    <div class="container">
+        <a href="./Inquiry_history.html">
+            <div class="card">
+                <div class="icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <p>문의내역</p>
+            </div>
+        </a>
+
+        <a href="http://open.kakao.com/o/sZHZwf2g">
+            <div class="card">
+                <div class="icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <p>채팅문의</p>
+            </div>
+        </a>
+
+        <a href="./Inquiry_details.html">
+            <div class="card">
+                <div class="icon">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <p>1:1 문의</p>
+            </div>
+        </a>
+    </div>
+
+    <!-- ================== FAQ ================== -->
+    <div class="faq-section">
+        <h2>자주 찾는 질문</h2>
         <div class="line1"></div>
-        <h1 class="munhee">문의하기</h1><br>
-
-        <ul>
-            <li>빠른 상담을 원하신다면 채팅문의를 이용해주세요.</li>
-            <li>운영시간 : 평일 10:00 ~ 18:00 (점심시간 12:00 ~ 13:00) / 주말 · 공휴일 휴무</li>
-        </ul><br>
-
-        <!-- 문의하기 카드 영역 -->
-        <div class="container">
-            <a href="#">
-                <div class="card">
-                    <div class="icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <p>문의내역</p>
-                </div>
-            </a>
-
-            <a href="http://open.kakao.com/o/sZHZwf2g">
-                <div class="card">
-                    <div class="icon">
-                        <i class="fas fa-comments"></i>
-                    </div>
-                    <p>채팅문의</p>
-                </div>
-            </a>
-
-            <a href="./문의하기.html">
-                <div class="card">
-                    <div class="icon">
-                        <i class="fas fa-edit"></i>
-                    </div>
-                    <p>1:1 문의</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- ================== FAQ ================== -->
-        <div class="faq-section">
-            <h2>자주 찾는 질문</h2>
-            <div class="line1"></div>
-            <div id="faqList" aria-live="polite"></div>
-        </div>
+        <div id="faqList" aria-live="polite"></div>
+    </div>
 
 
-    </main>
-    <script>
-        async function loadFAQ() {
-            const container = document.getElementById("faqList");
-            try {
-                const res = await fetch("/faq");
-                if (!res.ok) throw new Error("API 오류: " + res.status);
-                const data = await res.json();
+</main>
 
-                if (!Array.isArray(data) || data.length === 0) {
-                    container.innerHTML = "<p class='faq-empty'>등록된 FAQ가 없습니다.</p>";
-                    return;
-                }
+<!-- 플로팅 챗봇 버튼(이미지 교체만 하면 됨) -->
+<button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+    <img src="../assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
+</button>
 
-                container.innerHTML = data.map(it => `
-      <div class="faq-item">
-        <div class="faq-question">
-          ${it.question}
-          <span class="faq-toggle">▼</span>
-        </div>
-        <div class="faq-answer">
-          ${it.answer}
-        </div>
-      </div>
-    `).join("");
-
-            } catch (err) {
-                console.error("FAQ 로딩 실패:", err);
-                container.innerHTML = "<p class='faq-error'>FAQ를 불러오지 못했습니다.</p>";
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            loadFAQ();
-
-            // 이벤트 위임으로 FAQ 토글
-            const container = document.getElementById("faqList");
-            container.addEventListener("click", (e) => {
-                const q = e.target.closest(".faq-question");
-                if (!q) return;
-
-                const item = q.closest(".faq-item");
-                item.classList.toggle("open"); // CSS와 일치하게 open 클래스 토글
-
-                const arrow = q.querySelector(".faq-toggle");
-                if (arrow) arrow.style.transform =
-                    item.classList.contains("open") ? "rotate(180deg)" : "rotate(0deg)";
-            });
-        });
-    </script>
-
-
-
+<script src="../assets/js/support.js"></script>
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
 </body>
 
 </html>

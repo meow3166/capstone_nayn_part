@@ -1,0 +1,115 @@
+/* 공통 */
+.lineup-wrapper{
+  width:min(1100px, 96%);
+  margin:20px auto 60px;
+  font-family: "Pretendard","Noto Sans KR",system-ui,-apple-system,sans-serif;
+  color:#222;
+}
+.title{
+  text-align:center;
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:12px;
+}
+
+/* 팀/로고 줄 */
+.info-box{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:10px 0 18px;
+  flex-wrap:wrap;
+}
+.team-logo{ height:40px; max-width:120px; object-fit:contain; }
+.team-name{ font-weight:800; font-size:16px; }
+.vs{ font-weight:800; color:#555; }
+
+/* 라인업 박스 */
+.lineup-table{
+  display:flex;
+  gap:18px;
+  align-items:flex-start;
+  justify-content:center;
+  flex-wrap:wrap; /* 데스크톱에서도 줄바꿈 허용 */
+}
+.team{
+  flex:1 1 420px;              /* 넓으면 2열, 좁으면 1열 */
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,.05);
+}
+.team + .team{ margin-top:0; }
+
+.team-name{
+  display:block;
+  color:#fff;
+  padding:12px 14px;
+  font-size:17px;
+  text-align:center;
+}
+
+/* 표 래퍼: 작은 화면에서 가로 스크롤 허용 */
+.team table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+.team thead th{
+  background:#f7f8fa;
+  font-weight:700;
+  font-size:14px;
+  padding:10px 6px;
+  border-bottom:1px solid #eaecef;
+}
+.team tbody td{
+  padding:11px 6px;
+  font-size:15px;
+  text-align:center;
+  border-bottom:1px solid #f0f2f5;
+  word-break:keep-all;
+}
+.team tbody tr:nth-child(even){ background:#fafbfc; }
+
+/* 가운데 VS */
+.lineup-table > .vs{
+  align-self:center;
+  font-size:18px;
+  font-weight:800;
+  color:#444;
+  margin:6px 4px;
+}
+
+@media (max-width: 768px){
+  .title{ font-size:18px; }
+  .team-logo{ height:32px; }
+  .team{ flex:1 1 100%; }     /* 한 줄씩 세로 배치 */
+  .lineup-table{ gap:14px; flex-direction:column; align-items:center; }
+
+  /* ✅ VS 중앙 고정 */
+  .lineup-table > .vs{
+    order: 0;                /* ← 기존 order:2 제거 */
+    width:100%;
+    text-align:center;
+    font-size:18px;
+    margin:10px 0;
+  }
+
+  .team thead th{ font-size:13px; padding:8px 4px; }
+  .team tbody td{ font-size:14px; padding:9px 4px; }
+  .team tbody td:nth-child(2){ word-break:break-all; }
+}
+
+
+/* --------- 큰 화면(데스크톱) --------- */
+@media (min-width: 769px){
+  .lineup-table{ 
+    flex-wrap:nowrap;           /* 가로 두 칸 유지 */
+  }
+  .lineup-table > .vs{
+    margin:0 6px;
+    font-size:20px;
+  }
+}

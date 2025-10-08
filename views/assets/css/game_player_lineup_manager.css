@@ -1,0 +1,29 @@
+.admin-lineup {
+  width: min(1100px, 95%);
+  margin: 100px auto 60px;
+  padding: 20px;
+}
+
+.admin-lineup fieldset {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.admin-lineup legend {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.admin-lineup table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.admin-lineup th, .admin-lineup td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}

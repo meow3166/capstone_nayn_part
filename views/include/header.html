@@ -1,42 +1,62 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <title>메인페이지시작</title>
-        <link href="./assets/css/style.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <meta name="viewport" content="user-scalable=no, width=device-width">
-        <!-- 고객지원 -->
-        <link href="../assets/css/support.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-        <!-- 위치안내 -->
-        <link href="../assets/css/location_desktop.css" rel="stylesheet">
-        <link href="../assets/css/location.css" rel="stylesheet">
-        <link href="../assets/css/location_mobile.css" rel="stylesheet">
-    </head>
-    <body>
-        <header>
-            <div class="header_top">
-                <div class="logo"><a href="../index.html"><img src="./assets/img/edited_logo.png"></a></div>
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="whether">
-                    <div class="whe_b">
-                        <P>2025년 9월 27일 날씨 : 기온 23℃ 강수확률 10% - 임시</P>
-                    </div>
-                </div>
-                <div class="member">
-                    <div class="login">
-                        <a href="./login/Login.html" class="login_button">관리자 로그인</a>
-                    </div>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>메인페이지시작</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/FAB.css" rel="stylesheet">
+    <!-- 고객지원 -->
+    <link href="/assets/css/support.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="/assets/css/Inquiry_details.css" rel="stylesheet">
+    <link href="/assets/css/Inquiry_history.css" rel="stylesheet">
+    <!-- 공지사항 -->
+    <link href="/assets/css/announcement_detail.css" rel="stylesheet">
+    <link href="/assets/css/announcement_list.css" rel="stylesheet">
+    <!-- 위치안내 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <!-- 위치안내 페이지 css경로 -->
+    <link rel="stylesheet" href="/assets/css/location.css"> <!-- 공통 -->
+    <link rel="stylesheet" href="/assets/css/location_desktop.css" media="(min-width: 769px)"> <!-- 데탑 -->
+    <link rel="stylesheet" href="/assets/css/location_mobile.css" media="(max-width: 768px)"> <!-- 모바일 -->
+    <!-- 경기 리스트 -->
+    <link href="/assets/css/game_match_list.css" rel="stylesheet">
+    <!--  경기 라인업 -->
+    <link href="/assets/css/game_player_lineup.css" rel="stylesheet">
+    <link href="/assets/css/game_player_lineup_manager.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+    <header>
+        <div class="header_top">
+            <div class="logo"><a href="/index.html"><img src="/assets/img/edited_logo.png"></a></div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="whether">
+                <div class="whe_b">
+                    <P id="weather-info">날씨 정보를 불러오는 중입니다...</P>
                 </div>
             </div>
-            <div class="header_bottom">
-                <nav>
+            <div class="member">
+                <div class="login">
+                    <a href="/login/Login.html" class="login_button">관리자 로그인</a>
+                </div>
+            </div>
+        </div>
+        <div class="header_bottom">
+            <nav>
                 <ul class="mainmenu">
                     <li>
                         <a href="#"><span>선수단 정보</span></a>
@@ -51,9 +71,8 @@
                         <a href="#"><span>경기정보</span></a>
                         <ul class="sub">
                             <li><a href="#">경기일정</a></li>
-                            <li><a href="#">경기결과</a></li>
-                            <li><a href="#">경기요약</a></li>
-                            <li><a href="#">라인업</a></li>
+                            <li><a href="/game_match_list.html">경기결과</a></li>
+                            <li><a href="/game_player_lineup.html">라인업</a></li>
                         </ul>
                     </li>
                     <li>
@@ -64,23 +83,23 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="./location.html"><span>위치안내</span></a>
+                        <a href="/location.html"><span>위치안내</span></a>
                         <ul class="sub">
-                            <li><a href="./location.html">오시는길</a></li>
+                            <li><a href="/location.html">오시는길</a></li>
                             <li><a href="#">내부 지도</a></li>
                             <li><a href="#">먹거리</a></li>
                             <li><a href="#">화장실</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="./support.html"><span>고객지원</span></a>
+                        <a href="/support.html"><span>고객지원</span></a>
                         <ul class="sub">
-                            <li><a href="#">공지사항</a></li>
+                            <li><a href="/announcement_list.html">공지사항</a></li>
                             <li><a href="/support.html">고객센터</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="/support.html">FAQ</a></li>
                         </ul>
                     </li>
                 </ul>
             </nav>
-            </div>
-        </header>
+        </div>
+    </header>

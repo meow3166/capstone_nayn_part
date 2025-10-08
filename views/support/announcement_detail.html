@@ -1,0 +1,44 @@
+{%include "include/header.html"%}
+<main class="announcement_detail_container">
+  <h1 class="page-title">공지사항</h1>
+
+  <article class="detail" id="noticeDetail" data-id="">
+    <header class="detail-head">
+      <h2 class="title">{{ item.title }}</h2>
+      <div class="meta">
+        <span class="category">{{ item.category }}</span>
+        <time class="date" datetime="{{ item.published_at | date('YYYY-MM-DDTHH:mm') }}">
+          {{ item.published_at | date('YYYY-MM-DD HH:mm') }}
+        </time>
+        <span class="views">조회 {{ item.view_count }}</span>
+      </div>
+    </header>
+
+    <!-- 본문: 헤더 밖, 1회만 -->
+    <section class="detail-body" id="content">
+      {{ item.content_md | safe }}
+    </section>
+
+    <div class="back">
+      <a href="/support/announcement_list.html">목록</a>
+    </div>
+  </article>
+</main>
+
+<button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+  <!-- 절대경로 권장 -->
+  <img src="/assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
+</button>
+
+<script>
+  (function readQuery() {
+    var params = new URLSearchParams(location.search);
+    var id = params.get('id');
+    if (id) {
+      document.getElementById('noticeDetail')?.setAttribute('data-id', id);
+    }
+  })();
+</script>
+
+</body>
+</html>

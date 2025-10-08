@@ -1,0 +1,86 @@
+{%include "include/header.html"%}
+
+<!-- ================== MAIN ================== -->
+
+
+<main class="lineup-wrapper">
+    <h1 class="title">
+        {{ game.game_date }} {{ game.game_time }} | {{ game.venue }}
+    </h1>
+
+    <!-- 팀 로고 및 기본 정보 -->
+    <div class="info-box">
+        <img src="{{ home.team_logo }}" alt="{{ home.team_name }}" class="team-logo">
+        <strong class="team-name">{{ home.team_name }}</strong>
+        <span class="vs">VS</span>
+        <strong class="team-name">{{ away.team_name }}</strong>
+        <img src="{{ away.team_logo }}" alt="{{ away.team_name }}" class="team-logo">
+    </div>
+
+    {% if not game.is_lineup_announced %}
+    <p class="no-lineup">라인업 발표 전입니다.</p>
+    {% else %}
+    <div class="lineup-table">
+        <!-- 홈팀 -->
+        <div class="team">
+            <h2 class="team-name" style="background: {{ home.color_primary | default('#0B3D91') }}">
+                {{ home.team_name }}
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>타순</th>
+                        <th>선수명</th>
+                        <th>포지션</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in home_lineup %}
+                    <tr>
+                        <td>{{ r.order_label or r.order_num }}</td>
+                        <td>{{ r.player_name }}</td>
+                        <td>{{ r.position_kr }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="vs">VS</div>
+
+        <!-- 원정팀 -->
+        <div class="team">
+            <h2 class="team-name" style="background: {{ away.color_primary | default('#0B3D91') }}">
+                {{ away.team_name }}
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>타순</th>
+                        <th>선수명</th>
+                        <th>포지션</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in away_lineup %}
+                    <tr>
+                        <td>{{ r.order_label or r.order_num }}</td>
+                        <td>{{ r.player_name }}</td>
+                        <td>{{ r.position_kr }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</main>
+<!-- 플로팅 챗봇 버튼(이미지 교체만 하면 됨) -->
+<button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
+    <img src="../assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
+</button>
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+
+</html>
