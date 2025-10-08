@@ -8,7 +8,6 @@ const session = require("express-session");
 const bcrypt = require("bcrypt");
 const pool = require("./DB"); // ./DB.js 에서 export한 pool.promise()
 
-
 // 2) app 생성 -----------------------------------------------------
 const app = express();
 
@@ -30,7 +29,7 @@ app.set("views", VIEWS_DIR);
 const env = nunjucks.configure(path.join(__dirname, 'views'), {
   autoescape: true,
   express: app,
-  watch: false
+  watch: true
 });
 
 // /assets/* 정적 리소스            
@@ -46,6 +45,187 @@ app.use((req, res, next) => {
 
 
 // 5) 라우트 -------------------------------------------------------
+// 접근제어: 관리자 전용 페이지 보호
+function requireLogin(req, res, next) {
+  if (req.session?.user) return next();
+  req.session.returnTo = req.originalUrl; // 로그인 후 돌아갈 경로 기억
+  return res.send("<script>alert('관리자 전용 페이지입니다. 로그인 후 이용하세요.');location.href='/login';</script>");
+}
+
+// 세션 상태 확인(API) - 헤더 버튼 토글 등에 사용
+app.get('/api/me', (req, res) => {
+  const loggedIn = !!req.session?.user;
+  res.json({ loggedIn, user: loggedIn ? req.session.user : null });
+});
+
+// 접근제어: 관리자 전용 페이지 보호
+function requireLogin(req, res, next) {
+  if (req.session?.user) return next();
+  req.session.returnTo = req.originalUrl;
+  return res.send("<script>alert('관리자 전용 페이지입니다. 로그인 후 이용하세요.');location.href='/login';</script>");
+}
+
+// 세션 상태 확인(API)
+app.get('/api/me', (req, res) => {
+  const loggedIn = !!req.session?.user;
+  res.json({ loggedIn, user: loggedIn ? req.session.user : null });
+});
+
+// --------------------- 관리자 Router 시작 ---------------------
+const admin = express.Router();
+admin.use(requireLogin);
+
+/** 관리자 허브 */
+admin.get('/', requireLogin, (req, res) => {
+  res.render('admin/admin_index.html', { me: req.session.user });
+});
+
+/** 공지 목록 페이지 (파일명 유지: views/admin/admin_announcement_list.html) */
+admin.get(['/announcements/list', '/announcements'], async (req, res, next) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT notice_id, title, category, status, is_pinned,
+             IFNULL(publish_at, created_at) AS published_at,
+             view_count
+        FROM yuumi.notices
+       WHERE deleted_at IS NULL
+       ORDER BY is_pinned DESC, published_at DESC, created_at DESC
+    `);
+    res.render('admin/admin_announcement_list.html', { rows });
+  } catch (e) { next(e); }
+});
+
+/** 공지 작성 폼 (파일명 유지: views/admin/admin_announcement_form.html) */
+admin.get('/announcements/form', (req, res) => {
+  res.render('admin/admin_announcement_form.html', {
+    mode: 'create',
+    item: { title: '', category: '일반', status: 'PUBLISHED', is_pinned: 0, publish_at: '', content_md: '' }
+  });
+});
+
+/** 공지 등록 */
+admin.post('/announcements/new', async (req, res, next) => {
+  try {
+    const { title, category, content_md, status, is_pinned, publish_at } = req.body;
+    const pinned = (is_pinned === '1' || is_pinned === 'on') ? 1 : 0;
+    const pub = publish_at ? new Date(publish_at) : null;
+
+    const [r] = await pool.query(
+      `INSERT INTO yuumi.notices (title, category, content_md, status, is_pinned, publish_at)
+       VALUES (?,?,?,?,?,?)`,
+      [title, category || '일반', content_md || '', status || 'DRAFT', pinned, pub]
+    );
+    res.redirect(`/admin/announcements/${r.insertId}/edit`);
+  } catch (e) { next(e); }
+});
+
+/** 공지 수정 폼 (파일명 유지: views/admin/admin_announcement_form.html) */
+admin.get('/announcements/:id/edit', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const [[item]] = await pool.query(
+      `SELECT * FROM yuumi.notices WHERE notice_id=? AND deleted_at IS NULL`, [id]
+    );
+    if (!item) return res.status(404).send('공지 없음');
+    res.render('admin/admin_announcement_form.html', { mode: 'edit', item });
+  } catch (e) { next(e); }
+});
+
+/** 공지 수정 저장 */
+admin.post('/announcements/:id/update', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    const { title, category, content_md, status, is_pinned, publish_at } = req.body;
+    const pinned = (is_pinned === '1' || is_pinned === 'on') ? 1 : 0;
+    const pub = publish_at ? new Date(publish_at) : null;
+
+    await pool.query(
+      `UPDATE yuumi.notices
+          SET title=?, category=?, content_md=?, status=?, is_pinned=?, publish_at=?
+        WHERE notice_id=?`,
+      [title, category || '일반', content_md || '', status || 'DRAFT', pinned, pub, id]
+    );
+    res.redirect('/admin/announcements/list');
+  } catch (e) { next(e); }
+});
+
+/** 공지 발행/드래프트/삭제 */
+admin.post('/announcements/:id/publish', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    await pool.query(
+      `UPDATE yuumi.notices
+          SET status='PUBLISHED', publish_at = IFNULL(publish_at, NOW())
+        WHERE notice_id=?`,
+      [id]
+    );
+    res.redirect('/admin/announcements/list');
+  } catch (e) { next(e); }
+});
+
+admin.post('/announcements/:id/draft', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    await pool.query(`UPDATE yuumi.notices SET status='DRAFT' WHERE notice_id=?`, [id]);
+    res.redirect('/admin/announcements/list');
+  } catch (e) { next(e); }
+});
+
+admin.post('/announcements/:id/delete', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    await pool.query(`UPDATE yuumi.notices SET deleted_at=NOW() WHERE notice_id=?`, [id]);
+    res.redirect('/admin/announcements/list');
+  } catch (e) { next(e); }
+});
+
+/** 라인업 등록/관리 페이지 (파일명 유지: views/admin/admin_game_player_lineup.html) */
+admin.get('/lineup/manager', (req, res) => {
+  res.render('admin/admin_game_player_lineup.html');
+});
+
+/** 라인업 저장 */
+admin.post('/lineup/save', async (req, res) => {
+  try {
+    const { game_date, game_time, venue, home_team_id, away_team_id } = req.body;
+    if (!game_date || !game_time || !venue) return res.status(400).send('경기정보 누락');
+    if (!home_team_id || !away_team_id) return res.status(400).send('팀 선택 누락');
+    if (home_team_id === away_team_id) return res.status(400).send('홈/원정이 같습니다');
+
+    const [gameInsert] = await pool.query(`
+      INSERT INTO yuumi.games (game_date, game_time, venue, home_team_id, away_team_id, is_lineup_announced)
+      VALUES (?, ?, ?, ?, ?, 1)
+    `, [game_date, game_time, venue, home_team_id, away_team_id]);
+
+    const gameId = gameInsert.insertId;
+
+    async function insertLineup(teamId, prefix) {
+      for (let i = 1; i <= 10; i++) {
+        const player = req.body[`${prefix}_player_name_${i}`];
+        const pos = req.body[`${prefix}_position_${i}`];
+        if (player && pos) {
+          await pool.query(`
+            INSERT INTO yuumi.lineups (game_id, team_id, order_num, player_name, position_kr)
+            VALUES (?, ?, ?, ?, ?)
+          `, [gameId, teamId, i, player, pos]);
+        }
+      }
+    }
+    await insertLineup(home_team_id, 'home');
+    await insertLineup(away_team_id, 'away');
+
+    res.redirect(`/game_player_lineup?game_id=${gameId}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('라인업 등록 중 오류 발생');
+  }
+});
+
+// Router 장착
+app.use('/admin', admin);
+// --------------------- 관리자 Router 끝 ---------------------
+
+
 // 메인/기본
 app.get("/", (req, res) => res.render("index.html"));
 app.get(["/index", "/index.html"], (req, res) => res.redirect(301, "/"));
@@ -180,7 +360,7 @@ app.get(
       if (!item) return res.status(404).send('공지를 찾을 수 없습니다.');
 
       // 조회수 +1 (실패해도 진행)
-      pool.query(`UPDATE notices SET view_count=view_count+1 WHERE notice_id=?`, [id]).catch(()=>{});
+      pool.query(`UPDATE notices SET view_count=view_count+1 WHERE notice_id=?`, [id]).catch(() => { });
 
       res.render('support/announcement_detail.html', { item });
     } catch (e) { next(e); }
@@ -211,20 +391,20 @@ env.addFilter('date', function (value, fmt = 'YYYY-MM-DD HH:mm') {
 
   const pad = (n) => String(n).padStart(2, '0');
   const YYYY = d.getFullYear();
-  const MM   = pad(d.getMonth() + 1);
-  const DD   = pad(d.getDate());
-  const HH   = pad(d.getHours());
-  const mm   = pad(d.getMinutes());
-  const ss   = pad(d.getSeconds());
+  const MM = pad(d.getMonth() + 1);
+  const DD = pad(d.getDate());
+  const HH = pad(d.getHours());
+  const mm = pad(d.getMinutes());
+  const ss = pad(d.getSeconds());
 
   // 2) 간단 토큰 치환
   return fmt
     .replace('YYYY', YYYY)
-    .replace('MM',   MM)
-    .replace('DD',   DD)
-    .replace('HH',   HH)
-    .replace('mm',   mm)
-    .replace('ss',   ss);
+    .replace('MM', MM)
+    .replace('DD', DD)
+    .replace('HH', HH)
+    .replace('mm', mm)
+    .replace('ss', ss);
 });
 // 숫자 id 검증(선택)
 app.param('id', (req, res, next, id) => {
@@ -232,107 +412,10 @@ app.param('id', (req, res, next, id) => {
   next();
 });
 
-/** 관리자: 공지 목록 */
-app.get(
-  ['/support/admin/announcements', '/support/admin/announcements.html'],
-  async (req, res, next) => {
-    try {
-      const [rows] = await pool.query(`
-        SELECT notice_id, title, category, status, is_pinned,
-               IFNULL(publish_at, created_at) AS published_at,
-               view_count
-          FROM yuumi.notices
-         WHERE deleted_at IS NULL
-         ORDER BY is_pinned DESC, published_at DESC, created_at DESC
-      `);
-      res.render('support/admin_announcement_list.html', { rows });
-    } catch (e) { next(e); }
-  }
-);
 
-/** 관리자: 작성 폼 */
-app.get('/support/admin/announcements/new', (req, res) => {
-  res.render('support/admin_announcement_form.html', {
-    mode: 'create',
-    item: { title: '', category: '일반', status: 'PUBLISHED', is_pinned: 0, publish_at: '', content_md: '' }
-  });
-});
 
-/** 관리자: 등록 */
-app.post('/support/admin/announcements/new', async (req, res, next) => {
-  try {
-    const { title, category, content_md, status, is_pinned, publish_at } = req.body;
-    const pinned = (is_pinned === '1' || is_pinned === 'on') ? 1 : 0;
-    const pub = publish_at ? new Date(publish_at) : null;
 
-    const [r] = await pool.query(
-      `INSERT INTO yuumi.notices (title, category, content_md, status, is_pinned, publish_at)
-       VALUES (?,?,?,?,?,?)`,
-      [title, category || '일반', content_md || '', status || 'DRAFT', pinned, pub]
-    );
-    res.redirect(`/support/admin/announcements/${r.insertId}/edit`);
-  } catch (e) { next(e); }
-});
 
-/** 관리자: 수정 폼 */
-app.get('/support/admin/announcements/:id/edit', async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    const [[item]] = await pool.query(
-      `SELECT * FROM yuumi.notices WHERE notice_id=? AND deleted_at IS NULL`, [id]
-    );
-    if (!item) return res.status(404).send('공지 없음');
-    res.render('support/admin_announcement_form.html', { mode: 'edit', item });
-  } catch (e) { next(e); }
-});
-
-/** 관리자: 수정 저장 */
-app.post('/support/admin/announcements/:id/update', async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    const { title, category, content_md, status, is_pinned, publish_at } = req.body;
-    const pinned = (is_pinned === '1' || is_pinned === 'on') ? 1 : 0;
-    const pub = publish_at ? new Date(publish_at) : null;
-
-    await pool.query(
-      `UPDATE yuumi.notices
-          SET title=?, category=?, content_md=?, status=?, is_pinned=?, publish_at=?
-        WHERE notice_id=?`,
-      [title, category || '일반', content_md || '', status || 'DRAFT', pinned, pub, id]
-    );
-    res.redirect('/support/admin/announcements');
-  } catch (e) { next(e); }
-});
-
-/** 관리자: 발행/드래프트 토글 */
-app.post('/support/admin/announcements/:id/publish', async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    await pool.query(
-      `UPDATE yuumi.notices
-          SET status='PUBLISHED', publish_at = IFNULL(publish_at, NOW())
-        WHERE notice_id=?`,
-      [id]
-    );
-    res.redirect('/support/admin/announcements');
-  } catch (e) { next(e); }
-});
-app.post('/support/admin/announcements/:id/draft', async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    await pool.query(`UPDATE yuumi.notices SET status='DRAFT' WHERE notice_id=?`, [id]);
-    res.redirect('/support/admin/announcements');
-  } catch (e) { next(e); }
-});
-
-/** 관리자: 삭제(소프트) */
-app.post('/support/admin/announcements/:id/delete', async (req, res, next) => {
-  try {
-    const id = Number(req.params.id);
-    await pool.query(`UPDATE yuumi.notices SET deleted_at=NOW() WHERE notice_id=?`, [id]);
-    res.redirect('/support/admin/announcements');
-  } catch (e) { next(e); }
-});
 
 // 리스트 
 app.get(
@@ -394,8 +477,8 @@ app.get('/game_player_lineup', async (req, res) => {
           JOIN yuumi.teams ht ON ht.team_id = g.home_team_id
           JOIN yuumi.teams at ON at.team_id = g.away_team_id
           WHERE g.game_id = ?`,
-          [gameId]
-        )
+        [gameId]
+      )
       : await pool.query(`
           SELECT g.*,
                  ht.team_name AS home_name, ht.team_logo AS home_logo, ht.color_primary AS home_color,
@@ -415,7 +498,7 @@ app.get('/game_player_lineup', async (req, res) => {
     const formattedDate = `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
     const formattedTime = typeof game.game_time === 'string'
       ? game.game_time.slice(0, 5)
-      : `${String(game.game_time.getHours()).padStart(2,'0')}:${String(game.game_time.getMinutes()).padStart(2,'0')}`;
+      : `${String(game.game_time.getHours()).padStart(2, '0')}:${String(game.game_time.getMinutes()).padStart(2, '0')}`;
 
     // 3) 라인업
     const [homeLineup] = await pool.query(`
@@ -464,17 +547,18 @@ app.get('/game_player_lineup', async (req, res) => {
 
 /** 관리자 페이지 (라인업 등록) */
 app.get(
-  ['/game_player_lineup_manager', '/gameinfo/game_player_lineup_manager.html'],
+  ['/admin/lineup/manager', '/admin/lineup/manager.html'],
+  requireLogin,
   async (req, res) => {
     // (선택) 팀 목록을 DB에서 불러와 select에 채우고 싶다면 아래 사용
     // const [teams] = await pool.query('SELECT team_id, team_name FROM yuumi.teams ORDER BY team_name');
-    // res.render('gameinfo/game_player_lineup_manager.html', { teams });
-    res.render('gameinfo/game_player_lineup_manager.html');
+    // res.render('gameinfo/admin_game_player_lineup.html', { teams });
+    res.render('admin/lineup_manager.html');
   }
 );
 
 /** 라인업 저장 처리 */
-app.post('/gameinfo/lineup/save', async (req, res) => {
+app.post('/admin/lineup/save', requireLogin, async (req, res) => {
   try {
     const { game_date, game_time, venue, home_team_id, away_team_id } = req.body;
     if (!game_date || !game_time || !venue) return res.status(400).send('경기정보 누락');
@@ -566,15 +650,49 @@ app.post("/login", async (req, res) => {
     // 로그인 성공 → 세션 저장
     req.session.user = { id: user.admin_id, username: user.username, name: user.name };
 
-    // 알림 후 메인으로 이동
-    return res.send("<script>alert('로그인 성공!');location.href='/';</script>");
+    // 알림 후 원래 페이지(없으면 /admin)로 이동
+    const dest = req.session.returnTo || '/admin';
+    delete req.session.returnTo;
+    return res.send(`<script>alert('로그인 성공!');location.href='${dest}';</script>`);
+
+
 
   } catch (e) {
     console.error("[LOGIN]", e);
     return res.send("<script>alert('DB 오류 발생');history.back();</script>");
   }
 });
+// 과거 지원 경로 하위호환 (GET은 301, POST는 307)
+app.get(['/support/admin/announcements', '/support/admin/announcements.html'], (req, res) => {
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  res.redirect(301, '/admin/announcements' + q);
+});
+app.get('/support/admin/announcements/new', (req, res) => res.redirect(301, '/admin/announcements/new'));
+app.get('/support/admin/announcements/:id/edit', (req, res) => res.redirect(301, `/admin/announcements/${req.params.id}/edit`));
+app.post('/support/admin/announcements/new',         (req, res) => res.redirect(307, '/admin/announcements/new'));
+app.post('/support/admin/announcements/:id/update',  (req, res) => res.redirect(307, `/admin/announcements/${req.params.id}/update`));
+app.post('/support/admin/announcements/:id/publish', (req, res) => res.redirect(307, `/admin/announcements/${req.params.id}/publish`));
+app.post('/support/admin/announcements/:id/draft',   (req, res) => res.redirect(307, `/admin/announcements/${req.params.id}/draft`));
+app.post('/support/admin/announcements/:id/delete',  (req, res) => res.redirect(307, `/admin/announcements/${req.params.id}/delete`));
 
+app.get(['/game_player_lineup_manager', '/gameinfo/game_player_lineup_manager.html'], (req, res) => {
+  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+  res.redirect(301, '/admin/lineup/manager' + q);
+});
+app.post('/gameinfo/lineup/save', (req, res) => res.redirect(307, '/admin/lineup/save'));
+
+
+// 로그아웃
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('[LOGOUT]', err);
+      return res.send("<script>alert('로그아웃 중 오류');history.back();</script>");
+    }
+    res.clearCookie('connect.sid');
+    return res.send("<script>alert('로그아웃 되었습니다');location.href='/';</script>");
+  });
+});
 // 6) 서버 시작 ---------------------------------------------------
 // 헬스체크(선택) — 브라우저에서 http://localhost/ping 확인용
 app.get('/ping', (req, res) => res.send('pong'));

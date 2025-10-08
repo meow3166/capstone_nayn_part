@@ -1,0 +1,52 @@
+/* === 세로형 입력 폼 === */
+.admin-form-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 600px;
+}
+
+.admin-form-vertical label {
+  font-weight: 700;
+  color: #333;
+}
+
+.admin-form-vertical input[type="text"],
+.admin-form-vertical input[type="datetime-local"],
+.admin-form-vertical textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.admin-form-vertical textarea {
+  min-height: 260px;
+  resize: vertical;
+}
+
+.radio-group {
+  display: flex;
+  gap: 16px;
+}
+
+.checkbox-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+/* 강제 세로형 (안 먹히면 이 블록부터 적용됨) */
+.admin-form-vertical label { display:block; margin-top:10px; font-weight:700; }
+.admin-form-vertical input[type="text"],
+.admin-form-vertical input[type="datetime-local"],
+.admin-form-vertical textarea { display:block; width:100%; margin-top:6px; }
+.admin-form-vertical .radio-group { display:flex; gap:16px; margin-top:6px; }
+.admin-form-vertical .checkbox-inline { display:flex; align-items:center; gap:8px; margin-top:6px; }
+.admin-form-vertical .form-actions { display:flex; gap:10px; margin-top:14px; }

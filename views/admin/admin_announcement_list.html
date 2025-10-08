@@ -1,59 +1,63 @@
 {% include "include/header.html" %}
-{% include "include/header.html" %}
-<main class="container" style="max-width:960px;padding:20px 12px;">
-  <h1 style="margin:10px 0 16px;font-size:22px;font-weight:800;">공지 관리</h1>
 
-  <div style="margin:10px 0;">
-    <a href="/support/admin/announcements/new"
-       style="display:inline-block;padding:8px 12px;border:1px solid #0B3D91;border-radius:6px;text-decoration:none;background:#0B3D91;color:#fff;">새 공지</a>
-    <a href="/support/announcement_list.html"
-       style="display:inline-block;padding:8px 12px;border:1px solid #ddd;border-radius:6px;text-decoration:none;margin-left:10px;">사용자 목록 보기</a>
+<link rel="stylesheet" href="/assets/css/admin.css">
+
+<main class="admin-container">
+  <h1 class="admin-title">공지 관리</h1>
+
+  <div class="admin-actions">
+<a class="btn btn-primary" href="/admin/announcements/form">새 공지</a>
+    <a class="btn" href="/announcements">사용자 목록 보기</a>
   </div>
 
-  <table style="width:100%;border-collapse:collapse;">
+  <table class="admin-table">
     <thead>
-      <tr style="border-bottom:1px solid #eee;">
-        <th style="text-align:left;padding:10px;">제목</th>
-        <th style="text-align:center;width:90px;">상태</th>
-        <th style="text-align:center;width:80px;">고정</th>
-        <th style="text-align:center;width:160px;">게시시각</th>
-        <th style="text-align:center;width:80px;">조회</th>
-        <th style="text-align:center;width:240px;">관리</th>
+      <tr>
+        <th class="ta-left">제목</th>
+        <th class="ta-center w-90">상태</th>
+        <th class="ta-center w-80">고정</th>
+        <th class="ta-center w-160">게시시각</th>
+        <th class="ta-center w-80">조회</th>
+        <th class="ta-center w-260">관리</th>
       </tr>
     </thead>
     <tbody>
       {% for n in rows %}
-      <tr style="border-bottom:1px solid #f2f2f2;">
-        <td style="padding:10px;">
-          <a href="/support/announcements/{{ n.notice_id }}" target="_blank" style="text-decoration:none;color:#333;">
-            {{ n.title }}
-          </a>
-          <div style="font-size:12px;color:#777;">{{ n.category }}</div>
+      <tr>
+        <td>
+          <a class="link" href="/announcements/{{ n.notice_id }}" target="_blank">{{ n.title }}</a>
+          <div class="meta">{{ n.category }}</div>
         </td>
-        <td style="text-align:center;">{{ n.status }}</td>
-        <td style="text-align:center;">{{ n.is_pinned ? 'Y' : 'N' }}</td>
-        <td style="text-align:center;">{{ (n.published_at | date("YYYY-MM-DD HH:mm")) }}</td>
-        <td style="text-align:center;">{{ n.view_count }}</td>
-        <td style="text-align:center;">
-          <a href="/support/admin/announcements/{{ n.notice_id }}/edit"
-             style="padding:6px 8px;border:1px solid #ddd;border-radius:6px;text-decoration:none;">수정</a>
-          <form action="/support/admin/announcements/{{ n.notice_id }}/delete" method="post" style="display:inline;">
-            <button type="submit" style="padding:6px 8px;border:1px solid #f0a3a3;border-radius:6px;background:#ffe9e9;cursor:pointer;">삭제</button>
+        <td class="ta-center">{{ n.status }}</td>
+        <td class="ta-center">
+          {% if n.is_pinned %}Y{% else %}N{% endif %}
+        </td>
+        <td class="ta-center">{{ n.published_at | date('YYYY-MM-DD HH:mm') }}</td>
+        <td class="ta-center">{{ n.view_count }}</td>
+        <td class="ta-center">
+          <a class="btn btn-ghost" href="/admin/announcements/{{ n.notice_id }}/edit">수정</a>
+
+          <form class="inline" action="/admin/announcements/{{ n.notice_id }}/delete" method="post">
+            <button type="submit" class="btn btn-danger">삭제</button>
           </form>
+
           {% if n.status == 'PUBLISHED' %}
-            <form action="/support/admin/announcements/{{ n.notice_id }}/draft" method="post" style="display:inline;">
-              <button type="submit" style="padding:6px 8px;border:1px solid #ddd;border-radius:6px;cursor:pointer;">드래프트</button>
-            </form>
+          <form class="inline" action="/admin/announcements/{{ n.notice_id }}/draft" method="post">
+            <button type="submit" class="btn btn-ghost">드래프트</button>
+          </form>
           {% else %}
-            <form action="/support/admin/announcements/{{ n.notice_id }}/publish" method="post" style="display:inline;">
-              <button type="submit" style="padding:6px 8px;border:1px solid #0B3D91;border-radius:6px;background:#0B3D91;color:#fff;cursor:pointer;">발행</button>
-            </form>
+          <form class="inline" action="/admin/announcements/{{ n.notice_id }}/publish" method="post">
+            <button type="submit" class="btn btn-primary">발행</button>
+          </form>
           {% endif %}
         </td>
       </tr>
       {% else %}
-      <tr><td colspan="6" style="text-align:center;padding:20px;color:#777;">등록된 공지가 없습니다.</td></tr>
+      <tr>
+        <td colspan="6" class="empty">등록된 공지가 없습니다.</td>
+      </tr>
       {% endfor %}
     </tbody>
+
   </table>
 </main>
