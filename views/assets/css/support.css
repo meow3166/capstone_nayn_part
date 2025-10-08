@@ -1,57 +1,74 @@
-/* ================== 기본 초기화 ================== */
-* {
+/* ================== 공통(이 페이지 스코프) ================== */
+/* 전역 오염 방지: support-page 내부로 한정 */
+main.support-page * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Nanum Gothic", sans-serif;
+    /* font-family: "Nanum Gothic", sans-serif; */
 }
 
-/* 헤더 높이만큼 본문 아래로 내리기 (겹침 방지) */
-:root { --header-h: 35px; }   /* 헤더 높이에 맞게 조정 */
+/* 헤더 높이 변수(필요 시 사용) */
+:root {
+    --header-h: 35px;
+}
 
 /* ================== 메인 영역 ================== */
-main {
-    max-width: 1275px;
-    width: 100%;
+main.support-page {
+    width: min(1275px, 95%);
     margin: 0 auto;
 }
 
 /* 구분선 */
-.line1 {
-    border-top: 3px solid #7e4f37;
+main.support-page .line1 {
+    border-top: 3px solid #00106b;
     margin: 15px 0;
 }
 
 /* 제목 */
-.munhee {
+main.support-page .munhee {
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+    /* 좌측 정렬이므로 좌우 auto 제거 */
     display: block;
+    width: auto;
+    /* fit-content 제거 */
+    text-align: left;
+    /* 좌측 정렬 */
 }
 
-/* 안내 문단 */
-ul {
-    margin-bottom: 20px;
+/* 안내 문단(불릿/들여쓰기 전역 영향 차단) */
+main.support-page ul {
+    max-width: 900px;
+    margin: 8px 0 22px;
+    /* 좌측 정렬: 좌우 auto 제거 */
+    padding: 0;
+    list-style: none;
     color: #555;
     line-height: 1.6;
-    margin-left: 25px;
+    text-align: left;
+    /* 문단 좌정렬 고정 */
 }
+
 
 /* ================== 문의 카드 ================== */
-.container {
+main.support-page .container {
     display: flex;
-    justify-content: center;
     gap: 30px;
-    margin: 20px 0 40px;
+    justify-content: center;
+    /* 카드 내부 정렬 */
+    width: fit-content;
+    /* 카드 묶음 너비만큼만 */
+    margin: 20px auto 40px;
+    /* 묶음 자체를 화면 중앙 */
 }
 
-.container a {
+main.support-page .container a {
     text-decoration: none;
     color: inherit;
 }
 
-.card {
+main.support-page .card {
     width: 160px;
     height: 150px;
     border: 1px solid #ddd;
@@ -63,59 +80,60 @@ ul {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
-.card:hover {
+main.support-page .card:hover {
     border-color: #7e4f37;
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.card .icon {
+main.support-page .card .icon {
     font-size: 40px;
     margin-bottom: 15px;
     color: #333;
 }
 
-.card p {
+main.support-page .card p {
     font-size: 16px;
     font-weight: bold;
     color: #333;
 }
 
 /* ================== FAQ ================== */
-.faq-section {
-    max-width: 1275px;
+main.support-page .faq-section {
+    width: 100%;
     margin: 0 auto;
 }
 
-.faq-section h2 {
+main.support-page .faq-section h2 {
     font-size: 22px;
     margin-bottom: 10px;
 }
 
-.faq-item {
+main.support-page .faq-item {
     border-bottom: 1px solid #ddd;
     padding: 15px 10px;
     cursor: pointer;
 }
 
-.faq-question {
+main.support-page .faq-question {
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-size: 17px;
     font-weight: 500;
     color: #333;
-    min-height: 48px; /* 터치 영역 확보 */
+    min-height: 48px;
+    /* 터치 영역 확보 */
     gap: 8px;
 }
 
-.faq-toggle {
+main.support-page .faq-toggle {
     transform-origin: 50% 50%;
     font-size: 14px;
     transition: transform 0.2s ease;
 }
 
-.faq-answer {
+main.support-page .faq-answer {
     display: none;
     margin-top: 10px;
     padding: 10px;
@@ -127,38 +145,43 @@ ul {
 }
 
 /* 열림 상태 */
-.faq-item.open .faq-answer {
+main.support-page .faq-item.open .faq-answer {
     display: block;
 }
 
 /* ================== 반응형 ================== */
-
 /* 태블릿 이하 (<=768px) */
 @media (max-width: 768px) {
+    :root {
+        --header-h: 70px;
+    }
 
-    /* 헤더 높이 보정 */
-    :root { --header-h: 70px; }
+    main.support-page {
+        width: min(1275px, 94%);
+    }
 
-    ul {
-        margin-left: 16px;
-        margin-right: 0;
+    main.support-page ul {
+        margin: 8px auto 20px;
         line-height: 1.65;
     }
 
-    /* 카드: 한 줄에 3개 유지 */
-    .container {
+    /* 카드: 그리드 전환 */
+    main.support-page .container {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
         gap: 10px;
         margin: 16px 0 28px;
-        justify-items: center;
+        width: 100%;
+        /* fit-content 해제 */
     }
 
-    .container a {
+
+    main.support-page .container a {
         width: 100%;
     }
 
-    .card {
+    main.support-page .card {
         width: 100%;
         height: 120px;
         padding: 16px;
@@ -169,36 +192,34 @@ ul {
         text-align: center;
     }
 
-    .card .icon {
+    main.support-page .card .icon {
         font-size: 30px;
         margin-bottom: 8px;
     }
 
-    .card p {
+    main.support-page .card p {
         font-size: 14px;
     }
 
-    /* 구분선/제목 여백 조정 */
-    .line1 {
+    main.support-page .line1 {
         margin: 12px 0;
     }
 
-    .munhee {
+    main.support-page .munhee {
         font-size: 22px;
         margin-bottom: 6px;
     }
 
-    /* FAQ: 여백 축소 */
-    .faq-item {
+    main.support-page .faq-item {
         padding: 12px 6px;
     }
 
-    .faq-question {
+    main.support-page .faq-question {
         font-size: 16px;
         padding-right: 6px;
     }
 
-    .faq-answer {
+    main.support-page .faq-answer {
         font-size: 14px;
         padding: 10px;
         border-left-width: 3px;
@@ -207,25 +228,25 @@ ul {
 
 /* 작은 모바일(<=400px) */
 @media (max-width: 400px) {
-    main {
+    main.support-page {
         padding: 16px 12px;
     }
 
-    .card {
+    main.support-page .card {
         grid-template-columns: 40px 1fr;
         column-gap: 10px;
         padding: 14px;
     }
 
-    .card .icon {
+    main.support-page .card .icon {
         font-size: 28px;
     }
 
-    .faq-question {
+    main.support-page .faq-question {
         font-size: 15px;
     }
 
-    .faq-answer {
+    main.support-page .faq-answer {
         font-size: 13.5px;
     }
 }
