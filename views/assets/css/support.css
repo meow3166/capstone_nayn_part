@@ -230,6 +230,7 @@ main.support-page .faq-item.open .faq-answer {
 @media (max-width: 400px) {
     main.support-page {
         padding: 16px 12px;
+        margin: 10px;
     }
 
     main.support-page .card {

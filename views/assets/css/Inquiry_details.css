@@ -116,14 +116,15 @@ main.page-inquiry .inquiry-form button:hover {
    모바일 (≤768px)
    ================================ */
 @media screen and (max-width: 768px) {
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%;  }
 
   /* 모바일은 메뉴바(65px) 숨김 → 20px만 띄움 */
   main.page-inquiry {
     width: 100%;
-    margin-top: 15px;  /* ← 핵심 수정 */
+    margin-top: 5px;  /* ← 핵심 수정 */
     padding: 0 16px 40px;
     box-sizing: border-box;
+    margin: 10px;
   }
 
   main.page-inquiry .inquiry-form {
