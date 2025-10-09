@@ -43,12 +43,8 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
   el.style.position = "relative"
 })();
 
-/* 카카오 지도 붙이는 예시
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KEY&libraries=services"></script>
-const map = new kakao.maps.Map(document.getElementById('mapInner'), {
-  center: new kakao.maps.LatLng(37.515, 127.073), level: 4
-});
-*/
+/* 카카오 지도 붙이는 예시 */
+
 
 // ===== 모달(fab) =====
 (() => {

@@ -1,3 +1,4 @@
+/* ===================== 공통 기본 ===================== */
 :root {
   --brand: #0B3D91;
   --ink: #222;
@@ -7,9 +8,13 @@
   --chip: #f7f7f8;
   --panel: #fafafa;
   --radius: 14px;
+
+  /* 헤더 + 메뉴 높이 (PC 기준) */
+  --offset-top: 145px;
+  /* 모바일 검색바 높이 */
+  --searchH: 56px;
 }
 
-/* Base */
 * {
   box-sizing: border-box;
 }
@@ -17,15 +22,12 @@
 html,
 body {
   height: 100%;
-}
-
-body {
   margin: 0;
   color: var(--ink);
   background: var(--bg);
 }
 
-/* 공통 컴포넌트 기본 */
+/* ===================== 공통 컴포넌트 ===================== */
 .rail {
   border-right: 1px solid var(--line);
   background: #fff;
@@ -64,12 +66,6 @@ body {
   display: block;
 }
 
-.rail-copy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
 .rail-copy strong {
   font-size: 12px;
   color: #333;
@@ -84,10 +80,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow: hidden;
 }
 
-/* 검색바 */
 .search {
   position: relative;
 }
@@ -140,15 +134,6 @@ body {
   cursor: pointer;
 }
 
-.hint {
-  font-size: 12px;
-  color: #666;
-  padding: 8px 10px;
-  background: #fff;
-  border-radius: 8px;
-}
-
-/* 리스트 */
 .list {
   overflow: auto;
   padding-right: 4px;
@@ -205,11 +190,18 @@ body {
   position: relative;
 }
 
+#map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
 .map-inner {
   height: 100%;
 }
 
-/* 모바일 칩 기본(공통에서는 숨김) */
+/* 칩 공통 */
 .chips {
   display: none;
 }
@@ -225,20 +217,253 @@ body {
   white-space: nowrap;
 }
 
-
-
-/* 검색 input의 기본 X(취소 버튼) 숨기기 - 크롬/엣지/사파리 */
+/* 기본 X버튼 숨김 */
 .search input::-webkit-search-cancel-button {
   -webkit-appearance: none;
   appearance: none;
   display: none;
 }
 
-/* (구) Edge/IE 대응 */
 .search input::-ms-clear {
   display: none;
   width: 0;
   height: 0;
 }
 
+/* ===================== 데스크탑 (≥769px) ===================== */
+@media (min-width: 769px) {
+  .page {
+    height: calc(100dvh - var(--offset-top));
+    display: grid;
+    grid-template-columns: 92px 320px 1fr;
+    grid-template-rows: 1fr;
+    max-width: 1520px;
+    margin: 0 auto;
+    isolation: isolate;
+    /* z-index 정리 */
+  }
 
+  .rail {
+    grid-column: 1;
+    grid-row: 1;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .panel {
+    grid-column: 2;
+    grid-row: 1;
+    overflow-y: auto;
+    z-index: 20;
+    background: var(--panel);
+  }
+
+  #map {
+    grid-column: 3;
+    grid-row: 1;
+    position: relative;
+    z-index: 1;
+    min-height: calc(100dvh - var(--offset-top));
+  }
+
+  /* 모바일 전용 요소 숨김 */
+  #map .m-overlay {
+    display: none !important;
+  }
+
+  .chips {
+    display: none !important;
+  }
+}
+
+/* ===================== 모바일 (≤768px) ===================== */
+@media (max-width: 768px) {
+  .page {
+    height: calc(100% - 58px);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  #map {
+    grid-row: 1;
+    position: relative !important;
+    min-height: calc(100dvh - 58px) !important;
+    z-index: 1 !important;
+  }
+
+  /* 오버레이: 지도 전체 덮음 */
+  #map .m-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* 내부만 클릭 허용 */
+  #map .m-overlay .panel,
+  #map .m-overlay .chips {
+    pointer-events: auto !important;
+  }
+
+  /* 검색바 패널 */
+  #map .m-overlay .panel {
+    position: absolute !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: 12px !important;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* 검색창 크기 */
+  .search input {
+    height: var(--searchH) !important;
+    padding: 0 48px !important;
+    border-radius: 12px !important;
+    font-size: 16px !important;
+  }
+
+  .icon-search {
+    left: 16px !important;
+    width: 22px !important;
+    height: 22px !important;
+    border: 2px solid #333 !important;
+  }
+
+  .icon-search:after {
+    right: -7px !important;
+    bottom: -6px !important;
+    width: 11px !important;
+    height: 2px !important;
+    background: #333 !important;
+    transform: rotate(45deg);
+  }
+
+  .btn-clear {
+    right: 8px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 50% !important;
+    font-size: 22px !important;
+    border: 1px solid var(--line) !important;
+    background: #fff !important;
+  }
+
+  /* 칩 */
+  #map .m-overlay .chips {
+    position: absolute !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: calc(12px + var(--searchH) + 12px) !important;
+    display: flex !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    background: transparent !important;
+  }
+
+  .chip {
+    width: 96px !important;
+    aspect-ratio: 1 / 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    background: #fff !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .08) !important;
+    font-size: 13px !important;
+  }
+
+  .chip img {
+    width: 36px !important;
+    height: 36px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+}
+
+/* 1) 헤더/메뉴 높이 변수: 실제 값에 맞게 숫자만 바꿔도 됨 */
+:root {
+  /* .header_top 높이 */
+  --menu-h: 85px;
+}
+
+/* 2) 본문 시작점을 헤더 아래로 내리기 (헤더 안 건드림) */
+body {
+  /* padding-top: var(--offset-top); */
+}
+
+/* 3) 위치페이지 레이아웃 높이 계산 */
+.page {
+  height: calc(100dvh - var(--offset-top));
+  isolation: isolate;
+  /* 내부 z-index 충돌 방지 */
+}
+
+/* 4) 스크롤되는 3영역(sticky 기준은 0으로) */
+.rail,
+.panel,
+#map {
+  position: sticky;
+  top: 0;
+  /* header를 피하기 위해 body에 padding을 줬으니 0이 가장 안전 */
+}
+
+/* 5) 지도는 항상 뒤, 패널/레일이 위 (헤더는 더 위라 안 가려짐) */
+#map {
+  z-index: 1;
+}
+
+.panel,
+.rail {
+  z-index: 2;
+}
+
+
+/* 7) 모바일에서 지도 오버레이 사용하는 경우도 헤더를 침범하지 않도록 */
+@media (max-width: 768px) {
+  .page {
+    height: calc(100dvh - var(--offset-top));
+  }
+
+  #map {
+    position: relative;
+    /* 기준점 */
+    min-height: calc(100dvh - var(--offset-top));
+    z-index: 1;
+  }
+
+  #map .m-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  #map .m-overlay .panel,
+  #map .m-overlay .chips {
+    pointer-events: auto;
+  }
+}
+
+/* 메뉴(dropdown)가 지도보다 위로 뜨게 보강만 함 */
+header,
+.header_top,
+.header_bottom,
+nav,
+.mainmenu,
+.mainmenu .sub {
+  z-index: 9999 !important;
+  /* 지도 위로 강제 */
+  position: relative;
+  /* 필요시 기준만 줌 (기존 값 유지 가능) */
+}

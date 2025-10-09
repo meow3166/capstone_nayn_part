@@ -21,14 +21,15 @@
   grid-row: 1;
   min-height: calc(100dvh - 58px);
   position: relative;
-  z-index: 1;                 /* 지도는 아래 */
+  /* 지도는 아래 */
+  /* z-index: 1;                  */
 }
 
 /* 오버레이 래퍼: 지도 전체 덮음 */
 #map .overlay{
   position: absolute;
   inset: 0;
-  z-index: 20;
+  /* z-index: 20; */
   pointer-events: none;       /* 기본은 통과 */
 }
 
@@ -101,7 +102,7 @@
   padding: 0;
   background: transparent;
   overflow: auto;             /* 가로 스크롤 허용 */
-  z-index: 21;
+  /* z-index: 21; */
 }
 
 /* 정사각형 칩 */
@@ -140,7 +141,7 @@
 #map .m-overlay{
   position: absolute !important;
   inset: 0 !important;               /* 지도 전체 덮기 */
-  z-index: 100 !important;
+  /* z-index: 100 !important; */
   pointer-events: none !important;   /* 기본은 통과 */
 }
 
@@ -195,7 +196,7 @@
   padding: 0 !important;
   background: transparent !important;
   overflow: auto !important;         /* 가로 스크롤 */
-  z-index: 101 !important;
+  /* z-index: 101 !important; */
 }
 
 /* 정사각 칩 + 아이콘 크기 */
