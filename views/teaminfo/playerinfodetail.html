@@ -1,0 +1,60 @@
+{%include "include/header.html"%}
+
+<main>
+    <div class="playerdetail">
+        <div class="playerdetail_top">
+
+            <div class="playerpicture">
+                <img id="playerImage" src="/assets/img/{{ p.position_eng }}/{{ p.image_file }}">
+            </div>
+            <div class="playercard">
+                <div class="meta-top">
+                    <span class="number">{{ p.back_number }}</span>
+                    <span class="position">{{ p.position }}</span>
+                    <span class="hand">{{ p.hand }}</span>
+                </div>
+
+                <h1 class="player-name">{{ p.name }}</h1>
+
+                <div class="meta-line">
+                    <span>{{ p.birthdate }}</span>
+                    {% if p.height %}<span class="dot">·</span><span>{{ p.height }}cm</span>{% endif %}
+                    {% if p.weight %}<span class="dot">·</span><span>{{ p.weight }}kg</span>{% endif %}
+                </div>
+
+
+                {% if p.joining_year %}
+                <div class="meta-sub">{{ p.joining_year }}년 입단</div>
+                {% endif %}
+            </div>
+
+
+        </div>
+
+        <div class="playerdetail_bottom">
+            <table>
+                <tr>
+                    <td class="brief">{{ p.brief_description }}</td>
+                </tr>
+                <tr>
+                    <td class="detailed">{{ p.detailed_description }}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+
+
+</main>
+<footer></footer>
+<!-- 메뉴바 js -->
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+<!-- 챗봇 엔터 키 이벤트 js -->
+<!-- <script src="./assets/js/chat.js"></script> -->
+
+</body>
+
+</html>

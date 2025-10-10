@@ -1,0 +1,834 @@
+{%include "include/header.html"%}
+<main>
+    <div class="scoreboard">
+        <div class="result">
+            <p> 경기결과 </p>
+        </div>
+        <p class="review"> 리뷰 </p>
+        <div class="result_table">
+            <table border="1">
+                <colgroup>
+                    <col class="col-1"> <!-- 1열: 승/패 -->
+                    <col class="col-2"> <!-- 2열: Team A/B -->
+                    <col class="col-rest" span="16"> <!-- 3~18열: 모두 동일 너비 -->
+                </colgroup>
+
+                <tr>
+                    <td colspan="2" class="team">Team</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>R</td>
+                    <td>H</td>
+                    <td>E</td>
+                    <td>B</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+
+        </div>
+        <div class="result_table_bottom">
+            <table border="1">
+                <tr>
+                    <td>결승타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>홈런</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3루타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2루타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>실책</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>도루</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>주루사</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>병살타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>심판</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="teamA_hitter_result">
+            <p> TeamA 타자 기록 </p>
+            <table border="1">
+                <tr>
+                    <td colspan="3">선수명</td>
+                    <td>타수</td>
+                    <td>안타</td>
+                    <td>타점</td>
+                    <td>득점</td>
+                    <td>타율</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+        </div> <!-- teamA_hitter_result -->
+
+
+        <div class="teamB_hitter_result">
+            <p> TeamB 타자 기록 </p>
+            <table border="1">
+                <tr>
+                    <td colspan="3">선수명</td>
+                    <td>타수</td>
+                    <td>안타</td>
+                    <td>타점</td>
+                    <td>득점</td>
+                    <td>타율</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamB_hitter_result -->
+
+
+        <div class="teamA_pitcher_result">
+            <p> TeamA 투수 기록 </p>
+            <table border="1">
+                <tr>
+                    <td>선수명</td>
+                    <td>등판</td>
+                    <td>결과</td>
+                    <td>승</td>
+                    <td>패</td>
+                    <td>세</td>
+                    <td>이닝</td>
+                    <td>타자</td>
+                    <td>투구수</td>
+                    <td>타수</td>
+                    <td>피안타</td>
+                    <td>홈런</td>
+                    <td>4사구</td>
+                    <td>삼진</td>
+                    <td>실책</td>
+                    <td>자책</td>
+                    <td>ERA</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="6">Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamA_pitcher_result -->
+
+
+        <div class="teamB_pitcher_result">
+            <p> TeamB 투수 기록 </p>
+            <table border="1">
+                <tr>
+                    <td>선수명</td>
+                    <td>등판</td>
+                    <td>결과</td>
+                    <td>승</td>
+                    <td>패</td>
+                    <td>세</td>
+                    <td>이닝</td>
+                    <td>타자</td>
+                    <td>투구수</td>
+                    <td>타수</td>
+                    <td>피안타</td>
+                    <td>홈런</td>
+                    <td>4사구</td>
+                    <td>삼진</td>
+                    <td>실책</td>
+                    <td>자책</td>
+                    <td>ERA</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="6">Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamB_pitcher_result -->
+    </div>
+
+</main>
+<footer></footer>
+<script>
+    // function toggleMenu() {
+    //     // document.querySelector(".member").classList.toggle("show");
+    // }
+    const hamburger = document.querySelector('.hamburger');
+    const mainmenu = document.querySelector('.mainmenu');
+
+    hamburger.addEventListener('click', () => {
+        mainmenu.classList.toggle('active');
+    });
+
+    // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
+    document.querySelectorAll('.mainmenu > li > a').forEach(item => {
+        item.addEventListener('click', e => {
+            if (window.innerWidth <= 768) { // 모바일일 때만
+                e.preventDefault(); // 링크 이동 방지
+                const parentLi = item.parentElement;
+
+                // 다른 li의 open 클래스 제거
+                document.querySelectorAll('.mainmenu > li').forEach(li => {
+                    if (li !== parentLi) {
+                        li.classList.remove('open');
+                    }
+                });
+
+                // 클릭한 li toggle
+                parentLi.classList.toggle('open');
+            }
+        });
+    });
+
+
+    // 여기가 시발 개문제
+
+    (function () {
+        // ---------- 작은 유틸 ----------
+        const $ = (s, r = document) => r.querySelector(s);
+        const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+        // 안전 접근자
+        function pick(o, p) { try { return p.split('.').reduce((a, k) => a?.[k], o); } catch { return undefined; } }
+
+        // ---------- 서버 데이터 접근 ----------
+        function getScoreTable(d) { return d.scoreTable ?? d.payload?.scoreTable; }
+        function getSummaryTable(d) { return d.summaryTable ?? d.payload?.summaryTable; }
+        function getHitterA(d) { return pick(d, 'tables.hitterA.rows') ?? pick(d, 'payload.tables.hitterA.rows'); }
+        function getHitterB(d) { return pick(d, 'tables.hitterB.rows') ?? pick(d, 'payload.tables.hitterB.rows'); }
+        function getPitcherA(d) { return pick(d, 'tables.pitcherA.rows') ?? pick(d, 'payload.tables.pitcherA.rows'); }
+        function getPitcherB(d) { return pick(d, 'tables.pitcherB.rows') ?? pick(d, 'payload.tables.pitcherB.rows'); }
+
+        // ---------- 팀명: payload 우선, 없으면 스코어보드에서 추출 ----------
+        function getTeamNames(data) {
+            let A = data?.teamAName || '';
+            let B = data?.teamBName || '';
+            if (!A || !B) {
+                const tbl = $('.result_table table');
+                if (tbl) {
+                    const trs = qsa('tr', tbl);
+                    // 2행 2열 / 3행 2열
+                    A = A || (trs[1]?.cells?.[1]?.textContent || '').trim();
+                    B = B || (trs[2]?.cells?.[1]?.textContent || '').trim();
+                }
+            }
+            return { A: A || 'TeamA', B: B || 'TeamB' };
+        }
+
+        // ---------- 공통: 헤더 행 수 자동 감지(연속 th) ----------
+        function headerRowsCount(table) {
+            if (!table) return 0;
+            if (table.tHead && table.tHead.rows.length) return table.tHead.rows.length;
+            const trs = qsa('tr', table);
+            let cnt = 0;
+            for (const tr of trs) { if (tr.querySelector('th')) cnt++; else break; }
+            return cnt;
+        }
+
+        // ---------- 정확 매핑 렌더러(구조 불변, 데이터영역만 1:1 채우기) ----------
+        // headerRows: 데이터 시작 행 인덱스(보통 1)
+        function fillMatrixExact(table, matrix, headerRows = 1) {
+            if (!table || !Array.isArray(matrix)) return;
+            const trs = qsa('tr', table);
+            const dataTrs = trs.slice(headerRows);
+            const R = Math.min(dataTrs.length, matrix.length);
+            for (let r = 0; r < R; r++) {
+                const tr = dataTrs[r];
+                const cells = Array.from(tr.cells);          // td/th 모두
+                const row = matrix[r] || [];
+                const C = Math.min(cells.length, row.length);
+                for (let c = 0; c < C; c++) {
+                    cells[c].textContent = (row[c] ?? '').toString();
+                }
+                // 남는 셀/열은 그대로 둠(스타일/colspan 보존)
+            }
+        }
+
+        // ---------- 요약표: 키-값 쌍 1:1로 순서 채우기(키도 덮어씀) ----------
+        // (키 매칭이 아니라 "그대로 나오게" 하려면 순서 채우기가 가장 확실)
+        function fillKVSequential(table, pairs, headerRows = 0) {
+            if (!table || !Array.isArray(pairs)) return;
+            const trs = qsa('tr', table).slice(headerRows);
+            const N = Math.min(trs.length, pairs.length);
+            for (let i = 0; i < N; i++) {
+                const tr = trs[i];
+                const cells = Array.from(tr.cells);
+                // 최소 2칸 필요
+                if (cells.length >= 2) {
+                    const [k, v] = pairs[i] || [];
+                    cells[0].textContent = (k ?? '').toString();
+                    cells[1].textContent = (v ?? '').toString();
+                }
+            }
+        }
+
+        // 헤더 행(연속 th) 개수 자동 감지
+        function headerRowsCount(table) {
+            if (!table) return 0;
+            if (table.tHead && table.tHead.rows.length) return table.tHead.rows.length;
+            const trs = Array.from(table.querySelectorAll('tr'));
+            let cnt = 0; for (const tr of trs) { if (tr.querySelector('th')) cnt++; else break; }
+            return cnt;
+        }
+
+        // 마지막 행이 합계/Total인지 판별
+        function isTotalRow(tr) {
+            if (!tr) return false;
+            const first = tr.cells?.[0];
+            if (!first) return false;
+            const t = (first.textContent || '').trim().toLowerCase();
+            return (
+                t === 'total' || t === '합계' || t === '계' ||
+                first.classList?.contains('total') || tr.dataset?.total === 'true'
+            );
+        }
+
+        // 데이터 행을 rowsNeeded 수에 맞게 미리 늘림 (합계행은 맨 끝 유지)
+        function ensureDataRowCapacity(table, rowsNeeded, headerRows = 1) {
+            if (!table) return;
+            const trs = Array.from(table.querySelectorAll('tr'));
+            const hasTotal = isTotalRow(trs[trs.length - 1]);
+            const totalTr = hasTotal ? trs[trs.length - 1] : null;
+
+            // 현재 데이터 행들(헤더 제외, 합계 제외)
+            const dataTrs = hasTotal
+                ? trs.slice(headerRows, trs.length - 1)
+                : trs.slice(headerRows);
+
+            let current = dataTrs.length;
+            if (current >= rowsNeeded) return;
+
+            // 복제 템플릿: 데이터 구간의 마지막 행이 있으면 그걸, 없으면 헤더 바로 아래 첫 행을 기준
+            const template = dataTrs[dataTrs.length - 1] || trs[headerRows];
+            if (!template) return;
+
+            const insertBeforeNode = totalTr || null; // 합계 있으면 그 앞에, 없으면 맨 끝에
+            const toAdd = rowsNeeded - current;
+
+            for (let i = 0; i < toAdd; i++) {
+                const clone = template.cloneNode(true);
+                // 텍스트만 비움(스타일/colspan/width 그대로)
+                Array.from(clone.cells).forEach(td => td.textContent = '');
+                table.tBodies?.[0]
+                    ? table.tBodies[0].insertBefore(clone, insertBeforeNode)
+                    : table.insertBefore(clone, insertBeforeNode);
+            }
+        }
+
+        // ---------- 스코어보드: 팀명 반영 + 행 전체 매핑 ----------
+        function fillScoreboard(table, scoreRows, teamA, teamB) {
+            if (!table) return;
+            const hdr = headerRowsCount(table);        // 보통 1
+            // 팀명 반영: 2행 2열 / 3행 2열
+            const trs = qsa('tr', table);
+            if (trs[1]?.cells?.[1]) trs[1].cells[1].textContent = teamA;
+            if (trs[2]?.cells?.[1]) trs[2].cells[1].textContent = teamB;
+
+            // 점수 행 채우기(행/열 1:1)
+            fillMatrixExact(table, Array.isArray(scoreRows) ? scoreRows : [], hdr);
+        }
+
+        // ---------- 섹션 라벨(p태그) 업데이트 ----------
+        function setSectionLabels(teamA, teamB) {
+            const set = (sel, team, suffix) => {
+                const p = $(`${sel} p`);
+                if (p) p.textContent = `${team} ${suffix}`;
+            };
+            set('.teamA_hitter_result', teamA, '타자 기록');
+            set('.teamB_hitter_result', teamB, '타자 기록');
+            set('.teamA_pitcher_result', teamA, '투수 기록');
+            set('.teamB_pitcher_result', teamB, '투수 기록');
+        }
+
+        // ---- helpers: Total 인지 판정/분리/찾기 ----
+        function isTotalLabel(s) {
+            const t = String(s ?? '').trim().toLowerCase();
+            return t === 'total' || t === '합계' || t === '계';
+        }
+        function splitDataAndTotal(matrix) {
+            if (!Array.isArray(matrix) || !matrix.length) return { rows: [], total: null };
+            const last = matrix[matrix.length - 1];
+            if (Array.isArray(last) && isTotalLabel(last[0])) {
+                return { rows: matrix.slice(0, -1), total: last };
+            }
+            return { rows: matrix, total: null };
+        }
+        function findDomTotalRow(table) {
+            const trs = Array.from(table.querySelectorAll('tr'));
+            return trs.find(tr => {
+                const first = tr.cells?.[0];
+                const t = (first?.textContent || '').trim().toLowerCase();
+                return isTotalLabel(t) || first?.classList?.contains('total') || tr.dataset?.total === 'true';
+            }) || null;
+        }
+        function fillRowCells(tr, row) {
+            if (!tr || !Array.isArray(row)) return;
+            const cells = Array.from(tr.cells);
+            const n = Math.min(cells.length, row.length);
+            for (let i = 0; i < n; i++) cells[i].textContent = (row[i] ?? '').toString();
+        }
+
+        function renderStatTable(table, matrix, headerRows = 1) {
+            if (!table) return;
+            const { rows, total } = splitDataAndTotal(matrix || []);
+
+            // 1) 데이터 행 수를 rows.length 에 맞춰 먼저 늘림 (합계 제외)
+            ensureDataRowCapacity(table, rows.length, headerRows);
+
+            // 2) 데이터 영역 채우기 (구조 불변)
+            fillMatrixExact(table, rows, headerRows);
+
+            // 3) 합계가 있으면 DOM의 Total 전용 행에만 채움
+            if (total) {
+                const totalTr = findDomTotalRow(table);
+                if (totalTr) fillRowCells(totalTr, total);
+            }
+        }
+
+        // ---------- 메인 흐름 ----------
+        async function loadGame() {
+            const id = new URLSearchParams(location.search).get('id');
+            if (!id) return;
+
+            let data = {};
+            try {
+                const res = await fetch(`/api/game/${encodeURIComponent(id)}`, { cache: 'no-store' });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                data = await res.json();
+            } catch (e) {
+                console.error(e);
+                return;
+            }
+
+            // 팀명 정하기 → p 라벨 + 스코어보드 2열에 반영
+            const { A: teamA, B: teamB } = getTeamNames(data);
+            setSectionLabels(teamA, teamB);
+
+            // 상단 스코어보드 (헤더 1행 가정)
+            const scoreTbl = $('.result_table table');
+            if (scoreTbl) fillScoreboard(scoreTbl, getScoreTable(data), teamA, teamB);
+
+            // 하단 요약표(순서대로 채움; 헤더 없다고 가정. 있으면 headerRows=1로 바꿔)
+            const sumTbl = $('.result_table_bottom table');
+            if (sumTbl) fillKVSequential(sumTbl, getSummaryTable(data) || [], 0);
+
+            // 아래 4개 표: 헤더 1행 가정, 행/열 1:1 덮어쓰기
+            const ha = getHitterA(data);
+            const hb = getHitterB(data);
+            const pa = getPitcherA(data);
+            const pb = getPitcherB(data);
+
+            const tHA = document.querySelector('.teamA_hitter_result table');
+            const tHB = document.querySelector('.teamB_hitter_result table');
+            const tPA = document.querySelector('.teamA_pitcher_result table');
+            const tPB = document.querySelector('.teamB_pitcher_result table');
+
+            if (tHA && Array.isArray(ha)) renderStatTable(tHA, ha, 1);
+            if (tHB && Array.isArray(hb)) renderStatTable(tHB, hb, 1);
+            if (tPA && Array.isArray(pa)) renderStatTable(tPA, pa, 1);
+            if (tPB && Array.isArray(pb)) renderStatTable(tPB, pb, 1);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGame);
+    })();
+
+</script>
+
+<div id="user-error" style="margin:8px 0;"></div>
+
+</body>
+
+</html>

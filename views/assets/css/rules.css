@@ -1,0 +1,274 @@
+/* 공통 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  /* 헤더 고정 확인용 최소 높이 지정 */
+  min-height: 110vh;
+}
+
+/* PC 버전 */
+@media (min-width: 769px) {
+
+
+  main {
+    margin: 0 235px;
+    /* background-color: red; */
+    height: auto;
+  }
+
+  .rules_title {
+    margin-top: 50px;
+    /* background-color: antiquewhite; */
+  }
+
+  .rules_title p {
+    font-size: 32px;
+    font-weight: bold;
+    display: inline;
+    padding-bottom: 100px;
+  }
+
+
+  .rules_gicho {
+    margin-top: 50px;
+    /* background-color: wheat; */
+  }
+
+  .rules_gicho p:first-child {
+    font-size: 28px;
+    font-weight: bold;
+    /* background-color: blueviolet; */
+    padding-bottom: 10px;
+  }
+
+  .rules_gicho p:last-child {
+    /* font-weight: bold; */
+    font-size: 22px;
+  }
+
+
+
+  .rules_list {
+    /* background-color: aqua; */
+    margin-top: 50px;
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .rules_list p {
+    font-size: 28px;
+    font-weight: bold;
+    /* background-color: aquamarine; */
+    margin-bottom: 10px;
+  }
+
+  .rules_list ul {
+    margin-left: 30px;
+    /* font-weight: bold; */
+    font-size: 22px;
+  }
+
+
+
+  .rules_position {
+    margin-top: 50px;
+    height: auto;
+  }
+
+  .rules_position>.position_text {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /* background-color: aqua; */
+    width: 100%;
+  }
+
+  .field_all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* 세로 중앙 */
+    gap: 20px;
+    flex-wrap: wrap;
+
+  }
+
+  .field_img {
+    flex: 1 1 40%;
+    /* 너비 비율 (40%) */
+    /* background-color: aquamarine; */
+    position: relative;
+    aspect-ratio: 1/1;
+  }
+
+  .field_img img {
+    width: 100%;
+    height: auto;
+    /* object-fit: cover;   */
+    position: absolute;
+    inset: 0;
+
+    object-fit: cover;
+    display: block;
+  }
+
+  .field_info {
+    flex: 1 1 40%;
+    /* 너비 비율 (50%) */
+    /* background-color: aquamarine; */
+  }
+
+  .field_info table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    height: 70%
+  }
+
+  .field_info td {
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    line-height: 1.5;
+  }
+
+  .field_info table tr>td:first-child {
+    text-align: center;
+    font-weight: bold;
+    width: 30%;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  main {
+    margin: 0 20px;
+    /* background-color: red; */
+    height: auto;
+  }
+
+  .rules_title {
+    margin-top: 20px;
+    background-color: antiquewhite;
+  }
+
+  .rules_title p {
+    font-size: 32px;
+    font-weight: bold;
+    display: inline;
+    padding-bottom: 100px;
+  }
+
+
+  .rules_gicho {
+    margin-top: 30px;
+    /* background-color: wheat; */
+  }
+
+  .rules_gicho p:first-child {
+    font-size: 25px;
+    font-weight: bold;
+    /* background-color: blueviolet; */
+    padding-bottom: 10px;
+  }
+
+  .rules_gicho p:last-child {
+    /* font-weight: bold; */
+    font-size: 16px;
+  }
+
+
+  .rules_list {
+    /* background-color: aqua; */
+    margin-top: 40px;
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .rules_list p {
+    font-size: 25px;
+    font-weight: bold;
+    /* background-color: aquamarine; */
+    margin-bottom: 10px;
+  }
+
+  .rules_list ul {
+    margin-left: 15px;
+    /* font-weight: bold; */
+    font-size: 16px;
+    
+  }
+
+
+  .rules_position {
+    margin-top: 40px;
+    height: auto;
+  }
+
+  .rules_position>.position_text {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    /* background-color: aqua; */
+    width: 100%;
+  }
+
+
+
+
+
+  /*사진, 표 */
+  .field_all {
+    
+    justify-content: center;
+    align-items: center;
+    /* 세로 중앙 */
+    
+  }
+
+  .field_img {
+    /* background-color: blue; */
+    width: 100%;
+    display: block;
+    
+  }
+
+  .field_img img {
+    width: 100%;
+    height: auto;
+    /* object-fit: cover;   */
+    
+
+    
+    display: block;
+  }
+
+  /* .field_info {
+    
+    /* background-color: aquamarine; 
+  } */
+
+  .field_info table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    
+  }
+
+  .field_info td {
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+    line-height: 1.5;
+  }
+
+  .field_info table tr>td:first-child {
+    text-align: center;
+    font-weight: bold;
+    width: 28%;
+  }
+}

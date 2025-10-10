@@ -1,0 +1,212 @@
+{%include "include/header.html"%}
+<main>
+    <div class="hitterInfo">
+
+        <div class="InFielder">
+
+            <div class="inFielderPlayer">
+                <p id="inside">코칭스태프</p>
+
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=28">
+                    <img src="/assets/img/coach/jinman.jpg" alt="박진만">
+                    <div class="info">
+                        <p>70 박진만</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=29">
+                    <img src="/assets/img/coach/ilun.jpg" alt="최일언">
+                    <div class="info">
+                        <p>81 최일언</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=30">
+                    <img src="/assets/img/coach/sukjin.jpg" alt="박석진">
+                    <div class="info">
+                        <p>89 박석진</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=31">
+                    <img src="/assets/img/coach/jinyoung.jpg" alt="이진영">
+                    <div class="info">
+                        <p>85 이진영</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=32">
+                    <img src="/assets/img/coach/byunggon.jpg" alt="정병곤">
+                    <div class="info">
+                        <p>92 정병곤</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=33">
+                    <img src="/assets/img/coach/sangbyung.jpg" alt="채상병">
+                    <div class="info">
+                        <p>98 채상병</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=34">
+                    <img src="/assets/img/coach/jongwook.jpg" alt="이종욱">
+                    <div class="info">
+                        <p>93 이종욱</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=35">
+                    <img src="/assets/img/coach/jooin.jpg" alt="손주인">
+                    <div class="info">
+                        <p>76 손주인</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=36">
+                    <img src="/assets/img/coach/hani.jpg" alt="박한이">
+                    <div class="info">
+                        <p>74 박한이</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=37">
+                    <img src="/assets/img/coach/junhwan.jpg" alt="허준환">
+                    <div class="info">
+                        <p>96 허준환</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=38">
+                    <img src="/assets/img/coach/daehyun.jpg" alt="정대현">
+                    <div class="info">
+                        <p>73 정대현</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=39">
+                    <img src="/assets/img/coach/youngsik.jpg" alt="강영식">
+                    <div class="info">
+                        <p>84 강영식</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=40">
+                    <img src="/assets/img/coach/youngsub.jpg" alt="배영섭">
+                    <div class="info">
+                        <p>77 배영섭</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=41">
+                    <img src="/assets/img/coach/chando.jpg" alt="박찬도">
+                    <div class="info">
+                        <p>90 박찬도</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=42">
+                    <img src="/assets/img/coach/myunggoo.jpg" alt="강명구">
+                    <div class="info">
+                        <p>97 강명구</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="player">
+                <a href="/playerinfodetail?player_id=43">
+                    <img src="/assets/img/coach/mintae.jpg" alt="정민태">
+                    <div class="info">
+                        <p>79 정민태</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+        <div class="go_up">
+            <button type="button" class="btn-go-up" data-scroll-to="#inside" aria-label="내야수로 이동">▲</button>
+        </div>
+    </div>
+
+
+</main>
+<footer></footer>
+<!-- 메뉴바 js -->
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+<!-- 챗봇 엔터 키 이벤트 js -->
+<!-- <script src="./assets/js/chat.js"></script> -->
+<script>
+
+
+    // 외야수 버튼 눌러서 아래로 스크롤
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-scroll-to]');
+        if (!btn) return;
+
+        const selector = btn.getAttribute('data-scroll-to');
+        const target = document.querySelector(selector);
+        if (!target) return;
+
+        // 방법 A: scrollIntoView (간단)
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+
+
+    // 맨 아래 화살표 눌러서 맨 위로
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-scroll-to]');
+        if (!btn) return;
+
+        const selector = btn.getAttribute('data-scroll-to');
+        const target = document.querySelector(selector);
+        if (!target) return;
+
+        // #inside일 경우 → 무조건 맨 위로
+        if (selector === '#inside') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+
+
+
+</script>
+
+</body>
+
+</html>

@@ -58,19 +58,20 @@ app.get('/api/me', (req, res) => {
   res.json({ loggedIn, user: loggedIn ? req.session.user : null });
 });
 
-// 접근제어: 관리자 전용 페이지 보호
+
+// 접근제어: 관리자 전용 페이지 보호 (단일 정의)
 function requireLogin(req, res, next) {
-  if (req.session?.user) return next();
-  req.session.returnTo = req.originalUrl;
-  return res.send("<script>alert('관리자 전용 페이지입니다. 로그인 후 이용하세요.');location.href='/login';</script>");
-}
+   if (req.session?.user) return next();
+   req.session.returnTo = req.originalUrl;
+   return res.send("<script>alert('관리자 전용 페이지입니다. 로그인 후 이용하세요.');location.href='/login';</script>");
+ }
+ 
 
-// 세션 상태 확인(API)
+// 세션 상태 확인(API) (단일 정의)
 app.get('/api/me', (req, res) => {
-  const loggedIn = !!req.session?.user;
-  res.json({ loggedIn, user: loggedIn ? req.session.user : null });
-});
-
+   const loggedIn = !!req.session?.user;
+   res.json({ loggedIn, user: loggedIn ? req.session.user : null });
+ });
 // --------------------- 관리자 Router 시작 ---------------------
 const admin = express.Router();
 admin.use(requireLogin);
@@ -179,8 +180,10 @@ admin.post('/announcements/:id/delete', async (req, res, next) => {
   } catch (e) { next(e); }
 });
 
-/** 라인업 등록/관리 페이지 (파일명 유지: views/admin/admin_game_player_lineup.html) */
+
+/** 라인업 등록/관리 페이지 */
 admin.get('/lineup/manager', (req, res) => {
+  // 실제 존재하는 템플릿명으로 하나만 사용
   res.render('admin/admin_game_player_lineup.html');
 });
 
@@ -234,6 +237,30 @@ app.get(["/index", "/index.html"], (req, res) => res.redirect(301, "/"));
 app.get(["/location", "/location.html"], (req, res) => {
   res.render("location/location.html");
 });
+app.get(["/location_come", "/location_come.html"], (req, res) => {
+  res.render("location/location_come.html");
+});
+// 공/ㅛㅜ 규칙 
+app.get(["/rules", "/rules.html"], (req, res) => {
+  res.render("rules/rules.html");
+});
+app.get(["/rules_attack", "/rules_attack.html"], (req, res) => {
+  res.render("rules/rules_attack.html");
+});
+
+// 선수단 
+app.get(["/teaminfo_coach", "/teaminfo_coach.html"], (req, res) => {
+  res.render("teaminfo/teaminfo_coach.html");
+});
+app.get(["/teaminfo_hitter", "/teaminfo_hitter.html"], (req, res) => {
+  res.render("teaminfo/teaminfo_hitter.html");
+});
+app.get(["/teaminfo_pitcher", "/teaminfo_pitcher.html"], (req, res) => {
+  res.render("teaminfo/teaminfo_pitcher.html");
+});
+app.get(["/playerinfodet", "/playerinfodet.html"], (req, res) => {
+  res.render("teaminfo/playerinfodet.html");
+});
 
 // 로그인 페이지 (파일 위치가 views/login/Login.html 인 경우)
 app.get(["/login", "/Login", "/login.html", "/Login.html", "/login/Login.html"], (req, res) => {
@@ -264,7 +291,9 @@ app.get(
   (req, res) => res.render('support/Inquiry_history.html')
 );
 
-
+app.get(["/gameinfo_result", "/gameinfo_result.html"], (req, res) => {
+  res.render("gameinfo/gameinfo_result.html");
+});
 // routes/inquiries.js
 const router = express.Router();
 
@@ -446,17 +475,17 @@ app.get('/api/schedules', async (req, res) => {
   }
 });
 
-// /gameinfo/game_player_lineup → 표준 경로로 리디렉트
-app.get('/gameinfo/game_player_lineup', (req, res) => res.redirect(301, '/game_player_lineup'));
+
 
 // 폼 데이터 파싱 (POST용) - 한 번만 선언되어 있으면 생략 가능
 app.use(express.urlencoded({ extended: true }));
 
+
 /** 과거/실수 경로 → 표준 경로로 리다이렉트 */
 app.get('/gameinfo/game_player_lineup', (req, res) => {
-  const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
-  res.redirect(301, '/game_player_lineup' + q);
-});
+   const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
+   res.redirect(301, '/game_player_lineup' + q);
+ });
 app.get('/game_player_lineup.html', (req, res) => {
   const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
   res.redirect(301, '/game_player_lineup' + q);
@@ -594,7 +623,6 @@ app.post('/admin/lineup/save', requireLogin, async (req, res) => {
     res.status(500).send('라인업 등록 중 오류 발생');
   }
 });
-
 
 
 
