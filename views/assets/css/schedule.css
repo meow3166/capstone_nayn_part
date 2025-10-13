@@ -1,0 +1,411 @@
+/*경기일정 */
+.aa{
+    width: 80%;
+    margin: 0 auto;
+    /* background-color: rgb(250, 245, 245); */
+    display: flex;
+    justify-content: center;
+   
+    min-height: 110vh;
+}
+.cal {
+  width: 50%;
+    margin: 50px;
+    
+    padding: 20px;
+    border-radius: 8px;
+    /* ✅ 아래 3줄 추가 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result {
+  width: 50%; /* 오른쪽 절반 차지 */
+  margin: 50px;
+}
+
+/* 달력  */
+
+
+.section-title {
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+     margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+.card {
+    flex-direction: column;
+    align-items: center;
+}
+    }
+.btn {
+    font-family: 'Open Sans';
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: #fff;
+    color: #262626;
+    border-radius: 10px;
+    height: 50px;
+    font-weight: 600;
+    min-width: 100px;
+    padding: 0px 20px;
+    transition: 0.2s ease;
+    cursor: pointer;
+    outline: 0;
+}
+
+.btn:hover {
+    color: #FFF;
+    background: #455AF7;
+}
+
+.btn-small {
+    min-width: 50px;
+}
+
+.btn-day {
+    font-family: 'Open Sans';
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: rgba(0, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 99;
+    outline: 0;
+    border-radius: 10px;
+    transition: 0.4s all;
+}
+
+.btn-day.active {
+   color: #333; /* 글자색을 어둡게 */
+    font-weight: 600;
+    border: 1px solid #e0e0e0; /* 얇은 회색 테두리 */
+    background-color: #f9f9f9; /* 아주 연한 회색 배경 */
+}
+
+
+
+.text-field {
+    padding: 10px;
+    height: 30px;
+    width: 200px;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    margin: 0px 10px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+
+.calendar-assets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+
+#currentDate {
+    text-align: center;
+    font-size: 20px;
+}
+
+.field {
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.field label {
+    margin: 2px;
+}
+
+.form-input {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.day-assets {
+    display: flex;
+    justify-content: space-between;
+    width: 324px;
+}
+
+.calendar {
+    /* height: 380px; */
+    width: 324px;
+    border-radius: 18px;
+    background: #ffffff;
+    /* 상우하좌 */
+    padding: 20px 10px 0px 20px ;
+    border: 1px solid #e0e0e0;
+    user-select: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 18px 18px 0px 0px;
+    padding-left: 15px;
+    height: 50px;
+    width: 300px;
+    color: #262626;
+}
+
+.icon {
+    padding: 10px;
+    font-size: 1em;
+    margin: 0 0 0 5px;
+    background: #ffffff;
+    color: #455af7;
+    border: none;
+    cursor: pointer;
+    outline: 0;
+}
+
+.weekends th {
+    font-size: 1em;
+    color: gray;
+    font-weight: 400;
+    width: 40px;
+    margin: 10px 0;
+}
+
+#calendar tr {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: 3px;
+}
+
+#calendar td {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 99;
+}
+.schedule-day {
+background-color: #ffeb3b; /* 예: 노란색 배경 */
+color: black;
+font-weight: bold;
+}
+.schedule-day:hover{
+    background-color: beige;
+}
+/* ===== 공통 스타일: 카드, 헤더, 팀 정보 등 ===== */
+
+.game-result-card {
+    font-family: 'Noto Sans KR', sans-serif; /* 폰트 (예시) */
+    width: 100%;
+    max-width: 450px; /* 카드의 최대 너비 */
+    margin: 0 auto; /* 부모 요소 안에서 가운데 정렬 */
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 30px; /* 둥근 모서리 */
+    /* margin-bottom: 40px; */
+}
+
+.game-date {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.game-status-chip {
+    background-color: #f0f0f0;
+    color: #555;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.match-details {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.teams-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 10px;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 120px; /* 각 팀 정보의 너비를 고정해 좌우 대칭 유지 */
+}
+
+.team-logo {
+    
+    width: 100px; /* 로고 크기 */
+    height: 100px;
+    border: 1px solid #000;
+    object-fit: contain; /* ✅ 이미지 비율을 유지하며 틀 안에 꽉 차게 */
+
+}
+
+
+.vs-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+}
+
+
+/* ===== '경기 예정' 전용 스타일 ===== */
+
+.teams-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; /* ✅ 자식 요소들을 위쪽 기준으로 정렬 */
+    padding: 30px 10px;
+}
+
+.match-meta {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    color: #666;
+    font-size: 15px;
+}
+
+.match-meta .stadium {
+    font-weight: bold;
+    color: #000;
+}
+
+.match-meta .time::before {
+    content: '|';
+    margin: 0 10px;
+}
+
+.team-record {
+    font-size: 14px;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.pitcher-info {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+.pitcher-label {
+    color: #007bff; /* '선' 글자 파란색 */
+    font-weight: bold;
+}
+
+
+/* ===== '경기 종료' 전용 스타일 ===== */
+
+.match-header {
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+}
+
+.final-score {
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.final-score.winning {
+    color: #007bff; /* 승리 팀 점수 (파란색) */
+}
+
+.final-score.losing {
+    color: #dc3545; /* 패배 팀 점수 (빨간색) */
+}
+
+.pitcher-results {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.pitcher-results p {
+    margin: 0;
+}
+
+.result-label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.result-label.win {
+    background-color: #007bff; /* 승 (파란색) */
+}
+
+.result-label.loss {
+    background-color: #dc3545; /* 패 (빨간색) */
+}
+
+.result-label.save {
+    background-color: #28a745; /* 세 (초록색) */
+}
+/* 화면 너비가 768px 이하일 때 적용될 스타일 */
+@media (max-width: 768px) {
+
+    /* 부모 컨테이너(.aa)의 아이템 쌓는 방향을 세로로 변경 */
+    .aa {
+        flex-direction: column; /* 가로(row) -> 세로(column) */
+        align-items: center; /* 중앙 정렬 */
+        width: 100%; /* 모바일에서는 꽉 채우기 */
+        padding: 10px; /* 좌우 여백 (선택 사항) */
+        box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+    }
+
+    /* 달력(.cal)과 결과(.result)의 너비를 100%로 변경 */
+    .cal, .result {
+        width: 100%; /* 좌우 50% -> 전체 100% */
+        max-width: 500px; /* 너무 커지는 것을 방지 (선택 사항) */
+        margin: 20px 0; /* 좌우 여백은 없애고 상하 여백만 지정 */
+    }
+}

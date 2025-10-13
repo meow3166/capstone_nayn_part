@@ -178,6 +178,9 @@ router.get('/game_player_lineup', async (req, res) => {
     res.status(500).send(`<pre>${e.sqlMessage || e.message || String(e)}</pre>`);
   }
 });
+/* ===== 걍기일정 ===== */
+router.get(['/schedule', '/schedule.html'], (req, res) => res.render('gameinfo/schedule.html'));
+router.get(['/gameinfo/schedule', '/gameinfo/schedule.html'], (req, res) => res.render('gameinfo/schedule.html'));
 
 
 /* ===== 야구 규칙 ===== */

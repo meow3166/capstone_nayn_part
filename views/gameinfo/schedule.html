@@ -1,0 +1,106 @@
+{% include "include/header.html" %}
+        <main>
+           <div class="aa">
+                <div class="cal">
+                    <div class="card calendar-card">
+                        <h2 class="section-title">경기 일정</h2>
+                        
+                        <div class="calendar" id="table">
+                            <div class="header">
+                                <div class="month" id="month-header"></div>
+                               <div class="buttons">
+                                    <button id="prev-btn" class="icon" title="이전 달"><i class="fas fa-chevron-left"></i>이전 달</button>
+                                    <button id="next-btn" class="icon" title="다음 달"><i class="fas fa-chevron-right"></i>다음 달</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tooltip" style="display:none; position:absolute; background-color:#333; color:white; padding:5px 10px; border-radius:5px; font-size:14px; pointer-events:none;"></div>
+                    </div>
+                </div>
+                <div class="result">
+                    <div class="game-result-card finished">
+
+                    <div class="result-header">
+                        <span class="game-date">2025.09.02</span>
+                        <span class="game-status-chip">경기종료</span>
+                    </div>
+
+                    <div class="match-details">
+
+                        <div class="match-header">
+                            <strong>경기 결과</strong>
+                        </div>
+
+                        <div class="teams-container">
+                            
+                            <div class="team-info">
+                                <img class="team-logo" src="[롯데 로고 이미지 경로]" alt="롯데 자이언츠" >
+                                <p class="final-score losing">2</p>
+                                <div class="pitcher-results">
+                                    <p><span class="result-label loss">패</span> 박세웅</p>
+                                </div>
+                            </div>
+
+                            <span class="vs-text">VS</span>
+
+                            <div class="team-info">
+                                <img class="team-logo" src="[LG 로고 이미지 경로]" alt="LG 트윈스" >
+                                <p class="final-score winning">3</p>
+                                <div class="pitcher-results">
+                                    <p><span class="result-label win">승</span> 치리노스</p>
+                                    <p><span class="result-label save">세</span> 유영찬</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="game-result-card">
+
+                    <div class="result-header">
+                        <span class="game-date">2025.09.29</span>
+                        <span class="game-status-chip">경기예정</span>
+                    </div>
+
+                    <div class="match-details">
+
+                        <div class="match-meta">
+                            <span class="stadium">잠실</span>
+                            <span class="time">18:30</span>
+                        </div>
+
+                        <div class="teams-container">
+                            
+                            <div class="team-info">
+                                <img class="team-logo" src="[두산 로고 이미지 경로]" alt="두산 베어스">
+                                <p class="team-record">시즌 56승 72패 6무</p>
+                                <p class="pitcher-info">
+                                    <span class="pitcher-label">선</span> 땡땡땡
+                                </p>
+                            </div>
+
+                            <span class="vs-text">VS</span>
+
+                            <div class="team-info">
+                                <img class="team-logo" src="[LG 로고 이미지 경로]" alt="LG 트윈스">
+                                <p class="team-record">시즌 81승 50패 3무</p>
+                                <p class="pitcher-info">
+                                    <span class="pitcher-label">선</span> 땡땡땡
+                                </p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                </div>
+                </div>
+           </div>
+        </main>
+        <footer></footer>
+        <!-- 메뉴바 js -->
+        <script src="../assets/js/menubar.js"></script> 
+        <!-- 날씨 api js -->
+        <script src="../assets/js/weather.js"></script>
+        <!-- 챗봇 엔터 키 이벤트 js -->
+        <!-- <script src="./assets/js/chat.js"></script> -->
+        <!-- 캘린더 js -->
+         <script src="../assets/js/schedule.js"></script>
+    </body>
+</html>
