@@ -20,23 +20,110 @@ router.get(['/teaminfo_pitcher', '/teaminfo_pitcher.html'], (req, res) => res.re
 /* ===== 경기정보 ===== */
 router.get(['/game_match_list', '/game_match_list.html'], (req, res) => res.render('gameinfo/game_match_list.html'));
 router.get(['/gameinfo_result', '/gameinfo_result.html'], (req, res) => res.render('gameinfo/gameinfo_result.html'));
+// ─────────────────────────────────────────────
+// 테이블 보증: game_page (PK: game_id)
+// ─────────────────────────────────────────────
+pool.query(`
+  CREATE TABLE IF NOT EXISTS \`${DB}\`.\`game_page\` (
+    game_id    BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    game_date  DATE NULL,
+    payload    JSON NOT NULL,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+               ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (game_id),
+    KEY idx_game_date (game_date),
+    KEY idx_updated_at (updated_at)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+`).catch(e => console.error('[ensure game_page]', e.sqlMessage || e.message));
+
+/** 생성: POST /api/game  → { ok:true, id } */
+router.post('/api/game', async (req, res) => {
+  try {
+    const payload  = req.body || {};
+    const gameDate = payload.gameDate || null; // 'YYYY-MM-DD'
+    const [r] = await pool.query(
+      `INSERT INTO \`${DB}\`.game_page (game_date, payload) VALUES (?, ?)`,
+      [gameDate, JSON.stringify(payload)]
+    );
+    res.json({ ok: true, id: r.insertId });
+  } catch (e) {
+    console.error('[POST /api/game]', e);
+    res.status(500).json({ ok:false, error: e.sqlMessage || e.message });
+  }
+});
+
+/** 수정: PUT /api/game/:id  (id = game_id) */
+router.put('/api/game/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) return res.status(400).json({ ok:false, error:'invalid id' });
+
+    const payload  = req.body || {};
+    const gameDate = payload.gameDate || null;
+
+    const [r] = await pool.query(
+      `UPDATE \`${DB}\`.game_page SET game_date=?, payload=? WHERE game_id=?`,
+      [gameDate, JSON.stringify(payload), id]
+    );
+    if (r.affectedRows === 0) return res.status(404).json({ ok:false, error:'not_found' });
+    res.json({ ok:true, updated:true });
+  } catch (e) {
+    console.error('[PUT /api/game/:id]', e);
+    res.status(500).json({ ok:false, error: e.sqlMessage || e.message });
+  }
+});
+// 최신 한 건
+router.get('/api/game/latest', async (req, res, next) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT game_id, game_date, payload
+         FROM \`${DB}\`.game_page
+        ORDER BY updated_at DESC, game_id DESC
+        LIMIT 1`
+    );
+    if (!rows.length) return res.status(404).json({ ok:false, error:'not_found' });
+    const row = rows[0];
+    const payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
+    res.json({ ok:true, id: row.game_id, gameDate: row.game_date, ...payload });
+  } catch (e) { next(e); }
+});
+
+// id로 조회
+router.get('/api/game/:id', async (req, res, next) => {
+  try {
+    const id = Number(req.params.id);
+    if (!Number.isFinite(id)) return res.status(400).json({ ok:false, error:'invalid id' });
+    const [rows] = await pool.query(
+      `SELECT game_id, game_date, payload
+         FROM \`${DB}\`.game_page
+        WHERE game_id=? LIMIT 1`,
+      [id]
+    );
+    if (!rows.length) return res.status(404).json({ ok:false, error:'not_found' });
+    const row = rows[0];
+    const payload = typeof row.payload === 'string' ? JSON.parse(row.payload) : row.payload;
+    res.json({ ok:true, id: row.game_id, gameDate: row.game_date, ...payload });
+  } catch (e) { next(e); }
+});
+
 
 /* ===== 라인업: 파일형 → 표준 경로 리다이렉트 ===== */
+/** 과거 파일형 경로 → 표준 경로로 리다이렉트(유지하면 좋음) */
 router.get(['/game_player_lineup.html'], (req, res) => {
   const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
   res.redirect(301, '/game_player_lineup' + q);
 });
 
-/* ===== 라인업(사용자 뷰) ===== */
+/** 사용자 라인업 보기 (이미 있는 템플릿: views/gameinfo/game_player_lineup.html) */
 router.get('/game_player_lineup', async (req, res) => {
   try {
     const gameId = Number(req.query.game_id || 0);
 
     const base = `
       SELECT g.game_id, g.game_date, g.game_time, g.venue,
-             g.home_team_id, g.away_team_id,
-             IFNULL(g.is_lineup_announced,0) AS is_lineup_announced,
-             ht.team_name AS home_name, at.team_name AS away_name
+             g.home_team_id, g.away_team_id, IFNULL(g.is_lineup_announced,0) AS is_lineup_announced,
+             ht.team_name AS home_name, ht.team_logo AS home_logo, ht.color_primary AS home_color,
+             at.team_name AS away_name, at.team_logo AS away_logo, at.color_primary AS away_color
         FROM \`${DB}\`.games g
         JOIN \`${DB}\`.teams ht ON ht.team_id = g.home_team_id
         JOIN \`${DB}\`.teams at ON at.team_id = g.away_team_id
@@ -53,11 +140,9 @@ router.get('/game_player_lineup', async (req, res) => {
     }
 
     const g = gameRows[0];
-
     const d = new Date(g.game_date);
     const dateLabel = `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
-    const timeLabel = (t => typeof t === 'string'
-      ? t.slice(0, 5)
+    const timeLabel = (t => typeof t === 'string' ? t.slice(0, 5)
       : `${String(t.getHours()).padStart(2, '0')}:${String(t.getMinutes()).padStart(2, '0')}`)(g.game_time);
 
     const lineupSQL = `
@@ -72,7 +157,7 @@ router.get('/game_player_lineup', async (req, res) => {
     const [awayLineup] = await pool.query(lineupSQL, [g.game_id, g.away_team_id]);
 
     const isAnnounced = Number(g.is_lineup_announced) === 1 ||
-      (homeLineup.length > 0 && awayLineup.length > 0);
+                        (homeLineup.length > 0 && awayLineup.length > 0);
 
     res.render('gameinfo/game_player_lineup.html', {
       game: {
@@ -82,8 +167,8 @@ router.get('/game_player_lineup', async (req, res) => {
         venue: g.venue,
         is_lineup_announced: isAnnounced
       },
-      home: { team_name: g.home_name, team_logo: null, color_primary: null },
-      away: { team_name: g.away_name, team_logo: null, color_primary: null },
+      home: { team_name: g.home_name, team_logo: g.home_logo, color_primary: g.home_color },
+      away: { team_name: g.away_name, team_logo: g.away_logo, color_primary: g.away_color },
       home_lineup: homeLineup,
       away_lineup: awayLineup,
       error: null
@@ -93,6 +178,7 @@ router.get('/game_player_lineup', async (req, res) => {
     res.status(500).send(`<pre>${e.sqlMessage || e.message || String(e)}</pre>`);
   }
 });
+
 
 /* ===== 야구 규칙 ===== */
 router.get(['/rules_attack', '/rules_attack.html'], (req, res) => res.render('rules/rules_attack.html'));

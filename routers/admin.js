@@ -128,24 +128,66 @@ router.post('/announcements/:id/delete', async (req, res, next) => {
 /* ========================
    라인업 관리자 페이지
    ======================== */
-router.get("/lineup/manager", requireLogin, async (req, res, next) => {
+router.get('/admin_game_player_lineup', requireLogin, async (req, res, next) => {
   try {
-    const DB = process.env.SVR_DB_NAME || process.env.DB_NAME || "myapp_db";
     const [teams] = await pool.query(
       `SELECT team_id, team_name FROM \`${DB}\`.teams ORDER BY team_name`
     );
-    res.render("admin/admin_game_player_lineup.html", { teams });
+    // views/admin/admin_game_player_lineup.html 을 그대로 렌더
+    res.render('admin/admin_game_player_lineup.html', { teams });
+  } catch (e) { next(e); }
+});
+
+/** 라인업 저장 (폼 action은 /admin/lineup/save) */
+router.post('/lineup/save', requireLogin, async (req, res) => {
+  try {
+    const { game_date, game_time, venue, home_team_id, away_team_id } = req.body || {};
+    if (!game_date || !game_time || !venue) return res.status(400).send('경기정보 누락');
+    if (!home_team_id || !away_team_id)     return res.status(400).send('팀 선택 누락');
+    if (String(home_team_id) === String(away_team_id)) return res.status(400).send('홈/원정이 같습니다');
+
+    // 1) 경기 생성
+    const [r] = await pool.query(
+      `INSERT INTO \`${DB}\`.games (game_date, game_time, venue, home_team_id, away_team_id, is_lineup_announced)
+       VALUES (?, ?, ?, ?, ?, 1)`,
+      [game_date, game_time, venue, Number(home_team_id), Number(away_team_id)]
+    );
+    const gameId = r.insertId;
+
+    // 2) 라인업 생성 (1~10: 10=P)
+    async function insertLineup(teamId, prefix) {
+      for (let i = 1; i <= 10; i++) {
+        const name = (req.body[`${prefix}_player_name_${i}`] || '').trim();
+        const pos  = (req.body[`${prefix}_position_${i}`]    || '').trim();
+        if (name && pos) {
+          await pool.query(
+            `INSERT INTO \`${DB}\`.lineups (game_id, team_id, order_num, player_name, position_kr)
+             VALUES (?, ?, ?, ?, ?)`,
+            [gameId, Number(teamId), i, name, pos]
+          );
+        }
+      }
+    }
+    await insertLineup(home_team_id, 'home');
+    await insertLineup(away_team_id, 'away');
+
+    // 저장 후 사용자 페이지로 이동
+    res.redirect(`/game_player_lineup?game_id=${gameId}`);
   } catch (e) {
-    next(e);
+    console.error('[POST /admin/lineup/save]', e);
+    res.status(500).send('라인업 등록 중 오류');
   }
 });
 
+
 /* ========================
-   라인업 저장 (폼 action과 일치)
+   경기결과 관리자 페이지
    ======================== */
-
-
-
+// 경기결과 입력 화면
+router.get('/gameinfo_result_admin', requireLogin, (req, res) => {
+  // 템플릿 경로: views/gameinfo/gameinfo_result_admin.html
+  res.render('admin/gameinfo_result_admin.html');
+});
 module.exports = router;
 
 

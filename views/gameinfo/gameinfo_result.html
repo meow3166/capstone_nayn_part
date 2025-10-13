@@ -542,8 +542,14 @@
 
 </main>
 <footer></footer>
+
+    
+
+<div id="user-error" style="margin:8px 0;"></div>
+
+</body>
 <script>
-    // function toggleMenu() {
+// function toggleMenu() {
     //     // document.querySelector(".member").classList.toggle("show");
     // }
     const hamburger = document.querySelector('.hamburger');
@@ -552,7 +558,11 @@
     hamburger.addEventListener('click', () => {
         mainmenu.classList.toggle('active');
     });
-
+    function asPairs(x) {
+        if (Array.isArray(x)) return x;
+        if (x && typeof x === 'object') return Object.entries(x);
+        return [];
+    }
     // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
     document.querySelectorAll('.mainmenu > li > a').forEach(item => {
         item.addEventListener('click', e => {
@@ -575,6 +585,7 @@
 
 
     // 여기가 시발 개문제
+
 
     (function () {
         // ---------- 작은 유틸 ----------
@@ -781,11 +792,11 @@
         // ---------- 메인 흐름 ----------
         async function loadGame() {
             const id = new URLSearchParams(location.search).get('id');
-            if (!id) return;
+            const url = id ? `/api/game/${encodeURIComponent(id)}` : '/api/game/latest';
 
             let data = {};
             try {
-                const res = await fetch(`/api/game/${encodeURIComponent(id)}`, { cache: 'no-store' });
+                const res = await fetch(url, { cache: 'no-store' });
                 if (!res.ok) throw new Error('HTTP ' + res.status);
                 data = await res.json();
             } catch (e) {
@@ -793,19 +804,19 @@
                 return;
             }
 
-            // 팀명 정하기 → p 라벨 + 스코어보드 2열에 반영
+            // 팀명 → 라벨/스코어보드 반영
             const { A: teamA, B: teamB } = getTeamNames(data);
             setSectionLabels(teamA, teamB);
 
             // 상단 스코어보드 (헤더 1행 가정)
-            const scoreTbl = $('.result_table table');
+            const scoreTbl = document.querySelector('.result_table table');
             if (scoreTbl) fillScoreboard(scoreTbl, getScoreTable(data), teamA, teamB);
 
-            // 하단 요약표(순서대로 채움; 헤더 없다고 가정. 있으면 headerRows=1로 바꿔)
-            const sumTbl = $('.result_table_bottom table');
-            if (sumTbl) fillKVSequential(sumTbl, getSummaryTable(data) || [], 0);
+            // 하단 요약표 (순서대로 채우기)
+            const sumTbl = document.querySelector('.result_table_bottom table');
+            if (sumTbl) fillKVSequential(sumTbl, asPairs(getSummaryTable(data)), 0);
 
-            // 아래 4개 표: 헤더 1행 가정, 행/열 1:1 덮어쓰기
+            // 타자/투수 4개 표 (헤더 1행 가정)
             const ha = getHitterA(data);
             const hb = getHitterB(data);
             const pa = getPitcherA(data);
@@ -821,14 +832,9 @@
             if (tPA && Array.isArray(pa)) renderStatTable(tPA, pa, 1);
             if (tPB && Array.isArray(pb)) renderStatTable(tPB, pb, 1);
         }
-
         document.addEventListener('DOMContentLoaded', loadGame);
+
     })();
 
 </script>
-
-<div id="user-error" style="margin:8px 0;"></div>
-
-</body>
-
 </html>
