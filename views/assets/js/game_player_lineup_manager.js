@@ -1,5 +1,5 @@
 (function(){
-  const POSITIONS = ['투수','포수','1루수','2루수','3루수','유격수','좌익수','중견수','우익수','지명타자'];
+  const POSITIONS = ['포수','1루수','2루수','3루수','유격수','좌익수','중견수','우익수','지명타자'];
   const homeBody = document.getElementById('homeBody');
   const awayBody = document.getElementById('awayBody');
   const homeTeam = document.getElementById('homeTeam');
@@ -53,9 +53,22 @@
     }
   });
 
-  // 옵션 엘리먼트 생성
-  function positionSelect(name){
+  // 옵션 엘리먼트 생성 (10번 전용 처리 포함)
+  function positionSelect(name, idx){
     const sel = document.createElement('select');
+
+    if (idx === 10) {
+      // 10번은 '투수' 고정, 화면만 표시용으로 disabled
+      const o = document.createElement('option');
+      o.value = '투수';
+      o.textContent = '투수';
+      sel.appendChild(o);
+      sel.disabled = true;   // 사용자 변경 불가
+      // 실제 제출은 hidden input으로 처리할 것이므로 name 부여 안 함
+      return sel;
+    }
+
+    // 1~9번: '투수' 없는 배열로 생성
     sel.name = name;
     sel.required = true;
     POSITIONS.forEach(p=>{
@@ -74,9 +87,20 @@
       <td style="border:1px solid #eee;padding:6px;" data-pos-cell></td>
     `;
     const posCell = tr.querySelector('[data-pos-cell]');
-    const sel = positionSelect(`${prefix}_position_${idx}`);
-    if (idx===10){ sel.value='투수'; }
+    const sel = positionSelect(`${prefix}_position_${idx}`, idx);
     posCell.appendChild(sel);
+
+    if (idx === 10) {
+      // 실제 전송용 hidden input (이 name을 서버에서 받음)
+      const h = document.createElement('input');
+      h.type = 'hidden';
+      h.name = `${prefix}_position_${idx}`;
+      h.value = '투수';
+      tr.appendChild(h);
+      // select는 name 제거(중복 방지)
+      sel.name = '';
+    }
+
     return tr;
   }
 
@@ -90,12 +114,12 @@
   document.getElementById('copyHomeToAway').addEventListener('click', ()=>{
     for(let i=1;i<=10;i++){
       const nHome = form[`home_player_name_${i}`];
-      const pHome = form[`home_position_${i}`];
+      const pHome = form[`home_position_${i}`];   // 10번은 hidden
       const nAway = form[`away_player_name_${i}`];
-      const pAway = form[`away_position_${i}`];
+      const pAway = form[`away_position_${i}`];   // 10번은 hidden
       if (nHome && pHome && nAway && pAway){
         nAway.value = nHome.value;
-        pAway.value = pHome.value;
+        pAway.value = pHome.value; // 10번도 '투수' 그대로 복사
       }
     }
   });
@@ -107,6 +131,12 @@
     // 날짜/시간 기본값 재설정
     form.game_date.value = `${y}-${m}-${d}`;
     form.game_time.value = '18:30';
+
+    // 10번 hidden 값도 재보장(혹시 브라우저가 지웠을 경우 대비)
+    const homeP10 = form['home_position_10'];
+    const awayP10 = form['away_position_10'];
+    if (homeP10) homeP10.value = '투수';
+    if (awayP10) awayP10.value = '투수';
   });
 
   // 같은 팀 선택 방지
@@ -133,7 +163,7 @@
   function validateLineup(prefix){
     for(let i=1;i<=10;i++){
       const n = form[`${prefix}_player_name_${i}`];
-      const p = form[`${prefix}_position_${i}`];
+      const p = form[`${prefix}_position_${i}`]; // 10번은 hidden
       if(!n.value.trim() || !p.value.trim()){
         alert(`${prefix==='home'?'홈':'원정'} 라인업 ${i===10?'P':'#'+i} 입력을 확인해 주세요.`);
         n.focus();
@@ -170,6 +200,9 @@
         form[k].value = data[k];
       }
     });
+    // 10번 hidden 값 보정
+    if (form['home_position_10']) form['home_position_10'].value = '투수';
+    if (form['away_position_10']) form['away_position_10'].value = '투수';
     syncTeamOptions();
   }
   // 자동 저장 (입력 변경 시)

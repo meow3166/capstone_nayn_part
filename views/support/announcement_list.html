@@ -2,15 +2,16 @@
 <main class="announcement_list_container">
     <div class="page-head">
         <h1 class="page-title">공지사항</h1>
-        <form class="notice-search" method="get" action="./announcement_list.html">
+        <form class="notice-search" method="get" action="/support/announcement_list.html">
             <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
             <button type="submit">검색</button>
         </form>
+
     </div>
 
     <!-- 목록 영역: 실제 서비스에선 서버/JS로 동적 채움 -->
     <ul class="notice-list" id="noticeList">
-        {% for n in items %}
+        {% for n in notices %}
         <li class="notice-item">
             <a href="/support/announcements/{{ n.notice_id }}">
                 <div class="row">

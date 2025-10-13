@@ -4,19 +4,21 @@
 
   <article class="detail" id="noticeDetail" data-id="">
     <header class="detail-head">
-      <h2 class="title">{{ item.title }}</h2>
+
+
+      <h2 class="title">{{ notice.title }}</h2>
       <div class="meta">
-        <span class="category">{{ item.category }}</span>
-        <time class="date" datetime="{{ item.published_at | date('YYYY-MM-DDTHH:mm') }}">
-          {{ item.published_at | date('YYYY-MM-DD HH:mm') }}
+        <span class="category">{{ notice.category }}</span>
+        <time class="date" datetime="{{ notice.published_at | date('YYYY-MM-DDTHH:mm') }}">
+          {{ notice.published_at | date('YYYY-MM-DD HH:mm') }}
         </time>
-        <span class="views">조회 {{ item.view_count }}</span>
+        <span class="views">조회 {{ notice.view_count }}</span>
       </div>
     </header>
-
+    
     <!-- 본문: 헤더 밖, 1회만 -->
     <section class="detail-body" id="content">
-      {{ item.content_md | safe }}
+      {{ notice.content_md | safe }}
     </section>
 
     <div class="back">

@@ -856,7 +856,7 @@
 
                 // 날짜가 같으면 기존 ID에 업데이트
                 const res = await updateGame(CURRENT_ID, payload);
-                if (res.status === 404) { // 주소엔 id 있는데 DB엔 없음 → 새로 생성
+                if (res.status === 404) { // 주소엔 id 있는데 db엔 없음 → 새로 생성
                     const newId = await createGame(payload);
                     if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
                     return;
