@@ -104,6 +104,21 @@ router.get(['/location', '/location.html'],           (req, res) => res.render('
 
 /* ===== 고객지원 루트 ===== */
 router.get(['/support', '/support.html'], (req, res) => res.render('support/support.html'));
+// // FAQ 목록 API (support.js가 /faq로 호출)
+router.get('/faq', async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      // // 스키마명은 환경변수에서 받은 DB 사용
+      `SELECT id, question, answer 
+         FROM \`${DB}\`.faqs
+        ORDER BY id DESC`
+    );
+    res.json(rows); // // support.js가 기대하는 JSON
+  } catch (e) {
+    console.error('[GET /faq]', e);
+    res.status(500).json({ error: 'DB 오류' });
+  }
+});
 
 /* ===== 과거 공지 목록 경로 → 동적 목록으로 리다이렉트 ===== */
 router.get(
