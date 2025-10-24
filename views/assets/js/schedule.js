@@ -100,9 +100,9 @@ const months = [
             content.appendChild(table);
             changeActive();
             changeHeader(date);
-            document.getElementById('date').textContent = date;
+            document.getElementById('date').textContent = date.getFullYear() + "년 " + months[date.getMonth()] + date.getDate() + "일";
+
             getCurrentDate(document.getElementById("currentDate"), true);
-            getCurrentDate(document.getElementById("date"), false);
         }
 
         function setDate(form) {
@@ -142,11 +142,27 @@ const months = [
             generateCalendar();
         }
 
-        function changeDate(button) {
+        // async 키워드 추가
+        async function changeDate(button) {
             let newDay = parseInt(button.textContent);
             date = new Date(date.getFullYear(), date.getMonth(), newDay);
+            
+            // 1. 캘린더를 다시 그려서 선택한 날짜에 'active' 클래스를 적용합니다.
             generateCalendar();
+
+            // 2. API로 보낼 날짜 문자열(YYYY-MM-DD) 생성
+            // (date.getMonth() + 1)을 해주고, 10보다 작으면 '0'을 붙여줍니다.
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            const dateString = `${year}-${month}-${day}`;
+
+            console.log("API 요청 날짜 (dateString):", dateString);
+
+            // 3. (새로 만들) 경기 정보 조회 함수 호출
+            await fetchAndDisplayMatchInfo(dateString);
         }
+        
 
         function nextMonth() {
             date = new Date(date.getFullYear(), date.getMonth() + 1, 1);

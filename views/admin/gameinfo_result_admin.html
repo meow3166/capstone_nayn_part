@@ -1,1109 +1,1253 @@
 {%include "include/header.html"%}
-    <main>
-        <div class="game-date-picker" style="margin:10px 0;">
-            <label for="gameDateInput"><b>경기 날짜</b></label>
-            <input id="gameDateInput" type="date" required>
+<main>
+    <div class="game-date-picker" style="margin:10px 0;">
+        <label for="gameDateInput"><b>경기 날짜</b></label>
+        <input id="gameDateInput" type="date" required>
+    </div>
+    <div class="scoreboard">
+        <div class="result">
+            <p> 경기결과 </p>
         </div>
-        <div class="scoreboard">
-            <div class="result">
-                <p> 경기결과 </p>
-            </div>
-            <p class="review"> 리뷰 </p>
-            <div class="result_table">
-                <table border="1">
-                    <colgroup>
-                        <col class="col-1"> <!-- 1열: 승/패 -->
-                        <col class="col-2"> <!-- 2열: Team A/B -->
-                        <col class="col-rest" span="16"> <!-- 3~18열: 모두 동일 너비 -->
-                    </colgroup>
+        <p class="review"> 리뷰 </p>
+        <div class="result_table">
+            <table border="1">
+                <colgroup>
+                    <col class="col-1"> <!-- 1열: 승/패 -->
+                    <col class="col-2"> <!-- 2열: Team A/B -->
+                    <col class="col-rest" span="16"> <!-- 3~18열: 모두 동일 너비 -->
+                </colgroup>
 
-                    <tr>
-                        <td colspan="2" class="team">Team</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                        <td>6</td>
-                        <td>7</td>
-                        <td>8</td>
-                        <td>9</td>
-                        <td>10</td>
-                        <td>11</td>
-                        <td>12</td>
-                        <td>R</td>
-                        <td>H</td>
-                        <td>E</td>
-                        <td>B</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+                <tr>
+                    <td colspan="2" class="team">Team</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>R</td>
+                    <td>H</td>
+                    <td>E</td>
+                    <td>B</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
 
 
-            </div>
-            <div class="result_table_bottom">
-                <table border="1">
-                    <tr>
-                        <td>결승타</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>홈런</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3루타</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2루타</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>실책</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>도루</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>주루사</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>병살타</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>심판</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="teamA_hitter_result">
-                <p> TeamA 타자 기록 </p>
-                <table border="1">
-                    <tr>
-                        <td colspan="3">선수명</td>
-                        <td>타수</td>
-                        <td>안타</td>
-                        <td>타점</td>
-                        <td>득점</td>
-                        <td>타율</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Total</td>
-
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-
-            </div> <!-- teamA_hitter_result -->
-
-
-            <div class="teamB_hitter_result">
-                <p> TeamB 타자 기록 </p>
-                <table border="1">
-                    <tr>
-                        <td colspan="3">선수명</td>
-                        <td>타수</td>
-                        <td>안타</td>
-                        <td>타점</td>
-                        <td>득점</td>
-                        <td>타율</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">Total</td>
-
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div> <!-- teamB_hitter_result -->
-
-
-            <div class="teamA_pitcher_result">
-                <p> TeamA 투수 기록 </p>
-                <table border="1">
-                    <tr>
-                        <td>선수명</td>
-                        <td>등판</td>
-                        <td>결과</td>
-                        <td>승</td>
-                        <td>패</td>
-                        <td>세</td>
-                        <td>이닝</td>
-                        <td>타자</td>
-                        <td>투구수</td>
-                        <td>타수</td>
-                        <td>피안타</td>
-                        <td>홈런</td>
-                        <td>4사구</td>
-                        <td>삼진</td>
-                        <td>실책</td>
-                        <td>자책</td>
-                        <td>ERA</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">Total</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div> <!-- teamA_pitcher_result -->
-
-
-            <div class="teamB_pitcher_result">
-                <p> TeamB 투수 기록 </p>
-                <table border="1">
-                    <tr>
-                        <td>선수명</td>
-                        <td>등판</td>
-                        <td>결과</td>
-                        <td>승</td>
-                        <td>패</td>
-                        <td>세</td>
-                        <td>이닝</td>
-                        <td>타자</td>
-                        <td>투구수</td>
-                        <td>타수</td>
-                        <td>피안타</td>
-                        <td>홈런</td>
-                        <td>4사구</td>
-                        <td>삼진</td>
-                        <td>실책</td>
-                        <td>자책</td>
-                        <td>ERA</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td colspan="6">Total</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
-            </div> <!-- teamB_pitcher_result -->
+        </div>
+        <div class="result_table_bottom">
+            <table border="1">
+                <tr>
+                    <td>결승타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>홈런</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3루타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2루타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>실책</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>도루</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>주루사</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>병살타</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>심판</td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
 
-        <div id="tableCtxMenu" class="ctx-menu">
-            <button data-act="insert-above">현재 행 위에 추가</button>
-            <button data-act="insert-below">현재 행 아래에 추가</button>
-            <button data-act="delete-row">현재 행 삭제</button>
-        </div>
+        <div class="teamA_hitter_result">
+            <p> TeamA 타자 기록 </p>
+            <table border="1">
+                <tr>
+                    <td colspan="3">선수명</td>
+                    <td>타수</td>
+                    <td>안타</td>
+                    <td>타점</td>
+                    <td>득점</td>
+                    <td>타율</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
 
-    </main>
-    <footer></footer>
-    <script>
-        // function toggleMenu() {
-        //     // document.querySelector(".member").classList.toggle("show");
-        // }
-        const hamburger = document.querySelector('.hamburger');
-        const mainmenu = document.querySelector('.mainmenu');
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
 
-        hamburger.addEventListener('click', () => {
-            mainmenu.classList.toggle('active');
+        </div> <!-- teamA_hitter_result -->
+
+
+        <div class="teamB_hitter_result">
+            <p> TeamB 타자 기록 </p>
+            <table border="1">
+                <tr>
+                    <td colspan="3">선수명</td>
+                    <td>타수</td>
+                    <td>안타</td>
+                    <td>타점</td>
+                    <td>득점</td>
+                    <td>타율</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamB_hitter_result -->
+
+
+        <div class="teamA_pitcher_result">
+            <p> TeamA 투수 기록 </p>
+            <table border="1">
+                <tr>
+                    <td>선수명</td>
+                    <td>등판</td>
+                    <td>결과</td>
+                    <td>승</td>
+                    <td>패</td>
+                    <td>세</td>
+                    <td>이닝</td>
+                    <td>타자</td>
+                    <td>투구수</td>
+                    <td>타수</td>
+                    <td>피안타</td>
+                    <td>홈런</td>
+                    <td>4사구</td>
+                    <td>삼진</td>
+                    <td>실책</td>
+                    <td>자책</td>
+                    <td>ERA</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="6">Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamA_pitcher_result -->
+
+
+        <div class="teamB_pitcher_result">
+            <p> TeamB 투수 기록 </p>
+            <table border="1">
+                <tr>
+                    <td>선수명</td>
+                    <td>등판</td>
+                    <td>결과</td>
+                    <td>승</td>
+                    <td>패</td>
+                    <td>세</td>
+                    <td>이닝</td>
+                    <td>타자</td>
+                    <td>투구수</td>
+                    <td>타수</td>
+                    <td>피안타</td>
+                    <td>홈런</td>
+                    <td>4사구</td>
+                    <td>삼진</td>
+                    <td>실책</td>
+                    <td>자책</td>
+                    <td>ERA</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="6">Total</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div> <!-- teamB_pitcher_result -->
+    </div>
+
+    <div id="tableCtxMenu" class="ctx-menu">
+        <button data-act="insert-above">현재 행 위에 추가</button>
+        <button data-act="insert-below">현재 행 아래에 추가</button>
+        <button data-act="delete-row">현재 행 삭제</button>
+    </div>
+
+</main>
+<footer></footer>
+<script>
+    // function toggleMenu() {
+    //     // document.querySelector(".member").classList.toggle("show");
+    // }
+    const hamburger = document.querySelector('.hamburger');
+    const mainmenu = document.querySelector('.mainmenu');
+
+    hamburger.addEventListener('click', () => {
+        mainmenu.classList.toggle('active');
+    });
+
+    // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
+    document.querySelectorAll('.mainmenu > li > a').forEach(item => {
+        item.addEventListener('click', e => {
+            if (window.innerWidth <= 768) { // 모바일일 때만
+                e.preventDefault(); // 링크 이동 방지
+                const parentLi = item.parentElement;
+
+                // 다른 li의 open 클래스 제거
+                document.querySelectorAll('.mainmenu > li').forEach(li => {
+                    if (li !== parentLi) {
+                        li.classList.remove('open');
+                    }
+                });
+
+                // 클릭한 li toggle
+                parentLi.classList.toggle('open');
+            }
         });
+    });
 
-        // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
-        document.querySelectorAll('.mainmenu > li > a').forEach(item => {
-            item.addEventListener('click', e => {
-                if (window.innerWidth <= 768) { // 모바일일 때만
-                    e.preventDefault(); // 링크 이동 방지
-                    const parentLi = item.parentElement;
 
-                    // 다른 li의 open 클래스 제거
-                    document.querySelectorAll('.mainmenu > li').forEach(li => {
-                        if (li !== parentLi) {
-                            li.classList.remove('open');
-                        }
-                    });
 
-                    // 클릭한 li toggle
-                    parentLi.classList.toggle('open');
+
+
+    // 여기서부터 값 입력
+
+
+
+
+
+    // ============================
+    // 관리자 페이지 JS (최종 정리본: AUTO_INCREMENT 대응)
+    // ============================
+
+    /* ---------- 공통 상태 ---------- */
+    // URL ?id 또는 localStorage('game_id') 기준으로 현재 문서가 편집 중인 레코드 식별
+
+    /* =========================
+       관리자페이지 JS (최종 정리본)
+       - 처음 저장: POST /api/game → 새 id 발급, URL ?id 갱신
+       - 이후 저장: PUT  /api/game/:id
+       - 진입 즉시 자동저장 없음
+       ========================= */
+
+    /* ---------- 현재 id ---------- */
+    // 페이지 맨 위 초기화 부분에 추가(또는 교체)
+    let CURRENT_ID = new URLSearchParams(location.search).get('id') || null;
+    if (CURRENT_ID) {
+        CURRENT_ID = String(CURRENT_ID);
+        localStorage.setItem('game_id', CURRENT_ID);
+    }
+
+
+    /* ---------- 유틸 ---------- */
+    const qs = (sel, root = document) => root.querySelector(sel);
+    const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+    const debounce = (fn, wait = 600) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), wait); }; };
+    const todayStr = () => {
+        const d = new Date();
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    };
+
+    /* ---------- 표 유틸 ---------- */
+    function isTotalRow(tr) {
+        const first = tr?.children?.[0];
+        if (!first) return false;
+        const label = (first.textContent || '').trim().toLowerCase();
+        return (first.colSpan && first.colSpan > 1) || label === 'total';
+    }
+    function armCell(td) {
+        td.contentEditable = 'true';
+        td.spellcheck = false;
+        td.style.outline = 'none';
+        td.style.userSelect = 'text';
+        td.setAttribute('tabindex', '0');
+        ['input', 'blur', 'keyup', 'paste'].forEach(ev => {
+            td.addEventListener(ev, () => {
+                if (typeof window.applyTeamNames === 'function') window.applyTeamNames();
+                if (typeof window.autoSave === 'function') window.autoSave();
+            });
+        });
+    }
+
+    // 교체: td,th 모두 활성 + autosave 이벤트 연결
+    function makeEditable(table, { skipHeader = true, skipCols = 0 } = {}) {
+        if (!table) return;
+        qsa('tr', table).forEach((tr, rIdx) => {
+            if (skipHeader && rIdx === 0) return;
+            qsa('td,th', tr).forEach((td, cIdx) => {
+                if (cIdx < skipCols) return;
+                armCell(td);
+            });
+        });
+    }
+    function tableToArray(table) {
+        if (!table) return [];
+        return qsa('tr', table).map(tr => qsa('td,th', tr).map(td => (td.textContent || '').trim()));
+    }
+
+    function fillTable(table, data) {
+        if (!table || !Array.isArray(data)) return;
+        const trs = qsa('tr', table);
+        data.forEach((row, rIdx) => {
+            if (!trs[rIdx]) return;
+            const tds = qsa('td,th', trs[rIdx]);
+            row.forEach((val, cIdx) => { if (tds[cIdx]) tds[cIdx].textContent = val; });
+        });
+    }
+    function kvTableToPairs(table) {
+        if (!table) return [];
+        const pairs = [];
+        qsa('tr', table).forEach(tr => {
+            const cells = tr.querySelectorAll('td,th');
+            if (cells.length >= 2) pairs.push([(cells[0].textContent || '').trim(), (cells[1].textContent || '').trim()]);
+        });
+        return pairs;
+    }
+    function fillKVTableFromPairs(table, pairs) {
+        if (!table) return;
+        const trs = table.querySelectorAll('tr');
+        pairs.forEach((pair, i) => {
+            const tr = trs[i]; if (!tr) return;
+            const cells = tr.querySelectorAll('td,th');
+            if (cells[0]) cells[0].textContent = pair[0] ?? '';
+            if (cells[1]) cells[1].textContent = pair[1] ?? '';
+        });
+    }
+    function extractRows(tableEl, headerRows = 1, removeTotal = false) {
+        if (!tableEl) return { headerRows, rows: [] };
+        const trs = Array.from(tableEl.querySelectorAll('tr'));
+        const dataTrs = trs.slice(headerRows);
+        if (removeTotal && dataTrs.length && isTotalRow(dataTrs[dataTrs.length - 1])) {
+            dataTrs.pop();
+        }
+        const rows = dataTrs.map(tr => Array.from(tr.children).map(td => (td.textContent || '').trim()));
+        return { headerRows, rows };
+    }
+
+    function makeSummaryEditable(table) {
+        if (!table) return;
+        const trs = qsa('tr', table);
+        trs.forEach((tr, rIdx) => {
+            // 헤더가 없다면 rIdx 조건 제거해도 됨
+            const cells = qsa('td,th', tr);
+            cells.forEach((cell, cIdx) => {
+                if (cIdx === 1) armCell(cell); // 값 칸만 편집
+                else {
+                    cell.contentEditable = 'false';
+                    cell.removeAttribute('tabindex');
                 }
             });
         });
+    }
+
+    /* ---------- 수집 ---------- */
+    function collectFourTablesSnapshot() {
+        const hitterA = qs('.teamA_hitter_result table');
+        const hitterB = qs('.teamB_hitter_result table');
+        const pitcherA = qs('.teamA_pitcher_result table');
+        const pitcherB = qs('.teamB_pitcher_result table');
+        return {
+            tables: {
+                hitterA: extractRows(hitterA, 1, false),   // ← Total 유지
+                hitterB: extractRows(hitterB, 1, false),
+                pitcherA: extractRows(pitcherA, 1, false),
+                pitcherB: extractRows(pitcherB, 1, false),
+            }
+        };
+    }
+    function collectTeamNames() {
+        const scoreTable = qs('.result_table table');
+        if (!scoreTable) return { teamAName: 'TeamA', teamBName: 'TeamB' };
+        const rows = scoreTable.querySelectorAll('tr');
+        const pick = (row) => {
+            if (!row) return '';
+            const cell = row.querySelector('td:nth-child(2), th:nth-child(2)') || row.querySelector('td,th');
+            return (cell?.textContent || '').trim();
+        };
+        return {
+            teamAName: pick(rows[1]) || 'TeamA',
+            teamBName: pick(rows[2]) || 'TeamB',
+        };
+    }
+
+
+    function collectScoreTable() {
+        return tableToArray(qs('.result_table table')); // td,th 모두 수집
+    }
+    function collectSummaryPairs() {
+        return kvTableToPairs(qs('.result_table_bottom table'));
+    }
+
+    function collectScoreTableRowsOnly() {
+        const tbl = qs('.result_table table');
+        if (!tbl) return [];
+        const arr = tableToArray(tbl); // 헤더 포함 상태일 수 있음
+        const hasHeader = !!tbl.querySelector('tr th');
+        return hasHeader ? arr.slice(1) : arr; // ★ 헤더 1행 제거
+    }
+
+    function collectSummaryPairs() {
+        return kvTableToPairs(qs('.result_table_bottom table'));
+    }
+
+    function buildPayload(dateOverride) {
+        const gameDate = dateOverride || (qs('#gameDateInput')?.value?.trim() || qs('#gameDate')?.value?.trim() || todayStr());
+        const { teamAName, teamBName } = collectTeamNames();
+        const snap4 = collectFourTablesSnapshot();
+
+        const scoreTable = collectScoreTableRowsOnly(); // ★ 데이터 행만
+        const summaryTable = collectSummaryPairs();       // ★ [키,값] 배열
+
+        return {
+            gameDate, teamAName, teamBName,
+            scoreTable,            // ★ 포함
+            summaryTable,          // ★ 포함
+            ...snap4,              // tables.hitterA/B/pitcherA/B
+            savedAt: new Date().toISOString()
+        };
+    }
+
+
+    /* ---------- DOM 참조 ---------- */
+    const scoreTableEl = qs('.result_table table');
+    const summaryTableEl = qs('.result_table_bottom table');
+    const teamA_hitterEl = qs('.teamA_hitter_result table');
+    const teamB_hitterEl = qs('.teamB_hitter_result table');
+    const teamA_pitcherEl = qs('.teamA_pitcher_result table');
+    const teamB_pitcherEl = qs('.teamB_pitcher_result table');
+
+    /* ---------- 서버 통신 ---------- */
+    async function createGame(payload) {
+        const res = await fetch('/api/game', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        let json = {};
+        try { json = await res.json(); } catch (_) { }
+
+        if (!res.ok || !json?.id) {
+            const msg = json?.error || `CREATE 실패 (status ${res.status})`;
+            throw new Error(msg);
+        }
+
+        CURRENT_ID = String(json.id);
+        localStorage.setItem('game_id', CURRENT_ID);
+        history.replaceState(null, '', `?id=${encodeURIComponent(CURRENT_ID)}`);
+        return json.id;
+    }
+
+
+    async function updateGame(id, payload) {
+        // ✅ PUT에는 날짜를 싣지 않음 (서버도 거부하지만, 클라에서 먼저 방어)
+        const safe = { ...payload };
+        if ('gameDate' in safe) delete safe.gameDate;
+        if ('game_date' in safe) delete safe.game_date;
+
+        const res = await fetch(`/api/game/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(safe),
+        });
+
+        let json = {};
+        try { json = await res.json(); } catch (_) { }
+
+        if (res.status === 404) return { notFound: true };
+        if (res.status === 409) {
+            // 날짜 불일치로 서버가 막은 경우: 자동저장 등에서 온 잘못된 호출
+            console.warn('PUT blocked due to date_mismatch. Ignore autosave.');
+            return { ok: false, blocked: true, reason: 'date_mismatch' };
+        }
+        if (!res.ok || json?.ok === false) {
+            const msg = json?.error || `UPDATE 실패 (status ${res.status})`;
+            throw new Error(msg);
+        }
+        return { ok: true };
+    }
+
+    async function getGameMeta(id) {
+        try {
+            const res = await fetch(`/api/game/${id}`, { cache: 'no-store' });
+            if (!res.ok) return null;
+            return await res.json(); // { gameDate, ... }
+        } catch { return null; }
+    }
+
+    async function saveSnapshot(payload, { silent = false, allowNewOnDateChange = true } = {}) {
+        // 날짜 문자열만 비교(Y-m-d만 비교하도록 슬라이스)
+        const newDate = (payload.gameDate || '').slice(0, 10);
+
+        if (CURRENT_ID) {
+            const meta = await getGameMeta(CURRENT_ID); // 기존 저장본
+            const oldDate = (meta?.gameDate || '').slice(0, 10);
+
+            // ✅ 날짜가 다르면: 같은 ID에 덮어쓰지 말고 새로 생성
+            if (allowNewOnDateChange && oldDate && newDate && oldDate !== newDate) {
+                CURRENT_ID = null;
+                localStorage.removeItem('game_id');
+                const newId = await createGame(payload); // POST → 새 id
+                if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
+                return;
+            }
+
+            // 날짜가 같으면 기존 ID에 업데이트
+            const res = await updateGame(CURRENT_ID, payload);
+            if (res.status === 404) { // 주소엔 id 있는데 db엔 없음 → 새로 생성
+                const newId = await createGame(payload);
+                if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
+                return;
+            }
+            if (!silent) alert('저장 완료');
+            return;
+        }
+
+        // CURRENT_ID가 없으면 새로 생성
+        const newId = await createGame(payload);
+        if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
+    }
 
 
 
+    // async function loadData() {
+    //     if (!CURRENT_ID) { alert('불러올 id가 없습니다. 먼저 저장하세요.'); return; }
+    //     const res = await fetch(`/api/game/${CURRENT_ID}`, { cache: 'no-store' });
+    //     if (!res.ok) { alert('저장된 데이터가 없습니다.'); return; }
+    //     const data = await res.json();
+
+    //     const dateInput = qs('#gameDateInput') || qs('#gameDate');
+    //     if (data.gameDate) dateInput && (dateInput.value = data.gameDate);
+
+    //     if (data.scoreTable) fillTable(scoreTableEl, data.scoreTable);
+
+    //     if (Array.isArray(data.summaryTable)) {
+    //         fillKVTableFromPairs(summaryTableEl, data.summaryTable);
+    //     } else if (data.summaryTable && typeof data.summaryTable === 'object') {
+    //         const pairs = Array.from(summaryTableEl.querySelectorAll('tr')).map(tr => {
+    //             const key = tr.querySelectorAll('td,th')[0]?.textContent.trim() || '';
+    //             const val = data.summaryTable[key] ?? '';
+    //             return [key, val];
+    //         });
+    //         fillKVTableFromPairs(summaryTableEl, pairs);
+    //     }
+
+    //     if (data.teamA_hitter) fillTable(teamA_hitterEl, data.teamA_hitter);
+    //     if (data.teamB_hitter) fillTable(teamB_hitterEl, data.teamB_hitter);
+    //     if (data.teamA_pitcher) fillTable(teamA_pitcherEl, data.teamA_pitcher);
+    //     if (data.teamB_pitcher) fillTable(teamB_pitcherEl, data.teamB_pitcher);
+
+    //     alert('📄 데이터 불러오기 완료');
+    // }
 
 
-        // 여기서부터 값 입력
+    async function loadData() {
+        // 0) URL의 ?id를 최우선으로 사용하고, 있으면 CURRENT_ID 갱신
+        const urlId = new URLSearchParams(location.search).get('id');
+        if (urlId) CURRENT_ID = String(urlId);
+
+        if (!CURRENT_ID) { alert('불러올 id가 없습니다. 먼저 저장하세요.'); return; }
+
+        // 1) 캐시 무효화 + no-store
+        const res = await fetch(`/api/game/${encodeURIComponent(CURRENT_ID)}?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) { alert('저장된 데이터가 없습니다.'); return; }
+        const raw = await res.json();
+
+        // 2) 응답 형태 정규화: { ok, id, gameDate, ...payload } or { gameDate, payload:{...} } or row.payload=string
+        let data = raw;
+        if (raw && typeof raw === 'object') {
+            if ('payload' in raw && raw.payload && typeof raw.payload === 'string') {
+                try { raw.payload = JSON.parse(raw.payload); } catch { }
+            }
+            if (raw && raw.payload && typeof raw.payload === 'object') {
+                // 서버가 { ok, id, gameDate, ...payload } 형태가 아니라 { gameDate, payload:{...} } 로 주는 경우 payload를 펼침
+                data = { gameDate: raw.gameDate ?? raw.payload.gameDate, ...raw.payload };
+            }
+        }
+
+        // 3) 화면 초기화(이전 id 내용 잔존 방지)
+        try {
+            // 테이블/입력 초기화 헬퍼가 있으면 사용, 없으면 간단 초기화
+            const simpleClearTable = (el) => {
+                if (!el) return;
+                const rows = el.querySelectorAll('tr');
+                rows.forEach((tr, i) => {
+                    const cells = tr.querySelectorAll('td,th');
+                    // 헤더는 보존, 데이터셀 비우기
+                    cells.forEach((cell, ci) => {
+                        if (cell.tagName === 'TD') cell.textContent = '';
+                        // 필요시 input 요소 초기화
+                        const inp = cell.querySelector('input,textarea');
+                        if (inp) inp.value = '';
+                    });
+                });
+            };
+            const simpleClearKV = (el) => {
+                if (!el) return;
+                const rows = el.querySelectorAll('tr');
+                rows.forEach(tr => {
+                    const tds = tr.querySelectorAll('td,th');
+                    if (tds.length >= 2) {
+                        const valCell = tds[1];
+                        valCell.textContent = '';
+                        const inp = valCell.querySelector('input,textarea');
+                        if (inp) inp.value = '';
+                    }
+                });
+            };
+
+            // 실제 엘리먼트 변수명은 너가 이미 갖고 있는 걸 사용
+            simpleClearTable(scoreTableEl);
+            simpleClearKV(summaryTableEl);
+            simpleClearTable(teamA_hitterEl);
+            simpleClearTable(teamB_hitterEl);
+            simpleClearTable(teamA_pitcherEl);
+            simpleClearTable(teamB_pitcherEl);
+        } catch (e) {
+            console.warn('[loadData] clear UI skipped:', e);
+        }
+
+        // 4) 날짜 입력 설정
+        const dateInput = qs('#gameDateInput') || qs('#gameDate');
+        const normalizedDate = (data.gameDate || '').slice(0, 10); // 'YYYY-MM-DD'
+        if (dateInput && normalizedDate) dateInput.value = normalizedDate;
+
+        // 5) 표/섹션 주입
+        //  - 네 기존 헬퍼(fillTable, fillKVTableFromPairs)를 그대로 사용
+        if (data.scoreTable) fillTable(scoreTableEl, data.scoreTable);
+
+        if (Array.isArray(data.summaryTable)) {
+            fillKVTableFromPairs(summaryTableEl, data.summaryTable);
+        } else if (data.summaryTable && typeof data.summaryTable === 'object') {
+            const pairs = Array.from(summaryTableEl.querySelectorAll('tr')).map(tr => {
+                const key = tr.querySelectorAll('td,th')[0]?.textContent.trim() || '';
+                const val = data.summaryTable[key] ?? '';
+                return [key, val];
+            });
+            fillKVTableFromPairs(summaryTableEl, pairs);
+        }
+
+        if (data.teamA_hitter) fillTable(teamA_hitterEl, data.teamA_hitter);
+        if (data.teamB_hitter) fillTable(teamB_hitterEl, data.teamB_hitter);
+        if (data.teamA_pitcher) fillTable(teamA_pitcherEl, data.teamA_pitcher);
+        if (data.teamB_pitcher) fillTable(teamB_pitcherEl, data.teamB_pitcher);
+
+        // 6) 최종 확인용 로그
+        console.log('[loadData] loaded id=', CURRENT_ID, 'date=', normalizedDate, data);
+
+        alert('📄 데이터 불러오기 완료');
+    }
+
+
+    /* ---------- 관리자 바 (버튼만 생성, 이벤트는 별도) ---------- */
+    function setupAdminBar() {
+        if (document.querySelector('.admin-bar')) return;
+        const bar = document.createElement('div');
+        bar.className = 'admin-bar';
+        bar.style = 'position:sticky;top:0;padding:10px;background:#fff8c4;border:1px solid #ccc;z-index:999;';
+        bar.innerHTML = `
+    <b>관리자 모드</b>
+    <button id="loadBtn" style="margin-left:10px;" type="button">불러오기</button>
+    <button id="saveBtn" style="margin-left:10px;" type="button">저장</button>
+  `;
+        qs('.scoreboard')?.before(bar);
+    }
+
+    /* ---------- 팀명 반영 + 자동저장(입력 시에만) ---------- */
+    window.applyTeamNames = () => { };
+    (function setupTeamnameAndAutosave() {
+        if (!scoreTableEl) return;
+        const rows = scoreTableEl.querySelectorAll('tr');
+
+        function getTeamNameFromRow(row) {
+            if (!row) return '';
+            const cell = row.querySelector('td:nth-child(2), th:nth-child(2)') || row.querySelector('td,th');
+            return (cell?.textContent || '').trim();
+        }
+
+        window.autoSave = debounce(async () => {
+            try {
+                await saveSnapshot(buildPayload(), { silent: true, allowNewOnDateChange: false }); // ← 자동저장: 새로 안 만듦
+            } catch (e) { console.warn('자동 저장 실패:', e); }
+        }, 800);
 
 
 
-
-
-        // ============================
-        // 관리자 페이지 JS (최종 정리본: AUTO_INCREMENT 대응)
-        // ============================
-
-        /* ---------- 공통 상태 ---------- */
-        // URL ?id 또는 localStorage('game_id') 기준으로 현재 문서가 편집 중인 레코드 식별
-
-        /* =========================
-           관리자페이지 JS (최종 정리본)
-           - 처음 저장: POST /api/game → 새 id 발급, URL ?id 갱신
-           - 이후 저장: PUT  /api/game/:id
-           - 진입 즉시 자동저장 없음
-           ========================= */
-
-        /* ---------- 현재 id ---------- */
-        let CURRENT_ID =
-            new URLSearchParams(location.search).get('id') ||
-            localStorage.getItem('game_id') ||
-            null;
-
-        /* ---------- 유틸 ---------- */
-        const qs = (sel, root = document) => root.querySelector(sel);
-        const qsa = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-        const debounce = (fn, wait = 600) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), wait); }; };
-        const todayStr = () => {
-            const d = new Date();
-            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        window.applyTeamNames = () => {
+            const teamA = getTeamNameFromRow(rows[1]) || 'TeamA';
+            const teamB = getTeamNameFromRow(rows[2]) || 'TeamB';
+            qsa('.teamA_hitter_result p').forEach(el => el.textContent = `${teamA} 타자 기록`);
+            qsa('.teamB_hitter_result p').forEach(el => el.textContent = `${teamB} 타자 기록`);
+            qsa('.teamA_pitcher_result p').forEach(el => el.textContent = `${teamA} 투수 기록`);
+            qsa('.teamB_pitcher_result p').forEach(el => el.textContent = `${teamB} 투수 기록`);
+            // 초기 진입 시 자동 호출 없음 (입력 이벤트에서만 호출)
         };
 
-        /* ---------- 표 유틸 ---------- */
-        function isTotalRow(tr) {
-            const first = tr?.children?.[0];
-            if (!first) return false;
-            const label = (first.textContent || '').trim().toLowerCase();
-            return (first.colSpan && first.colSpan > 1) || label === 'total';
-        }
-        function armCell(td) {
+        [1, 2].forEach((rIdx) => {
+            const tds = rows[rIdx]?.querySelectorAll('td,th');
+            if (!tds) return;
+            tds.forEach((cell) => {
+                cell.contentEditable = 'true';
+                cell.style.outline = 'none';
+                cell.spellcheck = false;
+                ['input', 'blur', 'keyup', 'paste'].forEach(evt => {
+                    cell.addEventListener(evt, () => {
+                        window.applyTeamNames();
+                        window.autoSave();
+                    });
+                });
+            });
+        });
+    })();
+
+    /* ---------- 기본 편집 가능 영역 ---------- */
+    makeEditable(scoreTableEl, { skipHeader: true, skipCols: 2 });
+    makeEditable(teamA_hitterEl, { skipHeader: true, skipCols: 3 });
+    makeEditable(teamB_hitterEl, { skipHeader: true, skipCols: 3 });
+    makeEditable(teamA_pitcherEl, { skipHeader: true, skipCols: 1 });
+    makeEditable(teamB_pitcherEl, { skipHeader: true, skipCols: 1 });
+
+    makeSummaryEditable(summaryTableEl);
+
+    /* ---------- 초기화(옵션 no-op) ---------- */
+    function clearScoreTable() { }
+    function clearSummaryTable() { }
+    function clearHitterTable(tbl) { }
+    function clearPitcherTable(tbl) { }
+    function resetAdminPageToEmpty() {
+        const dateInput = qs('#gameDateInput') || qs('#gameDate');
+        if (dateInput) dateInput.value = '';
+        clearScoreTable(); clearSummaryTable();
+        clearHitterTable(teamA_hitterEl); clearHitterTable(teamB_hitterEl);
+        clearPitcherTable(teamA_pitcherEl); clearPitcherTable(teamB_pitcherEl);
+    }
+
+    /* ---------- 우클릭 컨텍스트 메뉴 ---------- */
+    (() => {
+        const editableTables = document.querySelectorAll(
+            '.result_table table, .teamA_hitter_result table, .teamB_hitter_result table, .teamA_pitcher_result table, .teamB_pitcher_result table'
+        );
+        const menu = document.getElementById('tableCtxMenu');
+        if (!menu) return;
+
+        let targetCell = null;
+
+        const armCell = (td) => {
             td.contentEditable = 'true';
-            td.spellcheck = false;
             td.style.outline = 'none';
-            td.style.userSelect = 'text';
-            td.setAttribute('tabindex', '0');
+            td.spellcheck = false;
             ['input', 'blur', 'keyup', 'paste'].forEach(ev => {
                 td.addEventListener(ev, () => {
                     if (typeof window.applyTeamNames === 'function') window.applyTeamNames();
                     if (typeof window.autoSave === 'function') window.autoSave();
                 });
             });
-        }
+        };
 
-        // 교체: td,th 모두 활성 + autosave 이벤트 연결
-        function makeEditable(table, { skipHeader = true, skipCols = 0 } = {}) {
-            if (!table) return;
-            qsa('tr', table).forEach((tr, rIdx) => {
-                if (skipHeader && rIdx === 0) return;
-                qsa('td,th', tr).forEach((td, cIdx) => {
-                    if (cIdx < skipCols) return;
-                    armCell(td);
-                });
-            });
-        }
-        function tableToArray(table) {
-            if (!table) return [];
-            return qsa('tr', table).map(tr => qsa('td,th', tr).map(td => (td.textContent || '').trim()));
-        }
+        const cellInfo = (cell) => {
+            const tr = cell.closest('tr');
+            const table = cell.closest('table');
+            const section = tr.parentNode; // THEAD/TBODY/TFOOT
+            const rows = Array.from(section.children).filter(el => el.tagName === 'TR');
+            const rowIndex = rows.indexOf(tr);
+            return { table, section, tr, rowIndex, cols: tr.cells.length };
+        };
 
-        function fillTable(table, data) {
-            if (!table || !Array.isArray(data)) return;
-            const trs = qsa('tr', table);
-            data.forEach((row, rIdx) => {
-                if (!trs[rIdx]) return;
-                const tds = qsa('td,th', trs[rIdx]);
-                row.forEach((val, cIdx) => { if (tds[cIdx]) tds[cIdx].textContent = val; });
-            });
-        }
-        function kvTableToPairs(table) {
-            if (!table) return [];
-            const pairs = [];
-            qsa('tr', table).forEach(tr => {
-                const cells = tr.querySelectorAll('td,th');
-                if (cells.length >= 2) pairs.push([(cells[0].textContent || '').trim(), (cells[1].textContent || '').trim()]);
-            });
-            return pairs;
-        }
-        function fillKVTableFromPairs(table, pairs) {
-            if (!table) return;
-            const trs = table.querySelectorAll('tr');
-            pairs.forEach((pair, i) => {
-                const tr = trs[i]; if (!tr) return;
-                const cells = tr.querySelectorAll('td,th');
-                if (cells[0]) cells[0].textContent = pair[0] ?? '';
-                if (cells[1]) cells[1].textContent = pair[1] ?? '';
-            });
-        }
-        function extractRows(tableEl, headerRows = 1, removeTotal = false) {
-            if (!tableEl) return { headerRows, rows: [] };
-            const trs = Array.from(tableEl.querySelectorAll('tr'));
-            const dataTrs = trs.slice(headerRows);
-            if (removeTotal && dataTrs.length && isTotalRow(dataTrs[dataTrs.length - 1])) {
-                dataTrs.pop();
+        const insertRow = (info, where = 'below') => {
+            const { section, rowIndex, cols } = info;
+            const idx = (where === 'above' ? rowIndex : rowIndex + 1);
+            const newTr = section.insertRow(idx);
+            for (let i = 0; i < cols; i++) {
+                const td = newTr.insertCell(-1);
+                td.textContent = '';
+                armCell(td);
             }
-            const rows = dataTrs.map(tr => Array.from(tr.children).map(td => (td.textContent || '').trim()));
-            return { headerRows, rows };
-        }
+        };
 
-        function makeSummaryEditable(table) {
-            if (!table) return;
-            const trs = qsa('tr', table);
-            trs.forEach((tr, rIdx) => {
-                // 헤더가 없다면 rIdx 조건 제거해도 됨
-                const cells = qsa('td,th', tr);
-                cells.forEach((cell, cIdx) => {
-                    if (cIdx === 1) armCell(cell); // 값 칸만 편집
-                    else {
-                        cell.contentEditable = 'false';
-                        cell.removeAttribute('tabindex');
-                    }
-                });
+        const deleteRow = (info) => {
+            const { section, rowIndex } = info;
+            if (section.tagName === 'THEAD') return alert('헤더 행은 삭제할 수 없어요.');
+            section.deleteRow(rowIndex);
+        };
+
+        editableTables.forEach(tbl => {
+            tbl.addEventListener('contextmenu', (e) => {
+                const cell = e.target.closest('td,th');
+                if (!cell || !tbl.contains(cell)) return;
+                e.preventDefault();
+                targetCell = cell;
+                const { clientX: x, clientY: y } = e;
+                menu.style.left = x + 'px';
+                menu.style.top = y + 'px';
+                menu.style.display = 'block';
             });
-        }
-
-        /* ---------- 수집 ---------- */
-        function collectFourTablesSnapshot() {
-            const hitterA = qs('.teamA_hitter_result table');
-            const hitterB = qs('.teamB_hitter_result table');
-            const pitcherA = qs('.teamA_pitcher_result table');
-            const pitcherB = qs('.teamB_pitcher_result table');
-            return {
-                tables: {
-                    hitterA: extractRows(hitterA, 1, false),   // ← Total 유지
-                    hitterB: extractRows(hitterB, 1, false),
-                    pitcherA: extractRows(pitcherA, 1, false),
-                    pitcherB: extractRows(pitcherB, 1, false),
-                }
-            };
-        }
-        function collectTeamNames() {
-            const scoreTable = qs('.result_table table');
-            if (!scoreTable) return { teamAName: 'TeamA', teamBName: 'TeamB' };
-            const rows = scoreTable.querySelectorAll('tr');
-            const pick = (row) => {
-                if (!row) return '';
-                const cell = row.querySelector('td:nth-child(2), th:nth-child(2)') || row.querySelector('td,th');
-                return (cell?.textContent || '').trim();
-            };
-            return {
-                teamAName: pick(rows[1]) || 'TeamA',
-                teamBName: pick(rows[2]) || 'TeamB',
-            };
-        }
-
-
-        function collectScoreTable() {
-            return tableToArray(qs('.result_table table')); // td,th 모두 수집
-        }
-        function collectSummaryPairs() {
-            return kvTableToPairs(qs('.result_table_bottom table'));
-        }
-
-        function collectScoreTableRowsOnly() {
-            const tbl = qs('.result_table table');
-            if (!tbl) return [];
-            const arr = tableToArray(tbl); // 헤더 포함 상태일 수 있음
-            const hasHeader = !!tbl.querySelector('tr th');
-            return hasHeader ? arr.slice(1) : arr; // ★ 헤더 1행 제거
-        }
-
-        function collectSummaryPairs() {
-            return kvTableToPairs(qs('.result_table_bottom table'));
-        }
-
-        function buildPayload(dateOverride) {
-            const gameDate = dateOverride || (qs('#gameDateInput')?.value?.trim() || qs('#gameDate')?.value?.trim() || todayStr());
-            const { teamAName, teamBName } = collectTeamNames();
-            const snap4 = collectFourTablesSnapshot();
-
-            const scoreTable = collectScoreTableRowsOnly(); // ★ 데이터 행만
-            const summaryTable = collectSummaryPairs();       // ★ [키,값] 배열
-
-            return {
-                gameDate, teamAName, teamBName,
-                scoreTable,            // ★ 포함
-                summaryTable,          // ★ 포함
-                ...snap4,              // tables.hitterA/B/pitcherA/B
-                savedAt: new Date().toISOString()
-            };
-        }
-
-
-        /* ---------- DOM 참조 ---------- */
-        const scoreTableEl = qs('.result_table table');
-        const summaryTableEl = qs('.result_table_bottom table');
-        const teamA_hitterEl = qs('.teamA_hitter_result table');
-        const teamB_hitterEl = qs('.teamB_hitter_result table');
-        const teamA_pitcherEl = qs('.teamA_pitcher_result table');
-        const teamB_pitcherEl = qs('.teamB_pitcher_result table');
-
-        /* ---------- 서버 통신 ---------- */
-        async function createGame(payload) {
-            const res = await fetch('/api/game', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            let json = {};
-            try { json = await res.json(); } catch (_) { }
-
-            if (!res.ok || !json?.id) {
-                const msg = json?.error || `CREATE 실패 (status ${res.status})`;
-                throw new Error(msg);
-            }
-
-            CURRENT_ID = String(json.id);
-            localStorage.setItem('game_id', CURRENT_ID);
-            history.replaceState(null, '', `?id=${encodeURIComponent(CURRENT_ID)}`);
-            return json.id;
-        }
-
-
-        async function updateGame(id, payload) {
-            const res = await fetch(`/api/game/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            let json = {};
-            try { json = await res.json(); } catch (_) { }
-
-            if (res.status === 404) return { notFound: true };
-            if (!res.ok || json?.ok === false) {
-                const msg = json?.error || `UPDATE 실패 (status ${res.status})`;
-                throw new Error(msg);
-            }
-            return { ok: true };
-        }
-
-        async function getGameMeta(id) {
-            try {
-                const res = await fetch(`/api/game/${id}`, { cache: 'no-store' });
-                if (!res.ok) return null;
-                return await res.json(); // { gameDate, ... }
-            } catch { return null; }
-        }
-
-        async function saveSnapshot(payload, { silent = false, allowNewOnDateChange = true } = {}) {
-            // 날짜 문자열만 비교(Y-m-d만 비교하도록 슬라이스)
-            const newDate = (payload.gameDate || '').slice(0, 10);
-
-            if (CURRENT_ID) {
-                const meta = await getGameMeta(CURRENT_ID); // 기존 저장본
-                const oldDate = (meta?.gameDate || '').slice(0, 10);
-
-                // ✅ 날짜가 다르면: 같은 ID에 덮어쓰지 말고 새로 생성
-                if (allowNewOnDateChange && oldDate && newDate && oldDate !== newDate) {
-                    CURRENT_ID = null;
-                    localStorage.removeItem('game_id');
-                    const newId = await createGame(payload); // POST → 새 id
-                    if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
-                    return;
-                }
-
-                // 날짜가 같으면 기존 ID에 업데이트
-                const res = await updateGame(CURRENT_ID, payload);
-                if (res.status === 404) { // 주소엔 id 있는데 db엔 없음 → 새로 생성
-                    const newId = await createGame(payload);
-                    if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
-                    return;
-                }
-                if (!silent) alert('저장 완료');
-                return;
-            }
-
-            // CURRENT_ID가 없으면 새로 생성
-            const newId = await createGame(payload);
-            if (!silent) alert(`저장 완료 (새 ID: ${newId})`);
-        }
-
-
-
-        async function loadData() {
-            if (!CURRENT_ID) { alert('불러올 id가 없습니다. 먼저 저장하세요.'); return; }
-            const res = await fetch(`/api/game/${CURRENT_ID}`, { cache: 'no-store' });
-            if (!res.ok) { alert('저장된 데이터가 없습니다.'); return; }
-            const data = await res.json();
-
-            const dateInput = qs('#gameDateInput') || qs('#gameDate');
-            if (data.gameDate) dateInput && (dateInput.value = data.gameDate);
-
-            if (data.scoreTable) fillTable(scoreTableEl, data.scoreTable);
-
-            if (Array.isArray(data.summaryTable)) {
-                fillKVTableFromPairs(summaryTableEl, data.summaryTable);
-            } else if (data.summaryTable && typeof data.summaryTable === 'object') {
-                const pairs = Array.from(summaryTableEl.querySelectorAll('tr')).map(tr => {
-                    const key = tr.querySelectorAll('td,th')[0]?.textContent.trim() || '';
-                    const val = data.summaryTable[key] ?? '';
-                    return [key, val];
-                });
-                fillKVTableFromPairs(summaryTableEl, pairs);
-            }
-
-            if (data.teamA_hitter) fillTable(teamA_hitterEl, data.teamA_hitter);
-            if (data.teamB_hitter) fillTable(teamB_hitterEl, data.teamB_hitter);
-            if (data.teamA_pitcher) fillTable(teamA_pitcherEl, data.teamA_pitcher);
-            if (data.teamB_pitcher) fillTable(teamB_pitcherEl, data.teamB_pitcher);
-
-            alert('📄 데이터 불러오기 완료');
-        }
-
-        /* ---------- 관리자 바 (버튼만 생성, 이벤트는 별도) ---------- */
-        function setupAdminBar() {
-            if (document.querySelector('.admin-bar')) return;
-            const bar = document.createElement('div');
-            bar.className = 'admin-bar';
-            bar.style = 'position:sticky;top:0;padding:10px;background:#fff8c4;border:1px solid #ccc;z-index:999;';
-            bar.innerHTML = `
-    <b>관리자 모드</b>
-    <button id="loadBtn" style="margin-left:10px;" type="button">불러오기</button>
-    <button id="saveBtn" style="margin-left:10px;" type="button">저장</button>
-  `;
-            qs('.scoreboard')?.before(bar);
-        }
-
-        /* ---------- 팀명 반영 + 자동저장(입력 시에만) ---------- */
-        window.applyTeamNames = () => { };
-        (function setupTeamnameAndAutosave() {
-            if (!scoreTableEl) return;
-            const rows = scoreTableEl.querySelectorAll('tr');
-
-            function getTeamNameFromRow(row) {
-                if (!row) return '';
-                const cell = row.querySelector('td:nth-child(2), th:nth-child(2)') || row.querySelector('td,th');
-                return (cell?.textContent || '').trim();
-            }
-
-            window.autoSave = debounce(async () => {
-                try {
-                    await saveSnapshot(buildPayload(), { silent: true, allowNewOnDateChange: false }); // ← 자동저장: 새로 안 만듦
-                } catch (e) { console.warn('자동 저장 실패:', e); }
-            }, 800);
-
-
-
-            window.applyTeamNames = () => {
-                const teamA = getTeamNameFromRow(rows[1]) || 'TeamA';
-                const teamB = getTeamNameFromRow(rows[2]) || 'TeamB';
-                qsa('.teamA_hitter_result p').forEach(el => el.textContent = `${teamA} 타자 기록`);
-                qsa('.teamB_hitter_result p').forEach(el => el.textContent = `${teamB} 타자 기록`);
-                qsa('.teamA_pitcher_result p').forEach(el => el.textContent = `${teamA} 투수 기록`);
-                qsa('.teamB_pitcher_result p').forEach(el => el.textContent = `${teamB} 투수 기록`);
-                // 초기 진입 시 자동 호출 없음 (입력 이벤트에서만 호출)
-            };
-
-            [1, 2].forEach((rIdx) => {
-                const tds = rows[rIdx]?.querySelectorAll('td,th');
-                if (!tds) return;
-                tds.forEach((cell) => {
-                    cell.contentEditable = 'true';
-                    cell.style.outline = 'none';
-                    cell.spellcheck = false;
-                    ['input', 'blur', 'keyup', 'paste'].forEach(evt => {
-                        cell.addEventListener(evt, () => {
-                            window.applyTeamNames();
-                            window.autoSave();
-                        });
-                    });
-                });
-            });
-        })();
-
-        /* ---------- 기본 편집 가능 영역 ---------- */
-        makeEditable(scoreTableEl, { skipHeader: true, skipCols: 2 });
-        makeEditable(teamA_hitterEl, { skipHeader: true, skipCols: 3 });
-        makeEditable(teamB_hitterEl, { skipHeader: true, skipCols: 3 });
-        makeEditable(teamA_pitcherEl, { skipHeader: true, skipCols: 1 });
-        makeEditable(teamB_pitcherEl, { skipHeader: true, skipCols: 1 });
-
-        makeSummaryEditable(summaryTableEl);
-
-        /* ---------- 초기화(옵션 no-op) ---------- */
-        function clearScoreTable() { }
-        function clearSummaryTable() { }
-        function clearHitterTable(tbl) { }
-        function clearPitcherTable(tbl) { }
-        function resetAdminPageToEmpty() {
-            const dateInput = qs('#gameDateInput') || qs('#gameDate');
-            if (dateInput) dateInput.value = '';
-            clearScoreTable(); clearSummaryTable();
-            clearHitterTable(teamA_hitterEl); clearHitterTable(teamB_hitterEl);
-            clearPitcherTable(teamA_pitcherEl); clearPitcherTable(teamB_pitcherEl);
-        }
-
-        /* ---------- 우클릭 컨텍스트 메뉴 ---------- */
-        (() => {
-            const editableTables = document.querySelectorAll(
-                '.result_table table, .teamA_hitter_result table, .teamB_hitter_result table, .teamA_pitcher_result table, .teamB_pitcher_result table'
-            );
-            const menu = document.getElementById('tableCtxMenu');
-            if (!menu) return;
-
-            let targetCell = null;
-
-            const armCell = (td) => {
-                td.contentEditable = 'true';
-                td.style.outline = 'none';
-                td.spellcheck = false;
-                ['input', 'blur', 'keyup', 'paste'].forEach(ev => {
-                    td.addEventListener(ev, () => {
-                        if (typeof window.applyTeamNames === 'function') window.applyTeamNames();
-                        if (typeof window.autoSave === 'function') window.autoSave();
-                    });
-                });
-            };
-
-            const cellInfo = (cell) => {
-                const tr = cell.closest('tr');
-                const table = cell.closest('table');
-                const section = tr.parentNode; // THEAD/TBODY/TFOOT
-                const rows = Array.from(section.children).filter(el => el.tagName === 'TR');
-                const rowIndex = rows.indexOf(tr);
-                return { table, section, tr, rowIndex, cols: tr.cells.length };
-            };
-
-            const insertRow = (info, where = 'below') => {
-                const { section, rowIndex, cols } = info;
-                const idx = (where === 'above' ? rowIndex : rowIndex + 1);
-                const newTr = section.insertRow(idx);
-                for (let i = 0; i < cols; i++) {
-                    const td = newTr.insertCell(-1);
-                    td.textContent = '';
-                    armCell(td);
-                }
-            };
-
-            const deleteRow = (info) => {
-                const { section, rowIndex } = info;
-                if (section.tagName === 'THEAD') return alert('헤더 행은 삭제할 수 없어요.');
-                section.deleteRow(rowIndex);
-            };
-
-            editableTables.forEach(tbl => {
-                tbl.addEventListener('contextmenu', (e) => {
-                    const cell = e.target.closest('td,th');
-                    if (!cell || !tbl.contains(cell)) return;
-                    e.preventDefault();
-                    targetCell = cell;
-                    const { clientX: x, clientY: y } = e;
-                    menu.style.left = x + 'px';
-                    menu.style.top = y + 'px';
-                    menu.style.display = 'block';
-                });
-            });
-
-            menu.addEventListener('click', (e) => {
-                const act = e.target?.dataset?.act;
-                if (!act || !targetCell) return;
-                const info = cellInfo(targetCell);
-                if (act === 'insert-above') insertRow(info, 'above');
-                if (act === 'insert-below') insertRow(info, 'below');
-                if (act === 'delete-row') deleteRow(info);
-
-                if (typeof window.applyTeamNames === 'function') window.applyTeamNames();
-                if (typeof window.autoSave === 'function') window.autoSave();
-
-                menu.style.display = 'none';
-                targetCell = null;
-            });
-
-            document.addEventListener('click', (e) => {
-                if (!menu.contains(e.target)) { menu.style.display = 'none'; targetCell = null; }
-            });
-            window.addEventListener('scroll', () => menu.style.display = 'none');
-            window.addEventListener('resize', () => menu.style.display = 'none');
-
-            editableTables.forEach(tbl => tbl.querySelectorAll('td,th').forEach(armCell));
-        })();
-
-        /* ---------- 시작 ---------- */
-        document.addEventListener('DOMContentLoaded', () => {
-            setupAdminBar();              // 상단 바 생성(없으면)
-            // loadData();                 // 필요 시 주석 해제 (CURRENT_ID 있어야 함)
-            // resetAdminPageToEmpty();    // 개발 중엔 보통 비활성
-            // 저장/불러오기 버튼 바인딩 (여기서 단 한 번만)
-            const loadBtn = document.getElementById('loadBtn');
-            const saveBtn = document.getElementById('saveBtn');
-            if (loadBtn && !loadBtn.__bound) { loadBtn.__bound = true; loadBtn.addEventListener('click', loadData); }
-            if (saveBtn && !saveBtn.__bound) {
-                saveBtn.__bound = true;
-                if (!saveBtn.getAttribute('type')) saveBtn.setAttribute('type', 'button');
-                saveBtn.addEventListener('click', async (e) => {
-                    e.preventDefault(); e.stopPropagation();
-                    const dateInput = qs('#gameDateInput') || qs('#gameDate');
-                    const val = dateInput?.value?.trim();
-                    if (!val) { alert('날짜를 선택하세요'); dateInput?.focus(); return; }
-                    try {
-                        await saveSnapshot(buildPayload(val), { silent: false, allowNewOnDateChange: true }); // ← 수동저장: 날짜 다르면 새 ID
-                    } catch (err) {
-                        console.error(err); alert('저장 실패');
-                    }
-                });
-
-
-
-
-            }
         });
 
+        menu.addEventListener('click', (e) => {
+            const act = e.target?.dataset?.act;
+            if (!act || !targetCell) return;
+            const info = cellInfo(targetCell);
+            if (act === 'insert-above') insertRow(info, 'above');
+            if (act === 'insert-below') insertRow(info, 'below');
+            if (act === 'delete-row') deleteRow(info);
+
+            if (typeof window.applyTeamNames === 'function') window.applyTeamNames();
+            if (typeof window.autoSave === 'function') window.autoSave();
+
+            menu.style.display = 'none';
+            targetCell = null;
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!menu.contains(e.target)) { menu.style.display = 'none'; targetCell = null; }
+        });
+        window.addEventListener('scroll', () => menu.style.display = 'none');
+        window.addEventListener('resize', () => menu.style.display = 'none');
+
+        editableTables.forEach(tbl => tbl.querySelectorAll('td,th').forEach(armCell));
+    })();
+
+    /* ---------- 시작 ---------- */
+    document.addEventListener('DOMContentLoaded', () => {
+        setupAdminBar();
+        const loadBtn = document.getElementById('loadBtn');
+        const saveBtn = document.getElementById('saveBtn');
+
+        if (loadBtn && !loadBtn.__bound) {
+            loadBtn.__bound = true;
+            loadBtn.addEventListener('click', loadData);
+        }
+
+        if (saveBtn && !saveBtn.__bound) {
+            saveBtn.__bound = true;
+            if (!saveBtn.getAttribute('type')) saveBtn.setAttribute('type', 'button');
+
+            // ✅ 저장 버튼: 같은 날짜면 덮어쓰기 / 다른 날짜면 새로 추가 (항상 POST)
+            saveBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // 1️⃣ 날짜 가져오기
+                const dateInput = qs('#gameDateInput') || qs('#gameDate');
+                const gameDate = dateInput?.value?.trim();
+
+                if (!gameDate) {
+                    alert('날짜를 선택하세요');
+                    dateInput?.focus();
+                    return;
+                }
+
+                try {
+                    // 2️⃣ 화면에서 전체 데이터 수집
+                    // buildPayload는 기존 함수 그대로 사용 (전체 테이블 JSON 반환)
+                    const dataObj = buildPayload(gameDate);
+
+                    // 3️⃣ 서버로 보낼 페이로드 (날짜 반드시 포함)
+                    const payloadToSend = {
+                        gameDate,          // 날짜 기준으로 업서트
+                        payload: dataObj   // 경기 결과 전체 데이터(JSON)
+                    };
+
+                    // 4️⃣ 항상 POST (같은 날짜면 덮어쓰기, 다른 날짜면 새로 추가)
+                    console.log('[SAVE → POST /api/game]', payloadToSend);
+                    const newId = await createGame(payloadToSend);
+
+                    // 5️⃣ 성공 처리
+                    alert(`저장 완료! (ID: ${newId})`);
+                    console.log('[POST 완료] ID:', newId);
+
+                    // ✅ localStorage 및 URL 갱신 (createGame 내부에서 자동 처리)
+                    // 필요 시 CURRENT_ID 확인용 로그
+                    console.log('CURRENT_ID:', CURRENT_ID);
+
+                } catch (err) {
+                    console.error('[SAVE ERROR]', err);
+                    alert('저장 실패: ' + (err.message || '알 수 없는 오류'));
+                }
+            });
+        }
+    });
 
 
 
-    </script>
+
+</script>
 
 </body>
 

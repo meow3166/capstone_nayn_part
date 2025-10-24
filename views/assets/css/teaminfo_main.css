@@ -1,0 +1,158 @@
+/* 공통 스타일 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  /* 헤더 고정 확인용 최소 높이 지정 */
+  min-height: 110vh;
+}
+
+/* PC 버전 */
+@media (min-width: 769px) {
+  main {
+    margin: 0 20px;
+    /* background-color: red; */
+    height: 200px;
+  }
+
+  .legnedPlayer, .winText{
+    grid-column: 1 / -1;
+  }
+  .legnedPlayer p, .winText p{
+    font-size: 32px;
+    font-weight: bold;
+    display: block;
+  }
+
+  .legend, .win_year{
+    
+    /* background-color: aqua; */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 230px);
+    gap: 20px;
+    /* margin: 50px 200px;        좌우 여백 200px 유지 */
+    justify-content: center;
+    /* 그리드 트랙을 가운데 정렬 */
+    /* background-color: red; */
+    /* margin-top: 100px; */
+  }
+  .win_year{
+    margin-top: 70px;
+  }
+
+  .legend_player, .winPic{
+    width: 230px;
+    height: 270px;
+    border: 1px solid black;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .legend_player:hover {
+    border: 3px solid red;
+    cursor: pointer;
+  }
+
+  .legend_player img, .winPic img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 50% 10%;
+    background-color: #fff;
+  }
+
+  .legend_player .info, .winPic .info{
+    position: absolute;
+    bottom: 0;
+    /* 사진 아래쪽에 고정 */
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    
+
+    opacity: 1;
+    /* 항상 보이게 */
+  }
+}
+
+/*모바일 버전*/
+@media (max-width: 768px) {
+  main{
+    /* margin: 8px 10px; */
+    /* background-color: aqua; */
+    box-sizing: border-box;
+    overflow: hidden;
+    /* padding-top: 50px; */
+  }
+
+  .legnedPlayer, .winText{
+    grid-column: 1 / -1;
+  }
+  .legnedPlayer p, .winText p{
+    font-size: 32px;
+    font-weight: bold;
+    display: block;
+  }
+  
+  .legend, .win_year{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 160px);
+    gap: 15px;
+    /* margin: 50px 200px;        좌우 여백 200px 유지 */
+    justify-content: center;
+    /* 그리드 트랙을 가운데 정렬 */
+    /* background-color: red; */
+  }
+
+  .legend_player, .winPic{
+    width: 160px;
+    height: 210px;
+    border: 1px solid black;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .legend_player:hover {
+    border: 3px solid red;
+    cursor: pointer;
+  }
+
+  .win_year{
+    margin-top: 50px;
+  }
+
+  .legend_player img, .winPic img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: 50% 10%;
+    background-color: #fff;
+  }
+
+  .legend_player .info, .winPic .info{
+    position: absolute;
+    bottom: 0;
+    /* 사진 아래쪽에 고정 */
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    
+
+    opacity: 1;
+    /* 항상 보이게 */
+  }
+}

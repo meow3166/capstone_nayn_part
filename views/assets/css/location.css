@@ -464,6 +464,4 @@ nav,
 .mainmenu .sub {
   z-index: 9999 !important;
   /* 지도 위로 강제 */
-  position: relative;
-  /* 필요시 기준만 줌 (기존 값 유지 가능) */
-}
+}    

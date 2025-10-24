@@ -143,7 +143,7 @@ router.post('/lineup/save', requireLogin, async (req, res) => {
   try {
     const { game_date, game_time, venue, home_team_id, away_team_id } = req.body || {};
     if (!game_date || !game_time || !venue) return res.status(400).send('경기정보 누락');
-    if (!home_team_id || !away_team_id)     return res.status(400).send('팀 선택 누락');
+    if (!home_team_id || !away_team_id) return res.status(400).send('팀 선택 누락');
     if (String(home_team_id) === String(away_team_id)) return res.status(400).send('홈/원정이 같습니다');
 
     // 1) 경기 생성
@@ -158,7 +158,7 @@ router.post('/lineup/save', requireLogin, async (req, res) => {
     async function insertLineup(teamId, prefix) {
       for (let i = 1; i <= 10; i++) {
         const name = (req.body[`${prefix}_player_name_${i}`] || '').trim();
-        const pos  = (req.body[`${prefix}_position_${i}`]    || '').trim();
+        const pos = (req.body[`${prefix}_position_${i}`] || '').trim();
         if (name && pos) {
           await pool.query(
             `INSERT INTO \`${DB}\`.lineups (game_id, team_id, order_num, player_name, position_kr)
@@ -188,6 +188,97 @@ router.get('/gameinfo_result_admin', requireLogin, (req, res) => {
   // 템플릿 경로: views/gameinfo/gameinfo_result_admin.html
   res.render('admin/gameinfo_result_admin.html');
 });
+
+/* ------------------------------
+   ✅ 1) 게임 저장 (POST /api/game)
+   - 같은 날짜면 덮어쓰기
+   - 다른 날짜면 새로 추가
+-------------------------------- */
+// 예: routes/admin.js (또는 해당 라우터 파일)
+// 예: routers/public.js
+// router.post('/api/game', async (req, res) => {
+//   try {
+//     const { gameDate, payload } = req.body;
+//     if (!gameDate || !payload) {
+//       return res.status(400).json({ error: 'gameDate, payload는 필수입니다.' });
+//     }
+
+//     const sql = `
+//       INSERT INTO game_page (game_date, payload)
+//       VALUES (DATE(?), ?)
+//       ON DUPLICATE KEY UPDATE
+//         game_date = DATE(VALUES(game_date)),
+//         payload   = VALUES(payload),
+//         updated_at = CURRENT_TIMESTAMP,
+//         game_id  = LAST_INSERT_ID(game_id)
+//     `;
+
+//     const params = [gameDate, JSON.stringify(payload)];
+
+//     console.log('[UPSERT SQL 실행]', params);
+
+//     // 🚀 중요: execute() 사용
+//     const [result] = await pool.execute(sql, params);
+
+//     console.log('[UPSERT 결과]', result);
+
+//     return res.json({ id: result.insertId });
+//   } catch (err) {
+//     console.error('[POST /api/game] error:', err);
+//     return res.status(500).json({ error: err.sqlMessage || String(err) });
+//   }
+// });
+
+
+
+
+
+/* ------------------------------
+   ✅ 2) 특정 게임 수정 (PUT /api/game/:id)
+-------------------------------- */
+router.put('/api/game/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { payload } = req.body;
+    if (!payload) return res.status(400).json({ error: 'payload가 필요합니다.' });
+
+    const sql = `
+      UPDATE game_page
+      SET payload = ?, updated_at = CURRENT_TIMESTAMP
+      WHERE game_id = ?
+    `;
+    const [result] = await db.execute(sql, [JSON.stringify(payload), id]);
+
+    if (result.affectedRows === 0) return res.status(404).json({ error: '해당 id 없음' });
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('[PUT /api/game/:id] 오류:', err);
+    res.status(500).json({ error: err.sqlMessage || 'DB 오류' });
+  }
+});
+
+/* ------------------------------
+   ✅ 3) 특정 게임 불러오기 (GET /api/game/:id)
+-------------------------------- */
+router.get('/api/game/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const [rows] = await db.execute('SELECT * FROM game_page WHERE game_id = ?', [id]);
+    if (rows.length === 0) return res.status(404).json({ error: '데이터 없음' });
+
+    const row = rows[0];
+    // payload가 JSON이므로 파싱해주면 프런트에서 바로 사용 가능
+    if (typeof row.payload === 'string') {
+      try { row.payload = JSON.parse(row.payload); } catch { }
+    }
+
+    res.json(row);
+  } catch (err) {
+    console.error('[GET /api/game/:id] 오류:', err);
+    res.status(500).json({ error: err.sqlMessage || 'DB 오류' });
+  }
+});
+
 module.exports = router;
 
 

@@ -9,9 +9,9 @@
 
 /* 전역 변수 */
 :root {
-  --header-height: 100px;
+  /* --header-height: 100px; */
   /* 헤더 높이 */
-  --team-width: 250px;
+  /* --team-width: 250px; */
   /* 스코어보드 상단 Team 칸 전체 폭 */
 }
 

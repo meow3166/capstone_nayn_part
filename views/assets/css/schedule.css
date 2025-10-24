@@ -269,13 +269,19 @@ font-weight: bold;
     width: 120px; /* 각 팀 정보의 너비를 고정해 좌우 대칭 유지 */
 }
 
-.team-logo {
+.team-logo_1 {
     
     width: 100px; /* 로고 크기 */
     height: 100px;
     border: 1px solid #000;
     object-fit: contain; /* ✅ 이미지 비율을 유지하며 틀 안에 꽉 차게 */
+    
 
+}
+
+div.pitcher-results p{
+    font-size: 14px;
+   
 }
 
 

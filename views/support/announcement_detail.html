@@ -3,7 +3,7 @@
   <h1 class="page-title">공지사항</h1>
 
   <article class="detail" id="noticeDetail" data-id="">
-    <header class="detail-head">
+    <div class="detail-head">
 
 
       <h2 class="title">{{ notice.title }}</h2>
@@ -14,8 +14,8 @@
         </time>
         <span class="views">조회 {{ notice.view_count }}</span>
       </div>
-    </header>
-    
+    </div>
+
     <!-- 본문: 헤더 밖, 1회만 -->
     <section class="detail-body" id="content">
       {{ notice.content_md | safe }}
@@ -42,5 +42,7 @@
   })();
 </script>
 
+
 </body>
+<script src="/assets/js/menubar.js"></script>
 </html>

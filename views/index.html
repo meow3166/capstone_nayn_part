@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: sans-serif;
-            min-height: 100vh;
+            min-height: 120vh;
             background-image: url('./assets/img/background_2.png');
             background-repeat: no-repeat;
             background-position: center center;
@@ -33,7 +33,7 @@
             </div>
             <div class="whether">
                 <div class="whe_b">
-                    <P id="weather-info">날씨 정보를 불러오는 중입니다...</P>
+                    <P id="weather-info">{{weatherInfo}}</P>
                 </div>
             </div>
             <div class="member">
@@ -98,10 +98,8 @@
     <footer></footer>
     <!-- 메뉴바 js -->
     <script src="./assets/js/menubar.js"></script>
-    <!-- 날씨 api js -->
-    <script src="./assets/js/weather.js"></script>
     <!-- 챗봇 엔터 키 이벤트 js -->
-    <!-- <script src="./assets/js/chat.js"></script> -->
+    <script src="./assets/js/chat.js"></script>
 </body>
 
 </html>
