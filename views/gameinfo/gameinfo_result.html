@@ -1,10 +1,20 @@
 {%include "include/header.html"%}
 <main>
     <div class="scoreboard">
-        <div class="result">
-            <p> 경기결과 </p>
+        
+        
+        <div class="date_review_group">
+            <div class="result">
+                <p> 경기결과 </p>
+            </div>
+            <div class="result_date">
+                <h2></h2>
+            </div>
+            <div class="review">
+                <p> 리뷰 </p>
+            </div>
         </div>
-        <p class="review"> 리뷰 </p>
+        
         <div class="result_table">
             <table border="1">
                 <colgroup>
@@ -543,13 +553,13 @@
 </main>
 <footer></footer>
 
-    
+
 
 <div id="user-error" style="margin:8px 0;"></div>
 
 </body>
 <script>
-// function toggleMenu() {
+    // function toggleMenu() {
     //     // document.querySelector(".member").classList.toggle("show");
     // }
     const hamburger = document.querySelector('.hamburger');
@@ -836,5 +846,36 @@
 
     })();
 
+
+    // 날짜 표시
+    const gameinfo_id = new URLSearchParams(location.search).get('id');
+
+    (async () => {
+        if (!gameinfo_id) return;
+
+        try {
+            const res = await fetch(`/api/game/${gameinfo_id}/date`, { cache: 'no-store' });
+            if (!res.ok) throw new Error('not found');
+            const data = await res.json();
+
+            const el = document.querySelector('.result_date h2');
+
+            if (data.game_date) {
+                const [y, m, d] = data.game_date.split('-');
+                el.textContent = `${y}.${m}.${d}`;
+            } else {
+                el.textContent = '날짜 없음';
+            }
+        } catch (e) {
+            console.error(e);
+            document.querySelector('.result_date h2').textContent = '날짜를 불러올 수 없습니다';
+        }
+    })();
+
+
+
+
+
 </script>
+
 </html>

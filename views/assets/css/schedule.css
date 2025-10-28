@@ -20,9 +20,10 @@
     align-items: center;
 }
 
-.result {
+.result_schedule {
   width: 50%; /* 오른쪽 절반 차지 */
   margin: 50px;
+  /* height: 500px; */
 }
 
 /* 달력  */
@@ -278,11 +279,11 @@ font-weight: bold;
     
 
 }
-
+/* 
 div.pitcher-results p{
     font-size: 14px;
    
-}
+} */
 
 
 .vs-text {
@@ -329,15 +330,21 @@ div.pitcher-results p{
     font-size: 14px;
     color: #555;
     margin: 0;
+    background-color: red;
 }
 
 .pitcher-label {
     color: #007bff; /* '선' 글자 파란색 */
     font-weight: bold;
+    background-color: red;
 }
 
 
 /* ===== '경기 종료' 전용 스타일 ===== */
+
+.team-info p {
+    font-size: 14px !important;
+}
 
 .match-header {
     text-align: center;
@@ -366,11 +373,14 @@ div.pitcher-results p{
 .pitcher-results {
     font-size: 14px;
     line-height: 1.6;
+    background-color: red;
 }
 
 .pitcher-results p {
     margin: 0;
+    font-size: 14px;
 }
+
 
 .result-label {
     display: inline-block;

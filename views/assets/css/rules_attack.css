@@ -11,77 +11,152 @@ body {
   min-height: 110vh;
 }
 
-main {
-  margin: 0 235px;
-  /* background-color: red; */
-  height: auto;
-}
+@media (min-width: 769px) {
+  main {
+    margin: 0 235px;
+    /* background-color: red; */
+    height: auto;
+  }
 
-.rules_title {
-  margin-top: 50px;
-  /* background-color: antiquewhite; */
-}
+  .rules_title {
+    margin-top: 50px;
+    /* background-color: antiquewhite; */
+  }
 
-.rules_title p {
-  font-size: 32px;
-  font-weight: bold;
-  display: inline;
-  padding-bottom: 100px;
-}
+  .rules_title p {
+    font-size: 32px;
+    font-weight: bold;
+    display: inline;
+    padding-bottom: 100px;
+  }
 
 
-.rules_gicho {
-  margin-top: 50px;
-  /* background-color: wheat; */
-  margin-bottom: 150px;
-}
+  .rules_attack_gicho {
+    margin-top: 50px;
+    /* background-color: wheat; */
+    margin-bottom: 100px;
+  }
 
-.rules_gicho p {
-  font-size: 28px;
-  font-weight: bold;
-  /* background-color: blueviolet; */
-  padding-bottom: 10px;
-}
+  .rules_attack_gicho p {
+    font-size: 28px;
+    font-weight: bold;
+    /* background-color: blueviolet; */
+    padding-bottom: 10px;
+  }
 
-.rules_gicho ul {
-  margin-left: 30px;
-  /* font-weight: bold; */
-  font-size: 22px;
-}
 
-.rules_gicho img{
+
+  .rules_attack_gicho img {
     width: 40%;
     /* justify-content: right; */
     float: right;
-    margin-top: 20px;
-}
+
+  }
+
+  
+  .rules_ining,
+  .rules_list,
+  .rules_goOut,
+  .rules_Out,
+  .rules_attackPoint {
+    /* background-color: aqua; */
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  .rules_ining p,
+  .rules_list p,
+  .rules_goOut p,
+  .rules_Out p,
+  .rules_attackPoint p {
+    font-size: 28px;
+    font-weight: bold;
+    /* background-color: aquamarine; */
+    margin-bottom: 10px;
+  }
+
+  .rules_attack_gicho ul,
+  .rules_ining ul,
+  .rules_list ul,
+  .rules_goOut ul,
+  .rules_Out ul,
+  .rules_attackPoint ul {
+    margin-left: 30px;
+    /* font-weight: bold; */
+    font-size: 22px;
+  }
 
 
-
-
- .rules_ining, .rules_list, .rules_goOut, .rules_Out, .rules_attackPoint {
-  /* background-color: aqua; */
-  font-size: 22px;
-  margin-bottom: 30px;
-}
-
-.rules_ining p, .rules_list p, .rules_goOut p, .rules_Out p, .rules_attackPoint p {
-  font-size: 28px;
-  font-weight: bold;
-  /* background-color: aquamarine; */
-  margin-bottom: 10px;
-}
-
-.rules_ining ul, .rules_list ul, .rules_goOut ul, .rules_Out ul, .rules_attackPoint ul {
-  margin-left: 30px;
-  /* font-weight: bold; */
-  font-size: 22px;
-}
-
-
-.rules_list img{
+  .rules_list img {
     width: 60%;
     /* display: block;
     margin: 20px auto */
+
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    margin: 0 20px;
+    /* background-color: red; */
+    height: auto;
+  }
+
+  .rules_title {
+    margin-top: 20px;
+    /* background-color: antiquewhite; */
+  }
+
+  .rules_title p {
+    font-size: 32px;
+    font-weight: bold;
+    display: inline;
+    padding-bottom: 100px;
+  }
+
+  .rules_attack_gicho{
+    margin-top: 30px;
     
+   
+  }
+  
+  .rules_attack_gicho,
+  .rules_ining,
+  .rules_list,
+  .rules_goOut,
+  .rules_Out,
+  .rules_attackPoint {
+    /* background-color: aqua; */
+    font-size: 16px;
+    margin-bottom: 30px;
+    
+  }
+
+  .rules_attack_gicho p,
+  .rules_ining p,
+  .rules_list p,
+  .rules_goOut p,
+  .rules_Out p,
+  .rules_attackPoint p {
+    font-size: 25px;
+    font-weight: bold;
+    /* background-color: aquamarine; */
+    margin-bottom: 10px;
+  }
+
+  .rules_attack_gicho ul,
+  .rules_ining ul,
+  .rules_list ul,
+  .rules_goOut ul,
+  .rules_Out ul,
+  .rules_attackPoint ul {
+    margin-left: 20px;
+    /* font-weight: bold; */
+    font-size: 16px;
+    /* background-color: aquamarine; */
+  }
+
+  .rules_attack_gicho img, .rules_list img{
+    width: 100%;
+  }
 }

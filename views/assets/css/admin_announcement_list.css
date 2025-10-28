@@ -1,0 +1,267 @@
+/* =====================================
+   관리자 공지 리스트 전용 스타일
+   스코프: .admin-container
+   ===================================== */
+
+/* ----- 레이아웃 기본 ----- */
+.admin-container {
+  max-width: 1160px;
+  width: min(1160px, 95%);
+  margin: 40px auto 80px;
+  font-family: "Nanum Gothic", sans-serif;
+  color: #222;
+}
+
+.admin-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #0B3D91;
+}
+
+/* ----- 상단 버튼 영역 ----- */
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.admin-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  line-height: 1;
+  transition: all .15s ease;
+}
+
+.admin-actions .btn-primary {
+  background: #0B3D91;
+  color: #fff;
+  border-color: #0B3D91;
+}
+.admin-actions .btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.admin-actions .btn {
+  background: #f3f4f6;
+  color: #333;
+  border: 1px solid #d1d5db;
+}
+.admin-actions .btn:hover {
+  background: #e5e7eb;
+}
+
+/* ----- 테이블 ----- */
+.admin-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: 2px solid #0B3D91;
+  font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+.admin-table th {
+  background: #f9fafb;
+  font-weight: 700;
+  color: #0B3D91;
+}
+
+.admin-table .ta-left { text-align: left; }
+.admin-table .ta-center { text-align: center; }
+.admin-table .w-80 { width: 80px; }
+.admin-table .w-90 { width: 90px; }
+.admin-table .w-160 { width: 160px; }
+.admin-table .w-260 { width: 260px; }
+
+/* 제목 링크 / 분류 */
+.admin-table .link {
+  color: #0B3D91;
+  text-decoration: none;
+  font-weight: 600;
+}
+.admin-table .link:hover {
+  text-decoration: underline;
+}
+.admin-table .meta {
+  color: #777;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* ----- 관리 버튼 영역 ----- */
+.admin-table td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.admin-table td:last-child > :is(a, button, form) {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* 각 버튼 통일된 규격 */
+.admin-table .btn,
+.admin-table button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .15s ease;
+  line-height: 1;
+}
+
+/* 색상 규칙 */
+.admin-table .btn-primary {
+  background: #0B3D91;
+  color: #fff;
+  border-color: #0B3D91;
+}
+.admin-table .btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.admin-table .btn-danger {
+  background: #ffe5e5;
+  color: #b3261e;
+  border: 1px solid #ffd1d1;
+}
+.admin-table .btn-danger:hover {
+  background: #ffdcdc;
+}
+
+.admin-table .btn-ghost {
+  background: #f7f8fb;
+  color: #333;
+  border: 1px solid #e6e8ee;
+}
+.admin-table .btn-ghost:hover {
+  background: #eef0f4;
+}
+
+/* 비어 있을 때 */
+.admin-table .empty {
+  text-align: center;
+  color: #888;
+  padding: 40px 0;
+  font-size: 15px;
+}
+
+/* ----- 반응형 ----- */
+@media (max-width: 768px) {
+  .admin-table,
+  .admin-table thead,
+  .admin-table tbody,
+  .admin-table th,
+  .admin-table td,
+  .admin-table tr {
+    display: block;
+  }
+  .admin-table thead {
+    display: none;
+  }
+  .admin-table tr {
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .admin-table td {
+    border: none;
+    padding: 6px 0;
+  }
+  .admin-table td:last-child {
+    text-align: left;
+    margin-top: 8px;
+  }
+  .admin-table td:last-child > * {
+    margin: 4px 6px 0 0;
+  }
+}
+
+/* form을 인라인으로 */
+.admin-container .admin-table td:last-child form.inline { display:inline; }
+
+/* 버튼/뱃지 초기화 */
+.admin-container .admin-table td:last-child .btn,
+.admin-container .admin-table td:last-child button {
+  all: unset;                                /* ← 전역 스타일 완전 제거 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 34px;
+  padding: 0 12px;
+  margin-left: 8px;
+  border-radius: 8px;
+  border: 1px solid #e6e8ee;
+  font: 600 13px/1 "Nanum Gothic", sans-serif;
+  color: #333;
+  cursor: pointer;
+  background: #f7f8fb;
+  box-shadow: none !important;               /* ← 남아있는 그림자 강제 제거 */
+  background-image: none !important;         /* ← 그라데이션 제거 */
+  vertical-align: middle;
+  text-decoration: none;
+  transition: transform .05s ease, filter .15s ease, background .15s ease;
+}
+.admin-container .admin-table td:last-child .btn:active,
+.admin-container .admin-table td:last-child button:active {
+  transform: translateY(1px);
+}
+
+/* 변형(색상) */
+.admin-container .admin-table td:last-child .btn-ghost {
+  background: #fff;
+  border-color: #e6e8ee;
+  color: #333;
+}
+.admin-container .admin-table td:last-child .btn-ghost:hover {
+  background: #eef0f4;
+}
+
+.admin-container .admin-table td:last-child .btn-primary {
+  background: #0B3D91;
+  border-color: #0B3D91;
+  color: #fff;
+}
+.admin-container .admin-table td:last-child .btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.admin-container .admin-table td:last-child .btn-danger {
+  background: #ffe5e5;
+  border-color: #ffd1d1;
+  color: #b3261e;
+}
+.admin-container .admin-table td:last-child .btn-danger:hover {
+  background: #ffdcdc;
+}
+
+.admin-container .btn-primary:hover {
+  background: #e8edfb;   /* 밝은 하늘색 */
+  border-color: #0B3D91;
+  color: #0B3D91;        /* 글씨를 파랗게 */
+}

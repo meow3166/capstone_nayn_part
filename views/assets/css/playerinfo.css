@@ -50,38 +50,21 @@ main {
 
 /*버튼 디자인해야하는데 썅 디자인 하다가 뒤질거 같음*/
 
-.btn {
-
-  border-color: #005BAC;
-
-
-  border: none;
-  /* 기본 테두리 제거 */
-
+.player_btn {
   cursor: pointer;
   transition: all 0.25s ease;
-  /* 부드러운 효과 */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  /* 살짝 그림자 */
+  width: 50px;
+  height: 30px;
+  /* font-weight: bold; */
+  font-size: 16px;
+  
 }
 
-.btn:hover {
-  background-color: #0076ff;
-  /* 밝은 파랑 */
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-  /* 살짝 떠오르는 효과 */
+.player_btn:active {
+  background-color: #0076ff ;
 }
 
-.btn:active {
-  background-color: #004494;
-  /* 눌릴 때 약간 어둡게 */
-  transform: translateY(0);
-  /* 눌리면 다시 내려옴 */
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-}
-
-/* 두 버튼 나란히 중앙정렬하고 싶다면 (선택사항) */
+/* 두 버튼 나란히 중앙정렬 */
 .btn-container {
   text-align: center;
   margin-top: 30px;
@@ -92,10 +75,11 @@ main {
 /* pc 버전*/
 @media (min-width: 769px) {
 
-  main{
+  main {
     margin: 0 235px;
     /* background-color: red; */
   }
+
   .hitterInfo {
     /* background-color: green; */
 
@@ -183,8 +167,8 @@ main {
     /* 항상 보이게 */
   }
 
-  .btn[data-scroll-to="#outside"],
-  .btn[data-scroll-to="#catch"] {
+  .player_btn[data-scroll-to="#outside"],
+  .player_btn[data-scroll-to="#catch"] {
     display: none;
   }
 
@@ -213,9 +197,16 @@ main {
   .pitcherPlayer {
     grid-column: 1 / -1;
     /* 전체 열 가로지르기 */
-    display: flex;
+    /* display: flex; */
     align-items: center;
     gap: 8px;
+    justify-content: space-between;
+  }
+
+  .player_btn_group {
+    display: flex;
+    gap: 10px;
+    /* 버튼 간격 */
   }
 
   .inFielderPlayer>#inside,
@@ -240,7 +231,7 @@ main {
   .Catcher,
   .pitcher {
     display: grid;
-    grid-template-columns: repeat(auto-fit, 160px);
+    grid-template-columns: repeat(auto-fit, 150px);
     gap: 15px;
     /* margin: 50px 200px;        좌우 여백 200px 유지 */
     justify-content: center;
@@ -258,7 +249,7 @@ main {
 
   /* 카드: 칸 너비 100%, 높이는 비율로 자동 */
   .hitterInfo .player {
-    width: 160px;
+    width: 150px;
     height: 210px;
     border: 1px solid black;
     overflow: hidden;
@@ -298,12 +289,12 @@ main {
   } */
 
   #outside {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 50px;
     /*외야수 버튼*/
   }
 
   #catch {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 50px;
     /*외야수 버튼*/
   }
 }

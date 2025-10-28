@@ -1,0 +1,132 @@
+/* ================================
+   관리자 메인(대시보드) 전용 스타일
+   스코프: .admin-home 내부만 적용
+   ================================ */
+
+/* 공통 레이아웃 */
+.admin-home{
+  max-width:1160px;
+  width:min(1160px,95%);
+  margin:20px auto 60px;
+  padding:16px;
+  font-family:"Nanum Gothic",sans-serif;
+  color:#222;
+}
+
+/* 환영 섹션 */
+.admin-home .admin-welcome{
+  background:linear-gradient(135deg,#0B3D91 0%,#2349a8 100%);
+  color:#fff;
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+.admin-home .admin-welcome h1{
+  font-size:28px;
+  margin:0 0 10px;
+}
+.admin-home .admin-welcome p{
+  margin:0;
+  opacity:.95;
+}
+
+/* 카드 그리드 */
+.admin-home .admin-menu{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+  margin:24px 0 12px;
+  align-items:stretch; /* 같은 줄 카드 높이 통일 */
+}
+
+/* 카드 */
+.admin-home .admin-card{
+  grid-column:span 4;              /* 3열 */
+  background:#fff;
+  border:1px solid #e6e8ee;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  display:flex;                    /* 제목/본문/버튼 세로 배치 */
+  flex-direction:column;
+  min-height:190px;                /* 한 줄 카드 기본 높이 */
+}
+.admin-home .admin-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 28px rgba(0,0,0,.10);
+  border-color:#dbe0ea;
+}
+.admin-home .admin-card h2{
+  font-size:18px;
+  margin:0 0 10px;
+  color:#0B3D91;
+}
+.admin-home .admin-card p{
+  margin:0 0 12px;
+  color:#6b7280;
+  line-height:1.5;
+}
+
+/* 버튼: 작게 + 중앙정렬 + 하단 고정 */
+.admin-home .admin-card > .btn:first-of-type{
+  margin-top:auto;                 /* 첫 버튼을 아래로 밀어 하단 정렬 */
+}
+.admin-home .btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 12px;                /* 내부 여백(작게) */
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  border:1px solid transparent;
+  transition:background .15s ease, color .15s ease, border-color .15s ease, transform .05s ease;
+  cursor:pointer;
+  margin-right:10px;
+  margin-top:10px;
+  line-height:1.3;                 /* 텍스트 세로 균형 */
+}
+.admin-home .btn:active{ transform:translateY(1px); }
+
+.admin-home .btn-primary{
+  background:#0B3D91;
+  color:#fff;
+  border-color:#0B3D91;
+  box-shadow:0 8px 20px rgba(11,61,145,.18);
+}
+.admin-home .btn-primary:hover{ filter:brightness(1.05); }
+
+.admin-home .btn-danger{
+  background:#b3261e;
+  border-color:#b3261e;
+  color:#fff;
+}
+.admin-home .btn-danger:hover{ filter:brightness(1.05); }
+
+/* 로그아웃 영역 */
+.admin-home .admin-logout{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:8px;
+}
+
+/* 포커스 접근성 */
+.admin-home .btn:focus,
+.admin-home .admin-card:focus-within{
+  outline:2px solid #94b9ff;
+  outline-offset:2px;
+}
+
+/* 반응형 */
+@media (max-width:1024px){
+  .admin-home .admin-card{ grid-column:span 6; }  /* 2열 */
+  .admin-home .admin-card{ min-height:180px; }
+}
+@media (max-width:640px){
+  .admin-home{ margin:88px auto 40px; padding:12px; }
+  .admin-home .admin-card{ grid-column:span 12; min-height:unset; }
+  .admin-home .admin-welcome{ padding:18px; }
+  .admin-home .btn{ padding:6px 12px; font-weight:600; }
+}

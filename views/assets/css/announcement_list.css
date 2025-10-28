@@ -44,4 +44,3 @@
   .notice-item .row { flex-direction: column; align-items: flex-start; gap: 6px; }
   .notice-item .right { align-self: flex-end; }
 }
-

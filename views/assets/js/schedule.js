@@ -160,7 +160,7 @@ const months = [
             console.log("API 요청 날짜 (dateString):", dateString);
 
             // 3. (새로 만들) 경기 정보 조회 함수 호출
-            await fetchAndDisplayMatchInfo(dateString);
+            loadGameResult(date);
         }
         
 

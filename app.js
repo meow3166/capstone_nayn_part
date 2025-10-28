@@ -134,7 +134,7 @@ app.use(session({
 // 현재 : nph-dfs_vsrt_grd - 70분 지연 초단기예보 사용
 // app.use(async (req, res, next) => {
 //     const cacheDuration = 30 * 60 * 1000; // 30분 캐시
-
+    
 //     // 1. 캐시 확인
 //     if (req.session.weatherInfo && req.session.weatherTimestamp) {
 //         const age = Date.now() - req.session.weatherTimestamp;
@@ -146,120 +146,155 @@ app.use(session({
 
 //     try {
 //         console.log("\n-----------------------------------------");
-//         console.log("[🚀 API 호출 시작] 'nph-dfs_vsrt_grd' (초단기) API를 호출합니다...");
-
+//         console.log("[🚀 API 호출 시작] 'nph-dfs_shrt_grd' (단기) API를 호출합니다...");
+        
 //         const authKey = '94LfPg3YQdaC3z4N2JHWbA'; // 사용자의 인증키
 //         const daeguLionsPark = { nx: 89, ny: 90 }; // 대구 삼성 라이온즈 파크 좌표
 
-//         // ★★★ 1. 'nph-dfs_vsrt_grd' (초단기)용 시간 계산 (70분 전 기준) ★★★
-//         const getUltraShortTermTime = () => {
-//             // 안정성을 위해 70분 전 시간을 기준으로 계산
-//             const availableDate = new Date(new Date().getTime() - 70 * 60 * 1000); 
+//         // ★★★ 1. 'nph-dfs_shrt_grd' (단기)용 시간 계산 (3시간 주기) ★★★
+//         const getShortTermTime = () => {
+//             const now = new Date();
+//             // 단기예보는 3시간 간격 발표 (02, 05, 08, 11, 14, 17, 20, 23시)
+//             const baseTimes = [2, 5, 8, 11, 14, 17, 20, 23];
+//             let checkDate = new Date(now.getTime());
+//             let baseHour = checkDate.getHours();
+            
+//             // 현재 시간(시)보다 작거나 같은 가장 가까운 과거 발표 시각을 찾음 (tmfc)
+//             // findLast를 사용하여 현재 시각보다 작은 값 중 가장 큰 값을 찾습니다.
+//             let tmfcHourNum = baseTimes.findLast(h => h <= baseHour);
 
-//             // 1. tmfc (발표시간): 연월일시분
-//             const tmfcYear = availableDate.getFullYear();
-//             const tmfcMonth = String(availableDate.getMonth() + 1).padStart(2, '0');
-//             const tmfcDay = String(availableDate.getDate()).padStart(2, '0');
-//             const tmfcHour = String(availableDate.getHours()).padStart(2, '0');
+//             if (tmfcHourNum === undefined) {
+//                 // 현재 시간이 0시, 1시인 경우, 전날 23시를 사용
+//                 tmfcHourNum = 23;
+//                 checkDate.setDate(checkDate.getDate() - 1); // 날짜를 하루 전으로 변경
+//             }
             
-//             // 10분 단위로 '내림' (e.g., 55분-70분= -15 -> 12시 40분대 -> ...1240)
-//             const tmfcMinute = String(Math.floor(availableDate.getMinutes() / 10) * 10).padStart(2, '0');
+//             const tmfcYear = checkDate.getFullYear();
+//             const tmfcMonth = String(checkDate.getMonth() + 1).padStart(2, '0');
+//             const tmfcDay = String(checkDate.getDate()).padStart(2, '0');
+//             const tmfcHour = String(tmfcHourNum).padStart(2, '0');
             
-//             // 2. tmef (발효시간): 연월일시 (현재 시간 + 1시간)
-//             const tmefDate = new Date(new Date().getTime() + 1 * 60 * 60 * 1000); // 1시간 뒤
-//             const tmefYear = tmefDate.getFullYear();
+//             // tmfc는 분(Minute) 정보 없이 시(Hour)까지만 사용 (단기예보 요구사항)
+//             const tmfc = `${tmfcYear}${tmfcMonth}${tmfcDay}${tmfcHour}`;
+            
+//             // 2. tmef (발효시간) 계산: 1시간 뒤 예보 시각을 요청 (단기예보 요구사항)
+//             const tmefDate = new Date(new Date().getTime() + 1 * 60 * 60 * 1000); 
 //             const tmefMonth = String(tmefDate.getMonth() + 1).padStart(2, '0');
 //             const tmefDay = String(tmefDate.getDate()).padStart(2, '0');
 //             const tmefHour = String(tmefDate.getHours()).padStart(2, '0');
+//             const tmef = `${tmefDate.getFullYear()}${tmefMonth}${tmefDay}${tmefHour}`;
 
-//             return {
-//                 tmfc: `${tmfcYear}${tmfcMonth}${tmfcDay}${tmfcHour}${tmfcMinute}`, // API 요청용 발표시각
-//                 tmef: `${tmefYear}${tmefMonth}${tmefDay}${tmefHour}`, // API 요청용 1시간 뒤 시각
-//                 displayMonth: tmefMonth, // 화면 표시용
-//                 displayDay: tmefDay,     // 화면 표시용
-//                 displayHour: tmefHour    // 화면 표시용
-//             };
+//             return { tmfc, tmef, displayMonth: tmefMonth, displayDay: tmefDay, displayHour: tmefHour };
 //         };
 
-
-//         const { tmfc, tmef, displayMonth, displayDay, displayHour } = getUltraShortTermTime();
+//         const { tmfc, tmef, displayMonth, displayDay, displayHour } = getShortTermTime();
 //         console.log(`[로그 1] 계산된 API 요청 시간: tmfc=${tmfc}, tmef=${tmef}`);
-        
-//         // 2. 초단기예보용 변수
-//         // T1H(기온), SKY(하늘), PTY(강수형태), RN1(1시간 강수량)
-//         const vars = ['T1H', 'SKY', 'PTY', 'RN1']; 
-        
+
+//         // 2. 단기예보용 변수 
+//         // TMP(기온), SKY(하늘), PTY(강수형태), POP(강수확률)
+//         const vars = ['TMP', 'SKY', 'PTY', 'POP']; 
 //         const promises = vars.map(v => {
-//             // 3. 초단기예보 URL
-//             const url = `https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-dfs_vsrt_grd?tmfc=${tmfc}&tmef=${tmef}&vars=${v}&nx=${daeguLionsPark.nx}&ny=${daeguLionsPark.ny}&authKey=${authKey}`;
+//             // 3. 단기예보 URL
+//             const url = `https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-dfs_shrt_grd?tmfc=${tmfc}&tmef=${tmef}&vars=${v}&nx=${daeguLionsPark.nx}&ny=${daeguLionsPark.ny}&authKey=${authKey}`;
 //             return axios.get(url).then(response => response.data);
 //         });
 
 //         const results = await Promise.all(promises);
+        
+//         // 🚨 디버깅을 위해 TMP 응답 원본 로그 출력
+//         console.log("[디버그] TMP (기온) API 응답 원본:");
+//         console.log(results[0]); 
+//         console.log("-----------------------------------------");
 
-//         // 4. 파싱 로직 (정확히 tmef 라인만 찾기)
-//         const parseValueForTime = (data, timeStr) => {
-//             const lines = data.split('\n').filter(line => line.includes(','));
+//         // 4. 파싱 로직 (CSV 또는 그리드 데이터의 첫 번째 유효 라인 추출 시도)
+//         const parseValueForTime = (data, timeStr, varName) => {
+//             const lines = data.split('\n').map(line => line.trim()).filter(line => line.includes(',')); 
+            
 //             if (!lines || lines.length === 0) {
-//                 console.warn(`[파싱 경고] ${timeStr} 응답에 데이터 라인이 없습니다.`);
-//                 return '-999';
+//                 console.warn(`[파싱 경고] ${varName} 응답에 유효한 데이터 라인이 없습니다.`);
+//                 return '-99.00';
 //             }
-//             // 이 API는 응답에 정확히 tmef 시간 하나만 줌
-//             const targetLine = lines.find(line => line.startsWith(timeStr)); 
-//             if (!targetLine) {
-//                  console.warn(`[파싱 경고] 응답에서 timeStr=${timeStr}에 해당하는 라인을 찾지 못했습니다.`);
-//                  return '-99.00';
+
+//             // 1) tmef로 시작하는 (정상 CSV 응답) 라인을 찾습니다.
+//             const targetLine = lines.find(line => line.startsWith(timeStr));
+            
+//             // 2) 만약 못 찾았으면, 첫 번째 유효 라인(lines[0])을 사용합니다.
+//             const actualLine = targetLine || lines[0];
+
+//             if (!actualLine) {
+//                 console.warn(`[파싱 경고] ${varName} 응답에서 라인 찾기 실패. (tmef: ${timeStr})`);
+//                 return '-99.00';
 //             }
-//             const parts = targetLine.split(',');
-//             if (parts.length > 2 && parts[2] !== undefined && parts[2].trim() !== '') {
+            
+//             const parts = actualLine.split(',');
+            
+//             // 3) 데이터의 값이 세 번째(index 2) 필드에 있다고 가정하고 추출 (정상 CSV)
+//             if (parts.length > 2 && parts[2].trim() !== '') {
+//                 console.log(`[파싱 성공] ${varName} (${targetLine ? '정상' : 'Fallback'}) 라인 사용: "${actualLine.substring(0, 30)}..." -> 값: ${parts[2].trim()}`);
 //                 return parts[2].trim();
 //             }
-//             console.warn(`[파싱 경고] API가 유효한 값을 반환하지 않았습니다. 라인: "${targetLine}"`);
-//             return '-99.00'; 
+            
+//             // 4) 그리드 데이터 형태일 경우 (숫자 배열), nx=89, ny=90의 위치를 대략적으로 파싱 시도 (비추천)
+//             // 이 로직은 단기예보 API의 공식 응답 형식이 아닙니다.
+//             // 제공된 로그처럼 숫자 배열만 있는 경우, 첫 번째 유효한 숫자(그리드 배열의 첫 번째 값)를 임시로 사용합니다.
+//             if (parts.length > 0 && !isNaN(parseFloat(parts[0].trim())) && parseFloat(parts[0].trim()) !== 0 && !targetLine) {
+//                  // 이 부분은 'TMP'에서 -99.00이 아닌 다른 값을 얻기 위한 임시적인 시도입니다.
+//                  // 그리드 데이터가 1차원 배열로 왔다고 가정하고 3번째 값을 임시 추출 시도
+//                  if (parts.length > 2) {
+//                      console.log(`[파싱 시도] ${varName} 그리드 데이터로 추정. 3번째 값 사용: ${parts[2].trim()}`);
+//                      return parts[2].trim(); 
+//                  }
+//             }
+
+//             console.warn(`[파싱 경고] ${varName} API가 예상된 값을 반환하지 않았습니다. 라인: "${actualLine.substring(0, 30)}..."`);
+//             return '-99.00';
 //         };
 
-//         const temperatureRaw = parseValueForTime(results[0], tmef); // T1H
-//         const skyCode = parseValueForTime(results[1], tmef);      // SKY
-//         const ptyCode = parseValueForTime(results[2], tmef);      // PTY
-//         const precipitationRaw = parseValueForTime(results[3], tmef); // RN1
+//         const temperatureRaw = parseValueForTime(results[0], tmef, 'TMP'); 
+//         const skyCode = parseValueForTime(results[1], tmef, 'SKY'); 
+//         const ptyCode = parseValueForTime(results[2], tmef, 'PTY'); 
+//         const precipitationRaw = parseValueForTime(results[3], tmef, 'POP'); 
 
-//         console.log(`[로그 4] 파싱된 ${displayHour}시 데이터: 기온=${temperatureRaw}, 하늘=${skyCode}, 강수형태=${ptyCode}, 강수량=${precipitationRaw}`);
+//         console.log(`[로그 4] 파싱된 ${displayHour}시 데이터: 기온=${temperatureRaw}, 하늘=${skyCode}, 강수형태=${ptyCode}, 강수확률=${precipitationRaw}`);
 
-//         // 5. 값 변환
+//         // 5. 값 변환 및 텍스트 생성 
 //         const temperature = parseFloat(temperatureRaw) < -90 ? "정보 없음" : `${temperatureRaw}℃`;
 
-//         // RN1 (강수량) 텍스트 변환
 //         let precipitationText;
-//         const rn1Num = parseFloat(precipitationRaw);
-//         if (rn1Num < 0) {
+//         const popNum = parseFloat(precipitationRaw);
+//         if (popNum < 0) {
 //             precipitationText = "정보 없음";
-//         } else if (rn1Num === 0) {
-//             precipitationText = "강수없음";
+//         } else if (popNum === 0) {
+//             precipitationText = "강수없음 (0%)";
 //         } else {
-//             precipitationText = `${precipitationRaw}mm`;
+//             precipitationText = `강수확률 ${popNum}%`;
 //         }
-        
-//         // 하늘 상태 (초단기예보 PTY 코드는 0, 1, 2, 3, 5, 6, 7 사용)
+
+//         // 하늘 상태 (PTY 코드는 사용하지 않고 SKY와 PTY 코드를 결합하여 최종 상태 결정)
 //         const getSkyState = (sky, pty) => {
-//             const ptyStr = String(parseInt(pty));
-//             const skyStr = String(parseInt(sky));
-//             if (parseFloat(pty) < 0 || parseFloat(sky) < 0) return "정보 없음";
-//             if (ptyStr !== '0') {
-//                 if (ptyStr === '1') return '비'; if (ptyStr === '2') return '비/눈';
-//                 if (ptyStr === '3') return '눈'; if (ptyStr === '5') return '빗방울';
-//                 if (ptyStr === '6') return '빗방울/눈날림'; if (ptyStr === '7') return '눈날림';
+//             const ptyInt = parseInt(pty);
+//             const skyInt = parseInt(sky);
+            
+//             if (ptyInt > 0) { // PTY 코드가 0이 아니면 강수/눈/비로 판단 (단기 예보 기준)
+//                 if (ptyInt === 1) return '비';
+//                 if (ptyInt === 2) return '비/눈';
+//                 if (ptyInt === 3) return '눈';
+//                 if (ptyInt === 4) return '소나기'; // 단기예보에는 소나기 코드 4가 포함됨
 //                 return '강수';
 //             }
-//             if (skyStr === '1') return '맑음'; if (skyStr === '3') return '구름많음';
-//             if (skyStr === '4') return '흐림';
+
+//             if (skyInt === 1) return '맑음';
+//             if (skyInt === 3) return '구름많음';
+//             if (skyInt === 4) return '흐림';
 //             return '정보 없음';
 //         };
 //         const skyState = getSkyState(skyCode, ptyCode);
-        
+
 //         // 6. 최종 텍스트
 //         const weatherText = `대구 삼성 라이온즈 파크 ${displayMonth}월 ${displayDay}일 ${displayHour}시 예보 : 기온 ${temperature}, 하늘 ${skyState}, 강수 ${precipitationText}`;
-//         console.log(`[✅ 최종 결과] 생성된 날씨 정보: ${weatherText}`);
         
+//         console.log(`[✅ 최종 결과] 생성된 날씨 정보: ${weatherText}`);
+
 //         req.session.weatherInfo = weatherText;
 //         req.session.weatherTimestamp = Date.now();
 //         res.locals.weatherInfo = weatherText;
@@ -268,7 +303,7 @@ app.use(session({
 //         console.error("날씨 정보 조회 실패:", error.message);
 //         res.locals.weatherInfo = "날씨 정보를 불러올 수 없습니다.";
 //     }
-    
+
 //     next();
 // });
 // ---------------------------------------------------------------------

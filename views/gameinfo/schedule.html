@@ -1,30 +1,83 @@
 {% include "include/header.html" %}
-        <main>
-           <div class="aa">
-                <div class="cal">
-                    <div class="card calendar-card">
-                        <h2 class="section-title">경기 일정</h2>
-                        
-                        <div class="calendar" id="table">
-                            <div class="header">
-                                <div class="month" id="month-header"></div>
-                               <div class="buttons">
-                                    <button id="prev-btn" class="icon" title="이전 달">이전 달</button>
-                                    <button id="next-btn" class="icon" title="다음 달">다음 달</button>
-                                </div>
-                            </div>
+<main>
+    <div class="aa">
+        <div class="cal">
+            <div class="card calendar-card">
+                <h2 class="section-title">경기 일정</h2>
+
+                <div class="calendar" id="table">
+                    <div class="header">
+                        <div class="month" id="month-header"></div>
+                        <div class="buttons">
+                            <button id="prev-btn" class="icon" title="이전 달">이전 달</button>
+                            <button id="next-btn" class="icon" title="다음 달">다음 달</button>
                         </div>
-                        <div id="tooltip" style="display:none; position:absolute; background-color:#333; color:white; padding:5px 10px; border-radius:5px; font-size:14px; pointer-events:none;"></div>
                     </div>
                 </div>
-                <div class="result">
-                    <div class="game-result-card finished">
+                <div id="tooltip"
+                    style="display:none; position:absolute; background-color:#333; color:white; padding:5px 10px; border-radius:5px; font-size:14px; pointer-events:none;">
+                </div>
+            </div>
+        </div>
+        <div class="result_schedule">
+            <!-- ssssssss -->
 
-                    <div class="result-header">
-                        <span class="game-date" id="date"></span>
-                        <span class="game-status-chip">경기종료</span>
+            <div class="result-header">
+                <span class="game-date" id="date"></span>
+                <!-- 이 부분도 경기 정보 없음 / 예정 / 종료에 따라 바뀌어야 함 -->
+                <span class="game-status-chip" id="dynamic-status-chip">....</span>
+            </div>
+
+            <div class="game-result-card" id="card-game-finished">
+                <div class="match-details">
+
+                    <div class="match-header">
+                        <strong>경기 결과</strong>
                     </div>
 
+                    <!-- <div class="teams-container">
+
+                        <div class="team-info">
+                            <img id="away-logo" class="team-logo_1" src="" alt="" width="100px" height="100px">
+                            <p id="away-score" class="final-score"></p>
+                            <div id="away-pitcher" class="pitcher-results">
+                            </div>
+                        </div>
+
+                        <span class="vs-text">VS</span>
+
+                        <div class="team-info">
+                            <img id="home-logo" class="team-logo_1" src="" alt="">
+                            <p id="home-score" class="final-score"></p>
+                            <div id="home-pitcher" class="pitcher-results">
+                                </div>
+                        </div>
+                    </div> -->
+                    <div class="teams-container">
+
+                        <div class="team-info">
+                            <img class="team-logo_1" src="../assets/img/임시로고_.png" alt="롯데 자이언츠">
+                            <p class="final-score losing">2</p>
+                            <div class="pitcher-results">
+                                <p><span class="result-label loss">패</span> 박세웅</p>
+                            </div>
+                        </div>
+
+                        <span class="vs-text">VS</span>
+
+                        <div class="team-info">
+                            <img class="team-logo_1" src="../assets/img/임시로고_b.png" alt="LG 트윈스">
+                            <p class="final-score winning">3</p>
+                            <div class="pitcher-results">
+                                <p><span class="result-label win">승</span> 치리노스</p>
+                                <p><span class="result-label save">세</span> 유영찬</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-result-card" id="card-no-game">
+                    <!-- db에 경기 정보가 없으면 나오는 부분  -->
                     <div class="match-details">
 
                         <div class="match-header">
@@ -32,33 +85,13 @@
                         </div>
 
                         <div class="teams-container">
-                            
-                            <div class="team-info">
-                                <img class="team-logo_1" src="[롯데 로고 이미지 경로]" alt="롯데 자이언츠" width="100px" height="100px">
-                                <p class="final-score losing">2</p>
-                                <div class="pitcher-results">
-                                    <p><span class="result-label loss">패</span> 박세웅</p>
-                                </div>
-                            </div>
-
-                            <span class="vs-text">VS</span>
-
-                            <div class="team-info">
-                                <img class="team-logo_1" src="[LG 로고 이미지 경로]" alt="LG 트윈스" >
-                                <p class="final-score winning">3</p>
-                                <div class="pitcher-results">
-                                    <p><span class="result-label win">승</span> 치리노스</p>
-                                    <p><span class="result-label save">세</span> 유영찬</p>
-                                </div>
-                            </div>
+                            <div> 등록된 경기 정보가 없습니다</div>
                         </div>
                     </div>
-                    <!-- <div class="game-result-card">
 
-                    <div class="result-header">
-                        <span class="game-date">2025.09.29</span>
-                        <span class="game-status-chip">경기예정</span>
-                    </div>
+                </div>
+
+                <div class="game-result-card" id="card-game-scheduled">
 
                     <div class="match-details">
 
@@ -68,9 +101,9 @@
                         </div>
 
                         <div class="teams-container">
-                            
+
                             <div class="team-info">
-                                <img class="team-logo_1" src="[두산 로고 이미지 경로]" alt="두산 베어스">
+                                <img class="team-logo_1" src="../assets/img/임시로고_b.png" alt="두산 베어스">
                                 <p class="team-record">시즌 56승 72패 6무</p>
                                 <p class="pitcher-info">
                                     <span class="pitcher-label">선</span> 땡땡땡
@@ -80,27 +113,84 @@
                             <span class="vs-text">VS</span>
 
                             <div class="team-info">
-                                <img class="team-logo_1" src="[LG 로고 이미지 경로]" alt="LG 트윈스">
+                                <img class="team-logo_1" src="../assets/img/임시로고_b.png" alt="LG 트윈스">
                                 <p class="team-record">시즌 81승 50패 3무</p>
                                 <p class="pitcher-info">
                                     <span class="pitcher-label">선</span> 땡땡땡
                                 </p>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
-                </div>
-                </div>
-           </div>
-        </main>
-        <footer></footer>
-        <!-- 메뉴바 js -->
-        <script src="../assets/js/menubar.js"></script> 
-        <!-- 날씨 api js -->
-        <script src="../assets/js/weather.js"></script>
-        <!-- 챗봇 엔터 키 이벤트 js -->
-        <!-- <script src="./assets/js/chat.js"></script> -->
-        <!-- 캘린더 js -->
-         <script src="../assets/js/schedule.js"></script>
-    </body>
+
+            </div>
+        </div>
+</main>
+<footer></footer>
+<!-- 메뉴바 js -->
+<script src="../assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<!-- <script src="../assets/js/weather.js"></script> -->
+<!-- 챗봇 엔터 키 이벤트 js -->
+<!-- <script src="./assets/js/chat.js"></script> -->
+
+<script>
+    // (변수 선언은 동일)
+    const cardFinished = document.getElementById('card-game-finished');
+    const cardScheduled = document.getElementById('card-game-scheduled');
+    const cardNoGame = document.getElementById('card-no-game');
+
+    console.log('cardNoGame 변수:', cardNoGame);
+    console.log('cardFinished 변수:', cardFinished); // ★ 로그 추가
+    console.log('cardScheduled 변수:', cardScheduled); // ★ 로그 추가
+
+    async function loadGameResult(dateString) {
+        // (1) 초기화
+        console.log('loadGameResult: 카드 숨기기 시작');
+        cardFinished.style.display = 'none';
+        cardScheduled.style.display = 'none';
+        cardNoGame.style.display = 'none';
+        console.log('loadGameResult: 카드 숨기기 완료');
+
+        try {
+            console.log('loadGameResult: API 호출 시작');
+            const response = await fetch(`/api/game-by-date?date=${dateString}`);
+
+            // (2) 404 응답 (경기 정보 없음) -> status 3
+            if (!response.ok) {
+                if (response.status === 404) {
+                    console.log('loadGameResult: 404 응답. "경기 정보 없음" 카드 켭니다. (상태 3)');
+                    cardNoGame.style.display = 'block';
+                }
+                return;
+            }
+
+            // (3) 200 OK 응답 (경기 있음)
+            const { game } = await response.json();
+
+            // ★ 서버에서 전달받은 game_status 값으로 분기
+            if (game.game_status === 1) { // 1: 경기 종료
+                console.log('loadGameResult: 200 OK. "경기 종료" 카드 켭니다. (상태 1)');
+                cardFinished.style.display = 'block';
+            } else if (game.game_status === 2) { // 2: 경기 예정/진행 중
+                console.log('loadGameResult: 200 OK. "경기 예정" 카드 켭니다. (상태 2)');
+                cardScheduled.style.display = 'block';
+            }
+            // 참고: 다른 상태값(3 등)은 현재 서버 로직에서 발생하지 않습니다.
+            // 다른 상태가 필요한 경우 서버의 SQL CASE 문과 클라이언트 로직을 추가 수정해야 합니다.
+
+        } catch (error) {
+            // (4) 그 외 모든 오류 (네트워크 오류 등)
+            console.error('loadGameResult: catch 블록 실행! 오류:', error);
+            // 오류 발생 시에도 '경기 정보 없음' 카드를 기본으로 표시
+            cardNoGame.style.display = 'block';
+        }
+    }
+</script>
+<script src="../assets/js/schedule.js"></script>
+</body>
+
+</html>
+</body>
+
 </html>

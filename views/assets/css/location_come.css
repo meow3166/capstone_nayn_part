@@ -114,7 +114,7 @@ body {
 
   .location_title {
     margin-top: 20px;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
   }
 
   .location_title p {
@@ -126,6 +126,7 @@ body {
 
   .map {
     margin-bottom: 50px;
+    
   }
 
   .transport>p {
@@ -151,8 +152,29 @@ body {
 
   }
 
+  .line2 {
+    background-color: #2dba1e;
+    padding: 0 5px;
+    color: #fff;
+    display: inline-block; /* 인라인블록으로 바꿔야 margin 작동함 */
+    margin-bottom: 4px;    /* 원하는 만큼 여백 조정 */
+  }
+  
+  .gansun{
+    background-color: #1e2eba;
+    padding: 2px 6px;
+    color: #fff;
+    display: inline-block; /* 인라인블록으로 바꿔야 margin 작동함 */
+    margin-bottom: 4px;  
+  }
 
-
+  .jisun{
+    background-color: #4cc844;
+    padding: 2px 6px;
+    color: #fff;
+    display: inline-block; /* 인라인블록으로 바꿔야 margin 작동함 */
+    margin-bottom: 4px;  
+  }
   .transport .route_mobile tr:nth-child(1),
   .transport .route_mobile tr:nth-child(3),
   .transport .route_mobile tr:nth-child(5),
@@ -168,7 +190,7 @@ body {
   .transport .route_mobile tr:nth-child(9),
   .transport .route_mobile tr:nth-child(10),
   .transport .route_mobile tr:nth-child(11) {
-    font-size: 20px;
+    font-size: 18px;
     /* color: red; */
   }
 
@@ -186,6 +208,6 @@ body {
   .route_mobile tr:nth-child(7) td,
   .route_mobile tr:nth-child(8) td,
   .route_mobile tr:nth-child(10) td{
-    padding-bottom: 10px;
+    padding-bottom: 0;
   }
 }

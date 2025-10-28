@@ -154,7 +154,7 @@ body {
 
   .rules_title {
     margin-top: 20px;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
   }
 
   .rules_title p {
@@ -198,7 +198,7 @@ body {
   }
 
   .rules_list ul {
-    margin-left: 15px;
+    margin-left: 20px;
     /* font-weight: bold; */
     font-size: 16px;
     

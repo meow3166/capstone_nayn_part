@@ -1,85 +1,85 @@
 {%include "include/header.html"%}
-    <main>
-        <div class="rules_title">
-            <p>공격</p>
-        </div>
-        <div class="rules_gicho">
-            <p>공격의 기본 개념</p>
-            <ul>
-                <li>야구는 공격과 수비가 번갈아 진행되는 경기</li>
-                <li>공격 팀은 득점을 목표로 하고, 타자가 타석(홈 플레이트)에서 공을 쳐서 베이스(1루->2루->3루)를 돌아 홈으로 돌아오면 1점
-                    <br> 
-                </li>
+<main>
+    <div class="rules_title">
+        <p>공격</p>
+    </div>
+    <div class="rules_attack_gicho">
+        <p>공격의 기본 개념</p>
+        <ul>
+            <li>야구는 공격과 수비가 번갈아 진행되는 경기</li>
+            <li>공격 팀은 득점을 목표로 하고, 타자가 타석(홈 플레이트)에서 공을 쳐서 베이스(1루->2루->3루)를 돌아 홈으로 돌아오면 1점</li>
 
-                <li>스트라이크 3개가 되면 자동으로 1아웃으로 카운트됨<img src="./assets/img/base.png"> </li>
-                <li>한 이닝에서 3아웃이 되면 공격이 종료되고 수비로 전환</li>
-            </ul>
-        </div>
-        <div class="rules_ining">
-            <p>이닝의 개념</p>
-            <ul>
-                <li>야구의 한 회차. 한 경기는 보통 9이닝으로 이루어짐</li>
-                <li>각 이닝은 초(원정팀 공격,홈팀 수비)와 말(홈팀 공격, 원정팀 수비)으로 나뉨</li>
-            </ul>
-        </div>
-        <div class="rules_list">
-            <p>기본 용어</p>
-            <ul>
-                <li>홈팀 : 경기를 하는 그 경기장이 본인팀의 구장인 팀 <br>원정팀 : 상대 팀의 구장에 방문해서 경기하는 팀</li>
-                <li>스트라이크 : 날아오는 공을 타자가 친다고 휘둘렀지만 치지 못한 경우 또는 스트라이크존 안으로 들어왔는데 타자가 치지 못한 공 <br>
-                    스트라이크가 3개면 '삼진아웃' = 1아웃 / 공3개로 삼진아웃 만들었으면 '삼구삼진'</li>
-                <li>스트라이크존 : 투수가 던진 공이 스트라이크인지 볼인지 판단하는 기준 구역 <br>
-                    * 기준 - 가로 : 홈플레이트 폭 / 세로 : 타자의 무릎과 가슴 사이<br>
-                    <img src="./assets/img/strikezone.png">   <!-- 스트라이크존 kbo 사진 넣기 -->
-                    
-                </li>
-                <li>볼 : 스트라이크존 밖으로 나간 공을 타자가 치지 않은 경우<br> 볼이 4개가 되면 '볼넷' (자동 1루 진출)</li>
-                <li>파울 : 타자가 공을 쳤지만 경기장 선 안쪽 으로 들어가지 못하고옆으로 빗나간 공 <br>
+            
+            <img src="./assets/img/base.png">
+            <li>스트라이크 3개가 되면 자동으로 1아웃으로 카운트됨 </li>
+            <li>한 이닝에서 3아웃이 되면 공격이 종료되고 수비로 전환</li>
+        </ul>
+    </div>
+    <div class="rules_ining">
+        <p>이닝의 개념</p>
+        <ul>
+            <li>야구의 한 회차. <br>한 경기는 보통 9이닝으로 이루어짐</li>
+            <li>각 이닝은 초(원정팀 공격,홈팀 수비)와 말(홈팀 공격, 원정팀 수비)으로 나뉨</li>
+        </ul>
+    </div>
+    <div class="rules_list">
+        <p>기본 용어</p>
+        <ul>
+            <li>홈팀 : 본인 구장에서 경기하는 팀 <br>원정팀 : 상대 팀의 구장에 방문해서 경기하는 팀</li>
+            <li>스트라이크 : 날아오는 공을 타자가 친다고 휘둘렀지만 치지 못한 경우 또는 스트라이크존 안으로 들어왔는데 타자가 치지 못한 공 <br>
+                스트라이크가 3개면 '삼진아웃' = 1아웃 / 공3개로 삼진아웃 만들었으면 '삼구삼진'</li>
+            <li>스트라이크존 : 투수가 던진 공이 스트라이크인지 볼인지 판단하는 기준 구역 <br>
+                * 기준 - 가로 : 홈플레이트 폭 / 세로 : 타자의 무릎과 가슴 사이<br>
+
+
+            </li><img src="./assets/img/strikezone.png"> <!-- 스트라이크존 kbo 사진 넣기 -->
+            <li>볼 : 스트라이크존 밖으로 나간 공을 타자가 치지 않은 경우<br> 볼이 4개가 되면 '볼넷' (자동 1루 진출)</li>
+            <li>파울 : 타자가 공을 쳤지만 경기장 선 안쪽 으로 들어가지 못하고옆으로 빗나간 공 <br>
                 파울은 스트라이크로 계산되지만, 스트라이크가 이미 2개인 상태에서는 카운트에 추가되지 않음</li>
-                <li>풀카운트 : 볼3개, 스트라이트 2개일 때</li>
-            </ul>
-        </div>
-        
-        <div class="rules_goOut">
-            <p>출루 방법 (타자가 나가는 법)</p>
-            <ul>
-                <li>안타 (Hit) : 공을 쳐서 수비수가 잡기 전에 땅에 떨어지고, 1루 이상 나가는 것</li>
-                <li>볼넷 (Base on Balls, 4볼) : 스트라이크가 아닌 공을 4개 받아 자동으로 1루로 진출</li>
-                <li>사구 (Hit by Pitch) : 공에 맞았을 때 1루로 진출</li>
-                <li>실책 (Error) : 수비의 실수로 나가는 경우</li>
-            </ul>
-        </div>
-        <div class="rules_Out">
-            <p>아웃 되는 경우</p>
-            <ul>
-                <li>삼진 (Strike Out) : 스트라이크 3개</li>
-                <li>땅볼 아웃 (Ground Out) : 공을 땅에 굴렸을 때 1루보다 공이 먼저 도착</li>
-                <li>플라이 아웃 (Fly Out) : 뜬 공을 수비수가 공중에서 잡으면 아웃</li>
-                <li>주루사 (Base Running Out) : 주자가 베이스에서 벗어나 잡히거나, 진루 중에 아웃</li>
-                <li>병살도 알려줘야할까....</li>
-            </ul>
-        </div>
-        <div class="rules_attackPoint">
-            <p>공격 예시</p>
-            <ul>
-                <li>홈런 : 공이 담장을 넘으면 타자와 주자 전원이 득점</li>
-                <li>희생번트 : 타자가 본인은 아웃되더라도 출루해있는 주자를 다음 루로 보내는 플레이</li>
-                <li>도루 : 이미 출루한 주자가 투수가 공을 던질 때 다음 루로 뛰는 플레이</li>
-                
-            </ul>
-        </div>
+            <li>풀카운트 : 볼3개, 스트라이트 2개일 때</li>
+        </ul>
+    </div>
 
-        
+    <div class="rules_goOut">
+        <p>출루 방법 (타자가 나가는 법)</p>
+        <ul>
+            <li>안타 (Hit) : 공을 쳐서 수비수가 잡기 전에 땅에 떨어지고, 1루 이상 나가는 것</li>
+            <li>볼넷 (Base on Balls, 4볼) : 스트라이크가 아닌 공을 4개 받아 자동으로 1루로 진출</li>
+            <li>사구 (Hit by Pitch) : 공에 맞았을 때 1루로 진출</li>
+            <li>실책 (Error) : 수비의 실수로 나가는 경우</li>
+        </ul>
+    </div>
+    <div class="rules_Out">
+        <p>아웃 되는 경우</p>
+        <ul>
+            <li>삼진 (Strike Out) : 스트라이크 3개</li>
+            <li>땅볼 아웃 (Ground Out) : 공을 땅에 굴렸을 때 1루보다 공이 먼저 도착</li>
+            <li>플라이 아웃 (Fly Out) : 뜬 공을 수비수가 공중에서 잡으면 아웃</li>
+            <li>주루사 (Base Running Out) : 주자가 베이스에서 벗어나 잡히거나, 진루 중에 아웃</li>
+            <li>병살도 알려줘야할까....</li>
+        </ul>
+    </div>
+    <div class="rules_attackPoint">
+        <p>공격 예시</p>
+        <ul>
+            <li>홈런 : 공이 담장을 넘으면 타자와 주자 전원이 득점</li>
+            <li>희생번트 : 타자가 본인은 아웃되더라도 출루해있는 주자를 다음 루로 보내는 플레이</li>
+            <li>도루 : 이미 출루한 주자가 투수가 공을 던질 때 다음 루로 뛰는 플레이</li>
+
+        </ul>
+    </div>
 
 
-    </main>
-    <footer></footer>
-    <!-- 메뉴바 js -->
-    <script src="./assets/js/menubar.js"></script>
-    <!-- 날씨 api js -->
-    <script src="./assets/js/weather.js"></script>
-    <!-- 챗봇 엔터 키 이벤트 js -->
-    <!-- <script src="./assets/js/chat.js"></script> -->
+
+
+</main>
+<footer></footer>
+<!-- 메뉴바 js -->
+<script src="./assets/js/menubar.js"></script>
+<!-- 날씨 api js -->
+<script src="./assets/js/weather.js"></script>
+<!-- 챗봇 엔터 키 이벤트 js -->
+<!-- <script src="./assets/js/chat.js"></script> -->
 </body>
 
 </html>
