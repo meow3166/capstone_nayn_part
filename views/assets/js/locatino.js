@@ -78,31 +78,76 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
 // ---------------------------------------------------------------------------------------
 (function () {
   const listEl = document.getElementById("resultList");
+  const qEl = document.getElementById("q_m"); // ✅ 검색 input
+  const clearBtn = document.getElementById("btnClear_m"); // ✅ x버튼
   const badge = { food: "먹거리", toilet: "화장실" };
+  const state = { rows: [] };
 
+  function render(rows) {
+    if (!rows || rows.length === 0) {
+      listEl.innerHTML = '<p class="empty">표시할 항목이 없습니다.</p>';
+      return;
+    }
+    listEl.innerHTML = rows.map(r => {
+      const imgStyle = r.image ? ` style="background-image:url('${r.image}');"` : "";
+      return `
+        <article class="item" data-type="${r.type}" data-id="${r.id}">
+          <div class="thumb"${imgStyle}></div>
+          <div class="meta">
+            <h4 class="name">${r.name}</h4>
+            <p class="desc">${r.items || ""}</p>
+          </div>
+          <span class="badge">${badge[r.type] || ""}</span>
+        </article>`;
+    }).join("");
+  }
+
+  // ✅ 검색어 필터
+  function applyFilter() {
+    const q = (qEl?.value || "").trim().toLowerCase();
+    const filtered = state.rows.filter(r => {
+      const text = `${r.name || ""} ${r.items || ""}`.toLowerCase();
+      return !q || text.includes(q);
+    });
+    render(filtered);
+  }
+
+  // ✅ 입력 이벤트 (디바운스)
+  let t;
+  qEl?.addEventListener("input", () => {
+    clearTimeout(t);
+    t = setTimeout(applyFilter, 200);
+  });
+
+  // ✅ “×” 버튼 클릭 시 검색창 리셋 + 전체 표시
+  clearBtn?.addEventListener("click", () => {
+    qEl.value = "";
+    applyFilter();
+    qEl.focus();
+  });
+
+  // ✅ 데이터 불러오기
   async function load() {
     try {
       listEl.innerHTML = '<p class="loading">불러오는 중...</p>';
       const res = await fetch("/poi");
-      const rows = await res.json();
-
-      if (!rows || rows.length === 0) {
-        listEl.innerHTML = '<p class="empty">표시할 항목이 없습니다.</p>';
-        return;
+      // 서버 오류(비정상 응답)가 올 수 있으므로 res.ok 검사
+      if (!res.ok) {
+        // 시도: 응답이 JSON이면 그 내용을 읽어 에러 메시지를 사용
+        let errText = `HTTP ${res.status}`;
+        try {
+          const body = await res.json();
+          if (body && body.error) errText = body.error;
+        } catch (e) {
+          // 파싱 실패 시 텍스트로 읽어본다
+          try { errText = await res.text(); } catch (_) {}
+        }
+        throw new Error(errText);
       }
 
-      listEl.innerHTML = rows.map(r => {
-        const imgStyle = r.image ? ` style="background-image:url('${r.image}');"` : "";
-        return `
-          <article class="item" data-type="${r.type}" data-id="${r.id}">
-            <div class="thumb"${imgStyle}></div>
-            <div class="meta">
-              <h4 class="name">${r.name}</h4>
-              <p class="desc">${r.items || ""}</p>
-            </div>
-            <span class="badge">${badge[r.type] || ""}</span>
-          </article>`;
-      }).join("");
+      const rows = await res.json();
+      state.rows = Array.isArray(rows) ? rows : [];
+      render(state.rows);
     } catch (e) {
       console.error("load error:", e);
       listEl.innerHTML = '<p class="error">목록을 불러오지 못했습니다.</p>';
@@ -115,5 +160,4 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
     load();
   }
 })();
-
 

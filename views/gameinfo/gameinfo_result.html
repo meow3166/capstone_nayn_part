@@ -1,8 +1,8 @@
 {%include "include/header.html"%}
 <main>
     <div class="scoreboard">
-        
-        
+
+
         <div class="date_review_group">
             <div class="result">
                 <p> 경기결과 </p>
@@ -14,7 +14,7 @@
                 <p> 리뷰 </p>
             </div>
         </div>
-        
+
         <div class="result_table">
             <table border="1">
                 <colgroup>
@@ -558,40 +558,42 @@
 <div id="user-error" style="margin:8px 0;"></div>
 
 </body>
+<!-- 메뉴바 js -->
+<script src="./assets/js/menubar.js"></script>
 <script>
     // function toggleMenu() {
     //     // document.querySelector(".member").classList.toggle("show");
     // }
-    const hamburger = document.querySelector('.hamburger');
-    const mainmenu = document.querySelector('.mainmenu');
+    // const hamburger = document.querySelector('.hamburger');
+    // const mainmenu = document.querySelector('.mainmenu');
 
-    hamburger.addEventListener('click', () => {
-        mainmenu.classList.toggle('active');
-    });
-    function asPairs(x) {
-        if (Array.isArray(x)) return x;
-        if (x && typeof x === 'object') return Object.entries(x);
-        return [];
-    }
-    // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
-    document.querySelectorAll('.mainmenu > li > a').forEach(item => {
-        item.addEventListener('click', e => {
-            if (window.innerWidth <= 768) { // 모바일일 때만
-                e.preventDefault(); // 링크 이동 방지
-                const parentLi = item.parentElement;
+    // hamburger.addEventListener('click', () => {
+    //     mainmenu.classList.toggle('active');
+    // });
+    // function asPairs(x) {
+    //     if (Array.isArray(x)) return x;
+    //     if (x && typeof x === 'object') return Object.entries(x);
+    //     return [];
+    // }
+    // // 모바일에서 서브 메뉴 클릭 시 옆으로 펼치기 (한 메뉴만 열리도록)
+    // document.querySelectorAll('.mainmenu > li > a').forEach(item => {
+    //     item.addEventListener('click', e => {
+    //         if (window.innerWidth <= 768) { // 모바일일 때만
+    //             e.preventDefault(); // 링크 이동 방지
+    //             const parentLi = item.parentElement;
 
-                // 다른 li의 open 클래스 제거
-                document.querySelectorAll('.mainmenu > li').forEach(li => {
-                    if (li !== parentLi) {
-                        li.classList.remove('open');
-                    }
-                });
+    //             // 다른 li의 open 클래스 제거
+    //             document.querySelectorAll('.mainmenu > li').forEach(li => {
+    //                 if (li !== parentLi) {
+    //                     li.classList.remove('open');
+    //                 }
+    //             });
 
-                // 클릭한 li toggle
-                parentLi.classList.toggle('open');
-            }
-        });
-    });
+    //             // 클릭한 li toggle
+    //             parentLi.classList.toggle('open');
+    //         }
+    //     });
+    // });
 
 
     // 여기가 시발 개문제
@@ -878,4 +880,4 @@
 
 </script>
 
-</html>
+{%include "include/footer.html"%}

@@ -330,13 +330,13 @@ div.pitcher-results p{
     font-size: 14px;
     color: #555;
     margin: 0;
-    background-color: red;
+    /* background-color: red; */
 }
 
 .pitcher-label {
     color: #007bff; /* '선' 글자 파란색 */
     font-weight: bold;
-    background-color: red;
+    /* background-color: red; */
 }
 
 
@@ -373,7 +373,7 @@ div.pitcher-results p{
 .pitcher-results {
     font-size: 14px;
     line-height: 1.6;
-    background-color: red;
+    /* background-color: red; */
 }
 
 .pitcher-results p {

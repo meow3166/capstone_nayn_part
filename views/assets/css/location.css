@@ -138,11 +138,10 @@ body {
   overflow: auto;
   padding-right: 4px;
 }
-
 .item {
   display: flex;
-  gap: 12px;
   align-items: center;
+  gap: 10px; /* 사용자 기본 10px 마진 취향 반영 */
   padding: 12px;
   margin-bottom: 10px;
   border: 1px solid var(--line);
@@ -153,10 +152,18 @@ body {
 .thumb {
   width: 64px;
   height: 64px;
+  flex: 0 0 64px;
   border: 1px dashed #d6d6d6;
   border-radius: 10px;
-  background: #f9f9f9;
+  overflow: hidden;
+
+  background-color: #f9f9f9;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
+
+
 
 .meta {
   min-width: 0;

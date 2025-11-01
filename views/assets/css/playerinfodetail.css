@@ -190,10 +190,10 @@ main {
     /* 세로로 쌓이게 */
     align-items: center;
     /* 가운데 정렬 */
-    gap: 40px;
+    gap: 30px;
     /* 사진과 카드 간 간격 */
     width: 100%;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
   }
 
   /* .playerpicture {
@@ -211,7 +211,7 @@ main {
 
   .playerpicture {
     margin-top: 50px;
-    width: 80%;
+    width: 60%;
     max-width: 350px;
     margin-right: 0;
 
@@ -247,7 +247,7 @@ main {
   }
 
   .number {
-    font-size: 42px;
+    font-size: 38px;
   }
 
   .position {
@@ -261,7 +261,7 @@ main {
   }
 
   .player-name {
-    font-size: 46px;
+    font-size: 40px;
     margin: 4px 0 24px;
     line-height: 1.2;
   }

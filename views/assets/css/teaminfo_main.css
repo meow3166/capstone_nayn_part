@@ -19,6 +19,10 @@ body {
     height: 200px;
   }
 
+  .legend{
+    margin-top: 100px;
+    
+  }
   .legnedPlayer, .winText{
     grid-column: 1 / -1;
   }
@@ -94,6 +98,9 @@ body {
     /* padding-top: 50px; */
   }
 
+  .legend{
+    margin-top: 10px;
+  }
   .legnedPlayer, .winText{
     grid-column: 1 / -1;
   }
