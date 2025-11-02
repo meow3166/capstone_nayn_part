@@ -131,100 +131,106 @@
     // 3. API 호출 및 데이터 바인딩 함수
     // ===================================================================
     async function loadGameResult(dateObj) {
-    let dateString = typeof dateObj === 'string' ? dateObj : getLocalISOString(dateObj);
-    let displayDate = new Date(dateString).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
+        let dateString = typeof dateObj === 'string' ? dateObj : getLocalISOString(dateObj);
+        let displayDate = new Date(dateString).toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
 
-    // 초기화
-    dateHeader.textContent = displayDate;
-    cardFinished.style.display = 'none';
-    cardScheduled.style.display = 'none';
-    cardNoGame.style.display = 'none';
-    statusChip.textContent = '';
-    statusChip.className = 'game-status-chip';
+        // 초기화
+        dateHeader.textContent = displayDate;
+        cardFinished.style.display = 'none';
+        cardScheduled.style.display = 'none';
+        cardNoGame.style.display = 'none';
+        statusChip.textContent = '';
+        statusChip.className = 'game-status-chip';
 
-    try {
-        const response = await fetch(`/api/game-by-date?date=${encodeURIComponent(dateString)}`);
-        
-        if (!response.ok) {
-            // DB에 데이터가 없어서 404가 반환된 경우 -> 경기 정보 없음
-            if (response.status === 404) {
-                cardNoGame.style.display = 'block';
-                statusChip.textContent = '경기 정보 없음';
-                statusChip.classList.add('no-game');
+        try {
+            const response = await fetch(`/api/game-by-date?date=${encodeURIComponent(dateString)}`);
+
+            if (!response.ok) {
+                // DB에 데이터가 없어서 404가 반환된 경우 -> 경기 정보 없음
+                if (response.status === 404) {
+                    cardNoGame.style.display = 'block';
+                    statusChip.textContent = '경기 정보 없음';
+                    statusChip.classList.add('no-game');
+                }
+                return;
             }
-            return;
-        }
-        
-        // --- ★ 데이터가 존재하면 무조건 경기 종료로 간주 (200 OK) ★ ---
-        const { game } = await response.json();
-        
-        statusChip.textContent = '경기 종료'; 
-        statusChip.classList.add('finished');
-        cardFinished.style.display = 'block';
+            const data = await response.json(); // 응답 데이터 전체를 일단 'data' 변수에 저장
+            console.log("--- API 응답 데이터 전체 ---");
+            console.log(data); // 데이터 구조 확인 (e.g., { game: {...} } 형태인지)
+            console.log("----------------------------");
 
-        // 로고 바인딩
-        finishedAwayLogo.src = game.away_team_logo;
-        finishedAwayLogo.alt = game.away_team_name;
-        finishedHomeLogo.src = game.home_team_logo;
-        finishedHomeLogo.alt = game.home_team_name;
+            const { game } = data; // 'data'에서 'game' 객체를 비구조화
+            // --- ★ 데이터가 존재하면 무조건 경기 종료로 간주 (200 OK) ★ ---
+            // const { game } = await response.json();
 
-        // 스코어 및 승패 클래스 결정 (결과 필드가 없거나 null이면 무승부 클래스 적용)
-        let awayScoreClass = 'draw';
-        let homeScoreClass = 'draw';
-        
-        if (game.score_away > game.score_home) {
-            awayScoreClass = 'winning'; homeScoreClass = 'losing';
-        } else if (game.score_away < game.score_home) {
-            awayScoreClass = 'losing'; homeScoreClass = 'winning';
-        }
+            statusChip.textContent = '경기 종료';
+            statusChip.classList.add('finished');
+            cardFinished.style.display = 'block';
 
-        // 스코어 바인딩 및 클래스 적용
-        finishedAwayScore.textContent = game.score_away || 0; // 스코어가 없으면 0으로 표시
-        finishedAwayScore.className = `final-score ${awayScoreClass}`;
-        finishedHomeScore.textContent = game.score_home || 0;
-        finishedHomeScore.className = `final-score ${homeScoreClass}`;
-        finishedVsText.textContent = 'VS';
+            // 로고 바인딩
+            finishedAwayLogo.src = game.away_team_logo;
+            finishedAwayLogo.alt = game.away_team_name;
+            finishedHomeLogo.src = game.home_team_logo;
+            finishedHomeLogo.alt = game.home_team_name;
 
-        // 투수 정보 바인딩 (임시 '투수 정보' 사용)
-        const infoText = '투수 정보'; 
-        finishedAwayPitcherContainer.innerHTML = '';
-        finishedHomePitcherContainer.innerHTML = '';
-        
-        // 경기 결과(result) 필드가 없거나 null일 경우 투수 정보는 표시하지 않음
-        if (game.result) {
-            // 원정팀 패전 투수 (임시값 그대로 사용)
-            if (awayScoreClass === 'losing' && game.lose_pitcher === infoText) {
-                finishedAwayPitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
+            // 스코어 및 승패 클래스 결정 (결과 필드가 없거나 null이면 무승부 클래스 적용)
+            let awayScoreClass = 'draw';
+            let homeScoreClass = 'draw';
+
+            if (game.score_away > game.score_home) {
+                awayScoreClass = 'winning'; homeScoreClass = 'losing';
+            } else if (game.score_away < game.score_home) {
+                awayScoreClass = 'losing'; homeScoreClass = 'winning';
             }
 
-            // 홈팀 승리 투수/세이브 투수 (임시값 그대로 사용)
-            if (homeScoreClass === 'winning' && game.win_pitcher === infoText) {
-                finishedHomePitcherContainer.innerHTML += `<p><span class="result-label win">승</span> ${infoText}</p>`;
-                finishedHomePitcherContainer.innerHTML += `<p><span class="result-label save">세</span> ${infoText}</p>`;
-            } else if (homeScoreClass === 'losing') {
-                 if (game.lose_pitcher === infoText) {
-                    finishedHomePitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
+            // 스코어 바인딩 및 클래스 적용
+            finishedAwayScore.innerHTML = `${game.away_team_name_in_list}<br>${game.score_away}`;
+            finishedAwayScore.className = `final-score ${awayScoreClass}`;
+            finishedHomeScore.innerHTML = `${game.home_team_name_in_list}<br>${game.score_home}`;
+            finishedHomeScore.className = `final-score ${homeScoreClass}`;
+            finishedVsText.textContent = 'VS';
+
+            // 투수 정보 바인딩 (임시 '투수 정보' 사용)
+            const infoText = '투수 정보';
+            finishedAwayPitcherContainer.innerHTML = '';
+            finishedHomePitcherContainer.innerHTML = '';
+
+            // 경기 결과(result) 필드가 없거나 null일 경우 투수 정보는 표시하지 않음
+            if (game.result) {
+                // 원정팀 패전 투수 (임시값 그대로 사용)
+                if (awayScoreClass === 'losing' && game.lose_pitcher === infoText) {
+                    finishedAwayPitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
+                }
+
+                // 홈팀 승리 투수/세이브 투수 (임시값 그대로 사용)
+                if (homeScoreClass === 'winning' && game.win_pitcher === infoText) {
+                    finishedHomePitcherContainer.innerHTML += `<p><span class="result-label win">승</span> ${infoText}</p>`;
+                    finishedHomePitcherContainer.innerHTML += `<p><span class="result-label save">세</span> ${infoText}</p>`;
+                } else if (homeScoreClass === 'losing') {
+                    if (game.lose_pitcher === infoText) {
+                        finishedHomePitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
+                    }
                 }
             }
+
+        } catch (error) {
+            console.error('경기 정보 로드 오류:', error);
+            cardNoGame.style.display = 'block';
+            statusChip.textContent = '오류 발생';
+            statusChip.classList.add('error');
         }
 
-    } catch (error) {
-        console.error('경기 정보 로드 오류:', error);
-        cardNoGame.style.display = 'block';
-        statusChip.textContent = '오류 발생';
-        statusChip.classList.add('error');
     }
-    
-}
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const today = new Date();
         // 1. 오늘 날짜의 경기 결과를 로드합니다.
-        loadGameResult(today); 
-        
+        loadGameResult(today);
+
         // 2. 캘린더/달력 UI의 초기 날짜도 오늘로 설정하는 로직이 있다면 여기에 추가
     });
 </script>
 <script src="../assets/js/schedule.js"></script>
 </body>
+
 </html>
 {%include "include/footer.html"%}

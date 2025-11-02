@@ -5,7 +5,27 @@ if (hamburger && mainmenu) {
     // 햄버거 클릭 시 메뉴 열기/닫기
     hamburger.addEventListener('click', () => {
         mainmenu.classList.toggle('active');
-        document.body.classList.toggle('menu-open', m.classList.contains('active'));
+        const firstMenuItem = document.querySelector('.mainmenu > li:first-child');
+        if (mainmenu.classList.contains('active')) {
+            // 메뉴가 열릴 때만 실행
+            const firstMenuItem = document.querySelector('.mainmenu > li:first-child');
+            if (firstMenuItem) {
+                // 첫 번째 li에 'open' 클래스 추가하여 서브 메뉴 펼치기
+                firstMenuItem.classList.add('open');
+                
+                // 만약 다른 li에 이미 'open'이 있다면 모두 닫고 첫 번째만 열리도록 하려면 아래 주석 해제
+                // document.querySelectorAll('.mainmenu > li').forEach(li => {
+                //     if (li !== firstMenuItem) {
+                //         li.classList.remove('open');
+                //     }
+                // });
+            }
+        } else {
+            // 메뉴가 닫힐 때는 모든 'open' 클래스 제거 (선택 사항)
+            document.querySelectorAll('.mainmenu > li.open').forEach(li => {
+                li.classList.remove('open');
+            });
+        }
     });
 
     // 모바일에서 서브 메뉴 클릭 시 한 메뉴만 펼치기

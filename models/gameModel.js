@@ -21,8 +21,8 @@ exports.getGameByDate = async (date) => {
             g.game_date,
             g.game_day,
             SUBSTRING(g.game_time, 1, 5) AS game_time,
-            g.score_home,
-            g.score_away,
+            COALESCE(g.score_home, g.note) AS score_home,
+            COALESCE(g.score_away, g.note) AS score_away,
             g.result,
 
             COALESCE(th.home_stadium, ta.home_stadium) AS game_venue,
@@ -70,6 +70,7 @@ exports.getLineup = async (gameId, teamId) => {
     return pool.query(sql, [gameId, teamId]);
 };
 
+// 캘린더 - 검색용 키워드 추가 - 개발 완료 시 지울 예정
 exports.getSchedules = async (month) => {
     const sql = `
         SELECT 
@@ -79,8 +80,8 @@ exports.getSchedules = async (month) => {
             game_time,
             team_home,
             team_away,
-            score_home,
-            score_away,
+            COALESCE(score_home, note) AS score_home,
+            COALESCE(score_away, note) AS score_away,
             tv_channel,
             stadium,
             note,
@@ -90,7 +91,7 @@ exports.getSchedules = async (month) => {
                 WHEN result IN ('win', 'lose', 'draw') THEN 1
                 ELSE 0
             END as is_finished
-        FROM \`${DB}\`.game_schedule
+        FROM \`${DB}\`.game_schedule_list
         WHERE DATE_FORMAT(game_date, '%Y-%m') = ?
         ORDER BY game_date ASC, game_time ASC
     `;

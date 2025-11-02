@@ -58,15 +58,15 @@ main {
 
   /* 제목 */
 
-  
+
   .result_admin p {
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 12px;
     text-align: left;
-    
-    background-color: aqua;
-    
+
+    /* background-color: aqua; */
+
   }
 
   .scoreboard .review {
@@ -254,6 +254,7 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.3;
+
   }
 
   .teamA_pitcher_result tr:last-child td,
@@ -264,6 +265,13 @@ main {
     padding: 4px 8px;
     text-align: center;
     font-weight: bold;
+
+  }
+
+  .teamA_pitcher_result tr:first-child td:first-child,
+  .teamB_pitcher_result tr:first-child td:first-child {
+    /* background-color: rebeccapurple; */
+    width: 100px;
   }
 
 

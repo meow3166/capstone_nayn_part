@@ -159,6 +159,8 @@ exports.getGameDate = async (req, res) => {
     res.status(500).json({ ok: false, error: e.message });
   }
 };
+
+// 캘린더 - 검색용 키워드 추가 - 개발 완료 시 지울 예정
 exports.getGameByDate = async (req, res) => {
   try {
     const { date } = req.query;

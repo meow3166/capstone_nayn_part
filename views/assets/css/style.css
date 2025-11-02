@@ -176,7 +176,7 @@ nav {
   min-width: 100px;
   /* box-shadow: 0 2px 6px rgba(0,0,0,0.2); */
   /* z-index: 10; */
-  min-height: 180px;
+  min-height: 140px;
 }
 
 .mainmenu:hover .sub {
@@ -240,6 +240,7 @@ nav {
   .sub li {
     padding: 14px;
     height: 60px;
+    text-align: left;
   }
 
   /* 메뉴 열리면 스크롤 잠금 */
@@ -301,7 +302,7 @@ nav {
     width: 100%;
     height: 60px;
     line-height: 60px;
-    text-align: left;
+    text-align: center;
     padding: 0 12px;
     border-bottom: 1px solid #e9e9e9;
   }
