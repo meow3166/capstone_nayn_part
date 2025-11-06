@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>메인페이지시작</title>
-    <link href="./assets/css/style.css" rel="stylesheet">
-    <link href="./assets/css/footer.css" rel="stylesheet">
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/footer.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta name="viewport" content="user-scalable=no, width=device-width">
     <link href="../assets/css/game_match_list.css" rel="stylesheet">
+    <link href="/assets/css/mainChatbot.css" rel="stylesheet">
+
     <style>
         body {
             font-family: sans-serif;
@@ -20,7 +22,6 @@
             background-size: cover;
         }
     </style>
-
 </head>
 
 <body>
@@ -40,7 +41,7 @@
             <div class="member">
                 <div class="login">
                     <a href="/login/Login.html" class="login_button">관리자 로그인</a>
-                </div>
+                </div>ㅁ
             </div>
         </div>
         <div class="header_bottom">
@@ -90,9 +91,12 @@
         </div>
     </header>
     <main>
-        <div class="chatInput">
-            <input type="text" id="chatInput">
-        </div>
+        <section class="fc-chat" id="fcChat">
+            <div class="fc-chat__log" id="chatLog" aria-live="polite"></div>
+            <div class="fc-chat__input">
+                <input type="text" id="chatInput" placeholder="무엇이 궁금하신가요? (Enter 입력)">
+            </div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -122,6 +126,28 @@
 
     </footer>
 </body>
+<script>
+    (function () {
+        const chat = document.getElementById('fcChat');
+        const footer = document.querySelector('footer');            // 푸터 선택자 필요 시 바꿔도 됨
+        if (!chat || !footer) return;
+
+        // fcChat이 다른 래퍼에 들어있으면 body로 이동(고정 보장)
+        if (chat.parentElement !== document.body) document.body.appendChild(chat);
+
+        function setFooterOffset() {
+            const r = footer.getBoundingClientRect();
+            // 푸터 상단이 뷰포트 안으로 들어온 양(겹치는 높이)
+            const overlap = Math.max(0, window.innerHeight - r.top);
+            chat.style.setProperty('--footer-offset', overlap + 'px');
+        }
+
+        setFooterOffset();
+        window.addEventListener('scroll', setFooterOffset, { passive: true });
+        window.addEventListener('resize', setFooterOffset);
+        $log.scrollTop = $log.scrollHeight;
+    })();
+</script>
 
 <!-- 헤더 메뉴바 js -->
 <script src="./assets/js/menubar.js"></script>
@@ -129,5 +155,9 @@
 <script src="./assets/js/weather.js"></script>
 <!-- 챗봇 엔터 키 이벤트 js -->
 <!-- <script src="./assets/js/chat.js"></script> -->
+<script type="module" src="/assets/js/aiCore.js" defer></script>
+<script type="module" src="/assets/js/main_chat.js" defer></script>
+
+
 
 </html>

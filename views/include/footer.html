@@ -1,24 +1,22 @@
+<!-- 플로팅 버튼 -->
 <button class="fab" id="fabBtn" aria-haspopup="dialog" aria-controls="chatModal" aria-expanded="false">
   <img src="../assets/img/Floating_Chatbot_Icon.png" alt="도움말 열기">
 </button>
 
-<!-- 모달 챗봇 수정할거 ..  -->
-<div class="modal" id="chatModal" role="dialog" aria-modal="true" aria-labelledby="chatTitle" hidden>
-  <div class="modal__backdrop" data-dismiss="modal"></div>
-  <div class="modal__dialog" role="document">
-    <header class="modal__header">
-      <h2 id="chatTitle">도움말 / 챗봇</h2>
-      <button class="modal__close" id="chatClose" aria-label="닫기">×</button>
-    </header>
+<!-- 모달 챗봇 -->
+<div class="modal dock" id="chatModal" hidden>
+  <div class="modal__backdrop"></div>
+  <div class="modal__dialog">
     <div class="modal__body">
-      <p>여기에 챗봇 또는 안내 내용을 넣으세요.</p>
+      <div id="chatLog" class="chat-log"></div>
+      <div class="chat-input-wrap">
+        <input id="chatInput" type="text" placeholder="질문을 입력하세요.">
+        <button id="chatSend" type="button" class="modal__btn">전송</button>
+      </div>
+
     </div>
-    <footer class="modal__footer">
-      <button class="modal__btn" data-dismiss="modal">닫기</button>
-    </footer>
   </div>
 </div>
-
 <footer class="site-footer">
     <div class="footer-content">
         <p class="logo">⚾ FullCount</p>
@@ -26,7 +24,7 @@
 
         <ul class="footer-menu">
             <li><a href="#"><img src="/assets/img/instagramIcon.png"></a></li>
-            <li><a href="#"><img src="/assets/img/kakaoIcon.png"></a></li>
+            <li><a href="http://open.kakao.com/o/sZHZwf2g"><img src="/assets/img/kakaoIcon.png"></a></li>
             <li><a href="https://www.youtube.com/@lionstv1982"><img src="/assets/img/youtubeIcon.png"></a></li>
 
         </ul>
@@ -58,5 +56,10 @@
 <!-- <script src="./assets/js/chat.js"></script> -->
  <!-- 고객센터 -->
 <script src="../assets/js/support.js"></script>
+
+<!-- 플로팅 챗봇 로직 연결 -->
+<script type="module" src="/assets/js/aiCore.js?v=1" defer></script>
+<script type="module" src="/assets/js/fullcount_main_chat.js"></script>
+
 
 </html>

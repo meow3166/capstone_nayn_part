@@ -8,8 +8,8 @@
     display: grid;
     grid-template-columns: 92px 320px 1fr;
     grid-template-rows: 1fr;
-    max-width: 1520px;
-    margin: 0 auto;
+    max-width: none; /* 전체 폭 사용 */
+    margin: 0 200px; /* 좌우 200px 여백 */
 
   }
 

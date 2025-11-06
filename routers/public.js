@@ -30,6 +30,7 @@ router.get('/playerinfodetail', teamController.playerDetail);
 /* ===== 경기정보 ===== */
 router.get(['/game_match_list', '/game_match_list.html'], gameController.showMatchList);
 router.get(['/gameinfo_result', '/gameinfo_result.html'], gameController.showResult);
+router.get('/gameinfo_result/:id', gameController.showResult); // ID를 URL 경로로 받는 라우트 추가
 
 /* ===== 경기 일정 API ===== */
 router.get('/api/schedules', gameController.getSchedules);
@@ -117,6 +118,13 @@ router.get('/api/inquiries', supportController.inquiryList);
 // 여기서 부터 추가한거  
 /* ===== 경기결과 API (날짜별 조회) ===== */
 router.get('/api/game-by-date', gameController.getGameByDate);
+
+// 경기 상세 API (ID별 조회) 추가
+/* ===== 경기 상세 페이지 (gameId 기반 조회) ===== */
+
+/* ===== 날짜로 game_id 조회 ===== */
+router.get('/api/game-id-by-date', gameController.getGameIdByDate);
+
 
 /* ===== 루트 ===== */
 router.get(['/', '/index', '/index.html'], (req, res) => res.render('index.html'));

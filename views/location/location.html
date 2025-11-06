@@ -1,76 +1,47 @@
-{%include "include/header.html"%}
+{% include "include/header.html" %}
 
 <main class="page">
     <!-- 좌측 레일(PC) -->
     <aside class="rail" aria-label="빠른 찾기">
         <button class="rail-btn" data-filter="route">
-            <span class="rail-ico">
-                <img src="./assets/img/Directions_icon.png" alt="길 찾기 아이콘">
-            </span>
+            <span class="rail-ico"><img src="./assets/img/Directions_icon.png" alt="길 찾기 아이콘"></span>
             <span class="rail-copy"><strong>길 찾기</strong></span>
         </button>
         <button class="rail-btn" data-filter="all">
-            <span class="rail-ico">
-                <img src="./assets/img/map_all.png" alt="전체 아이콘">
-            </span>
+            <span class="rail-ico"><img src="./assets/img/map_all.png" alt="전체 아이콘"></span>
             <span class="rail-copy"><strong>전체</strong></span>
         </button>
         <button class="rail-btn" data-filter="food">
-            <span class="rail-ico">
-                <img src="./assets/img/Food_icon.png" alt="먹거리 아이콘">
-            </span>
+            <span class="rail-ico"><img src="./assets/img/Food_icon.png" alt="먹거리 아이콘"></span>
             <span class="rail-copy"><strong>먹거리</strong></span>
         </button>
-
-        <button class="rail-btn" data-filter="amenities">
-            <span class="rail-ico">
-                <img src="./assets/img/Map_Amenities.png" alt="편의시설 아이콘">
-            </span>
+        <!-- DB에서 타입 Amenities 바꾸고 data_filter도 바꿔주기-->
+        <button class="rail-btn" data-filter="toilet">
+            <span class="rail-ico"><img src="./assets/img/Map_Amenities.png" alt="편의시설 아이콘"></span>
             <span class="rail-copy"><strong>편의시설</strong></span>
         </button>
     </aside>
-    <!-- 검색/리스트 패널 -->
+
+    <!-- 검색 + 리스트 패널 -->
     <section class="panel" aria-label="검색 및 결과">
         <div class="search">
-            <!-- ⚠️ 여기 ID 바꿈 -->
-            <input id="q_m" type="search" placeholder="검색어를 입력하세요" aria-label="검색어">
+            <input id="q" type="search" placeholder="검색어를 입력하세요" aria-label="검색어">
             <i class="icon-search" aria-hidden="true"></i>
-            <button class="btn-clear" id="btnClear_m" aria-label="검색어 지우기">×</button>
+            <button class="btn-clear" id="btnClear" aria-label="검색어 지우기">×</button>
         </div>
-
-        <!-- 변경 전: 하드코딩된 article들 전부 삭제/주석 -->
         <div class="list" id="resultList" aria-live="polite"></div>
-
     </section>
 
-    <!-- 모바일 칩 -->
+    <!-- 지도 -->
     <section id="map">
         <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3234.3303178387955!2d128.67891447559919!3d35.840903172536095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3566095381548595%3A0x4a48e31222ad6c61!2z64yA6rWs7IK87ISx65287J207Jio7KaI7YyM7YGs!5e0!3m2!1sko!2skr!4v1759976658220!5m2!1sko!2skr"
             width="1110" height="800" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-        <!-- 모바일에서 지도 위에 겹칠 오버레이 -->
-        <div class="m-overlay">
-            <section class="panel" aria-label="검색 및 결과">
-                <div class="search">
-                    <input id="q" type="search" placeholder="검색어를 입력하세요" aria-label="검색어">
-                    <i class="icon-search" aria-hidden="true"></i>
-                    <button class="btn-clear" id="btnClear" aria-label="검색어 지우기">×</button>
-                </div>
-            </section>
-
-            <div class="chips" role="group" aria-label="빠른 찾기(모바일)">
-                <button class="chip" data-filter="route"><img src="../assets/img/Directions_icon.png" alt=""><span>길
-                        찾기</span></button>
-                <button class="chip" data-filter="food"><img src="../assets/img/Food_icon.png"
-                        alt=""><span>먹거리</span></button>
-                <button class="chip" data-filter="toilet"><img src="../assets/img/toilet_icon.png"
-                        alt=""><span>화장실</span></button>
-            </div>
-        </div>
+        <!-- 모바일 전용 오버레이 (검색창 이동용) -->
+        <div class="m-overlay"></div>
     </section>
-
 </main>
 
-{%include "include/footer.html"%}
+{% include "include/footer.html" %}

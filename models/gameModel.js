@@ -18,44 +18,128 @@ exports.getGameById = async (id) => {
 exports.getGameByDate = async (date) => {
     const sql = `
         SELECT
+            g.id AS game_id,
+            MAX(gp.game_id) AS page_id,
             g.game_date,
             g.game_day,
             SUBSTRING(g.game_time, 1, 5) AS game_time,
-            COALESCE(g.score_home, g.note) AS score_home,
-            COALESCE(g.score_away, g.note) AS score_away,
+            g.score_home AS score_home,
+            g.score_away AS score_away,
             g.result,
 
-            COALESCE(th.home_stadium, ta.home_stadium) AS game_venue,
+            MAX(COALESCE(th.home_stadium, ta.home_stadium)) AS game_venue,
 
-            -- DB 기록 유무에 따른 game_status (간단 구현)
             CASE
                 WHEN g.result IS NOT NULL THEN 1
                 ELSE 2
             END AS game_status,
 
-            -- 투수 정보: 필드가 없으므로 임시 문자열 반환
-            '투수 정보' AS win_pitcher,
-            '투수 정보' AS lose_pitcher,
-            '투수 정보' AS save_pitcher,
+            -- 승/세 투수 정보 추출 (JSON_TABLE 사용)
+            MAX(CASE WHEN jt_pitcher.result_type = '승' THEN jt_pitcher.pitcher_name ELSE NULL END) AS win_pitcher,
+            MAX(CASE WHEN jt_pitcher.result_type = '세' THEN jt_pitcher.pitcher_name ELSE NULL END) AS save_pitcher,
+            
+            -- 패전 투수 정보 추출 
+            
+            MAX(CASE WHEN jt_pitcher.result_type = '패' THEN jt_pitcher.pitcher_name ELSE NULL END) AS lose_pitcher,
 
             g.team_home AS home_team_name_in_list,
             g.team_away AS away_team_name_in_list,
-
-            th.team_name AS home_team_name,
-            ta.team_name AS away_team_name,
-            th.logo_path AS home_team_logo,
-            ta.logo_path AS away_team_logo,
-            th.season_record AS home_team_record,
-            ta.season_record AS away_team_record
+            
+            MAX(th.team_name) AS home_team_name,
+            MAX(ta.team_name) AS away_team_name,
+            MAX(th.logo_path) AS home_team_logo,
+            MAX(ta.logo_path) AS away_team_logo,
+            MAX(th.season_record) AS home_team_record,
+            MAX(ta.season_record) AS away_team_record
         FROM \`${DB}\`.game_schedule_list g
         LEFT JOIN \`${DB}\`.t_team_info th ON g.team_home = th.short_name
         LEFT JOIN \`${DB}\`.t_team_info ta ON g.team_away = ta.short_name
+        
+        -- 1. 상세 정보를 가진 테이블과 '날짜' 기준으로 조인
+        LEFT JOIN \`${DB}\`.game_page gp ON g.game_date = gp.game_date 
+        
+        -- 2. JSON_TABLE을 사용하여 승리팀 투수 기록 배열을 행으로 변환
+        LEFT JOIN LATERAL (
+            -- pitcherA의 투수 기록
+            SELECT 
+                pitcher_name, result_type
+            FROM JSON_TABLE(
+                gp.payload, 
+                '$.tables.pitcherA.rows[*]' 
+                COLUMNS(
+                    pitcher_name VARCHAR(50) PATH '$[0]', 
+                    result_type VARCHAR(10) PATH '$[2]'  
+                )
+            ) AS p_a
+            
+            UNION ALL
+            
+            -- pitcherB의 투수 기록
+            SELECT 
+                pitcher_name, result_type
+            FROM JSON_TABLE(
+                gp.payload, 
+                '$.tables.pitcherB.rows[*]' 
+                COLUMNS(
+                    pitcher_name VARCHAR(50) PATH '$[0]', 
+                    result_type VARCHAR(10) PATH '$[2]'  
+                )
+            ) AS p_b
+        ) AS jt_pitcher ON 1 = 1  -- LATERAL 조인을 위한 구문
+        
         WHERE g.game_date = ?
+        
+        -- GROUP BY 절을 g 테이블의 비집계 컬럼들로 정리
+        GROUP BY 
+            g.id, g.game_date, g.game_day, g.game_time, g.score_home, g.score_away, g.result, g.note,
+            g.team_home, g.team_away
         LIMIT 1
     `;
 
     const [rows] = await pool.query(sql, [date]);
     return rows[0] || null;
+};
+
+
+exports.getGameDetailsById = async (scheduleId) => {
+    const sql = `
+        SELECT 
+            g.game_date,
+            gp.payload,
+            gp.game_id AS page_id
+        FROM game_schedule_list g
+        LEFT JOIN game_page gp 
+            ON gp.game_id = g.id   -- ✅ 날짜 + 팀 매칭 제거, id로 단일 연결
+        WHERE g.id = ?
+        LIMIT 1;
+    `;
+
+    const [rows] = await pool.query(sql, [scheduleId]);
+    const row = rows[0];
+
+    if (!row || !row.payload) return null;
+
+    const details = typeof row.payload === 'string'
+        ? JSON.parse(row.payload)
+        : row.payload;
+
+    return {
+        gameDate: row.game_date,
+        pageId: row.page_id,
+        details
+    };
+};
+
+exports.getGameIdByDate = async (date) => {
+    const sql = `
+        SELECT game_id
+        FROM \`${DB}\`.game_page
+        WHERE DATE(game_date) = DATE(?)
+        LIMIT 1
+    `;
+
+    const [rows] = await pool.query(sql, [date]);
+    return rows.length ? rows[0].game_id : null;
 };
 
 exports.getLineup = async (gameId, teamId) => {

@@ -256,12 +256,19 @@ env.addFilter('date', function (value, fmt = 'YYYY-MM-DD HH:mm') {
 // ---------------------------------------------------------------------
 // 4) 라우터
 // ---------------------------------------------------------------------
-app.use('/', require('./routers/public'));   // // 사용자/공지 라우트
-app.use('/', require('./routers/auth'));     // // 로그인/로그아웃 등(있다면)
-app.use('/admin', require('./routers/admin'));// // 관리자(있다면)
+app.use('/', require('./routers/public'));   // 사용자/공지 라우트
+app.use('/', require('./routers/auth'));     // 로그인/로그아웃 등
+app.use('/admin', require('./routers/admin'));// 관리자
+app.use('/api/ai', require('./routers/FullCountAi')); // AI API 통일
+
 
 // 헬스체크
 app.get('/ping', (req, res) => res.send('pong'));
+app.get('/favicon.ico', (_req, res) => res.status(204).end());
+
+app.use('/api', (req, res) => {
+  res.status(404).json({ code: 404, message: `API not found: ${req.method} ${req.originalUrl}` });
+});
 
 // ---------------------------------------------------------------------
 // 5) 서버 시작

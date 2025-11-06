@@ -8,13 +8,43 @@
   height: calc(100% - 58px);
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;    /* 지도만 */
+  grid-template-rows: 1fr;    /* 지도 한 칸, 위엔 오버레이로 겹침 */
   max-width: none;
   margin: 0;
+  position: relative;         /* 오버레이 기준 */
 }
 
-/* 좌측 레일 숨김 */
-.rail{ display: none; }
+@media (max-width: 768px){
+  /* 좌측 레일: 지도 위 오버레이, 고정 아님 */
+  .rail{
+    position: absolute;
+    left: 12px; right: 12px;
+    top: calc(12px + var(--searchH) + 12px);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0 0 8px;
+    background: transparent;
+    z-index: 1001;
+  }
+
+  /* 레일 버튼을 정사각 칩으로 - 컬럼 폭에 맞춰 자동 */
+  .rail-btn{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.08);
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .rail-ico img{ width: 28px; height: 28px; object-fit: contain; display: block; }
+  .rail-copy{ white-space: nowrap; }
+}
 
 /* 지도 컨테이너: 오버레이 기준 */
 #map{
@@ -39,17 +69,20 @@
   pointer-events: auto;
 }
 
-/* 패널(검색바) : 상단 겹치기 */
-#map .overlay .panel{
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  top: 12px;
-  border: 0;
-  background: transparent;
-  padding: 0;
-  margin: 0;
-  overflow: visible;          /* 잘림 방지 */
+/* 패널(검색바) : 지도 위 오버레이 (고정 아님) */
+@media (max-width: 768px){
+  .panel{
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 12px;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    overflow: visible;          /* 잘림 방지 */
+    z-index: 1002;
+  }
 }
 
 /* 검색바 */
@@ -90,8 +123,10 @@
   cursor: pointer;
 }
 
-/* 힌트/리스트는 모바일 기본 숨김 (필요 시 JS로 토글) */
-.hint, .list{ display: none; }
+/* 힌트/리스트는 모바일에서만 숨김 (PC에선 보임) */
+@media (max-width: 768px){
+  .hint, .list{ display: none; }
+}
 
 /* 칩: 검색바 바로 아래 겹치기 */
 #map .overlay .chips{

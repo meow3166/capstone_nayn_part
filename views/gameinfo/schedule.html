@@ -182,34 +182,81 @@
             } else if (game.score_away < game.score_home) {
                 awayScoreClass = 'losing'; homeScoreClass = 'winning';
             }
-
+            if (game.game_status === 1) { // 1 = 종료
+                statusChip.textContent = '경기 종료';
+                statusChip.classList.add('finished');
+                cardFinished.style.display = 'block';
+            } else if (game.game_status === 0) { // 0 = 예정
+                statusChip.textContent = '경기 예정';
+                statusChip.classList.add('scheduled');
+                cardScheduled.style.display = 'block';
+                return; // ✅ 예정 경기니까 여기서 끝
+            } else {
+                cardNoGame.style.display = 'block';
+                statusChip.textContent = '경기 정보 없음';
+                statusChip.classList.add('no-game');
+                return;
+            }
             // 스코어 바인딩 및 클래스 적용
             finishedAwayScore.innerHTML = `${game.away_team_name_in_list}<br>${game.score_away}`;
             finishedAwayScore.className = `final-score ${awayScoreClass}`;
             finishedHomeScore.innerHTML = `${game.home_team_name_in_list}<br>${game.score_home}`;
             finishedHomeScore.className = `final-score ${homeScoreClass}`;
             finishedVsText.textContent = 'VS';
+            cardFinished.style.cursor = 'pointer';
 
-            // 투수 정보 바인딩 (임시 '투수 정보' 사용)
-            const infoText = '투수 정보';
-            finishedAwayPitcherContainer.innerHTML = '';
-            finishedHomePitcherContainer.innerHTML = '';
+            cardFinished.onclick = async function () {
+    const date = game.game_date.slice(0,10); // YYYY-MM-DD
+
+    try {
+        const res = await fetch(`/api/game-id-by-date?date=${encodeURIComponent(dateString)}`);
+        if (!res.ok) throw new Error('API 응답 실패');
+
+        const data = await res.json();
+
+        if (data.ok && data.gameId) {
+            // page_id 대신 gameId 사용
+            cardFinished.style.cursor = 'pointer';
+            cardFinished.onclick = () => {
+                window.location.href = `/gameinfo_result?id=${data.gameId}`;
+            };
+        } else {
+            alert('상세 경기 정보가 없습니다.');
+        }
+    } catch (err) {
+        console.error(err);
+        alert("경기 정보를 가져오는 중 오류가 발생했습니다.");
+    }
+};
+            // finishedHomePitcherContainer.innerHTML = '';
+
+            // 투수 정보 바인딩: 실제 DB 데이터(game.win_pitcher, game.lose_pitcher, game.save_pitcher) 사용
+            finishedAwayPitcherContainer.innerHTML = ''; // 초기화
+            finishedHomePitcherContainer.innerHTML = ''; // 초기화
 
             // 경기 결과(result) 필드가 없거나 null일 경우 투수 정보는 표시하지 않음
-            if (game.result) {
-                // 원정팀 패전 투수 (임시값 그대로 사용)
-                if (awayScoreClass === 'losing' && game.lose_pitcher === infoText) {
-                    finishedAwayPitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
+            // 경기가 실제로 종료되었고 (result 필드가 null이 아님), 투수 정보가 있는 경우에만 처리
+            if (game.result && (game.win_pitcher || game.lose_pitcher || game.save_pitcher)) {
+
+                // --- 1. 승리팀 결정 및 바인딩 ---
+                let winningContainer = (awayScoreClass === 'winning') ? finishedAwayPitcherContainer : finishedHomePitcherContainer;
+
+                // 승리 투수 (항상 존재해야 함)
+                if (game.win_pitcher) {
+                    winningContainer.innerHTML += `<p><span class="result-label win">승</span> ${game.win_pitcher}</p>`;
                 }
 
-                // 홈팀 승리 투수/세이브 투수 (임시값 그대로 사용)
-                if (homeScoreClass === 'winning' && game.win_pitcher === infoText) {
-                    finishedHomePitcherContainer.innerHTML += `<p><span class="result-label win">승</span> ${infoText}</p>`;
-                    finishedHomePitcherContainer.innerHTML += `<p><span class="result-label save">세</span> ${infoText}</p>`;
-                } else if (homeScoreClass === 'losing') {
-                    if (game.lose_pitcher === infoText) {
-                        finishedHomePitcherContainer.innerHTML += `<p><span class="result-label loss">패</span> ${infoText}</p>`;
-                    }
+                // 세이브 투수 (있을 수도, 없을 수도 있음)
+                if (game.save_pitcher && game.save_pitcher !== 'null') { // MySQL에서 NULL이 문자열 'null'로 올 수 있기에 방어 코드 추가
+                    winningContainer.innerHTML += `<p><span class="result-label save">세</span> ${game.save_pitcher}</p>`;
+                }
+
+                // --- 2. 패배팀 결정 및 바인딩 ---
+                let losingContainer = (awayScoreClass === 'losing') ? finishedAwayPitcherContainer : finishedHomePitcherContainer;
+
+                // 패전 투수 (Summary에서 추출한 값이 들어오므로, null이 아닌지 확인)
+                if (game.lose_pitcher && game.lose_pitcher !== 'null') {
+                    losingContainer.innerHTML += `<p><span class="result-label loss">패</span> ${game.lose_pitcher}</p>`;
                 }
             }
 

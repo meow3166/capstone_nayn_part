@@ -20,7 +20,7 @@ main.support-page {
 
 /* 구분선 */
 main.support-page .line1 {
-    border-top: 3px solid #00106b;
+    border-top: 3px solid #000080;
     margin: 15px 0;
 }
 
@@ -28,7 +28,9 @@ main.support-page .line1 {
 main.support-page .munhee {
     font-size: 28px;
     font-weight: bold;
-    margin: 0 0 10px;
+    /* margin: 0 0 10px; */
+    margin-top: 30px;
+    margin-bottom: 10px;
     /* 좌측 정렬이므로 좌우 auto 제거 */
     display: block;
     width: auto;
@@ -81,7 +83,7 @@ main.support-page .card {
 }
 
 main.support-page .card:hover {
-    border-color: #7e4f37;
+    border-color: #000080;
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -141,7 +143,7 @@ main.support-page .faq-answer {
     line-height: 1.6;
     color: #555;
     background: #fafafa;
-    border-left: 3px solid #7e4f37;
+    border-left: 3px solid #000080;
 }
 
 /* 열림 상태 */

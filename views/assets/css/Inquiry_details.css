@@ -20,7 +20,7 @@ main.page-inquiry .form-group textarea {
 
 /* 구분선 */
 main.page-inquiry .line1 {
-  border-top: 3px solid #7e4f37;
+  border-top: 3px solid #000080;
   width: 100%;
   margin: 10px 0;
 }
@@ -64,7 +64,7 @@ main.page-inquiry .form-group textarea {
 main.page-inquiry .form-group input:focus,
 main.page-inquiry .form-group select:focus,
 main.page-inquiry .form-group textarea:focus {
-  border-color: #935b3f;
+  border-color: #000080;
   outline: none;
 }
 
@@ -73,7 +73,7 @@ main.page-inquiry .form-group select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  border: 2px solid #70422c;
+  /* border: 2px solid #00106b; */
   padding: 10px 38px 10px 12px;
   position: relative;
   z-index: 1100;
@@ -85,7 +85,7 @@ main.page-inquiry .form-group:has(select:focus)::after {
   content: "";
   position: absolute;
   inset: -6px;
-  border: 2px solid #4e2f1f;
+  border: 2px solid #000080;
   border-radius: 12px;
   pointer-events: none;
 }
@@ -101,7 +101,7 @@ main.page-inquiry .form-group textarea {
 main.page-inquiry .inquiry-form button {
   width: 100%;
   padding: 10px;
-  background: #ffdac8;
+  background: #000080;
   color: #fff;
   font-size: 16px;
   border: none;
@@ -109,7 +109,7 @@ main.page-inquiry .inquiry-form button {
   cursor: pointer;
 }
 main.page-inquiry .inquiry-form button:hover {
-  background: #ffefe8;
+  background: #0010A0;
 }
 
 /* ================================

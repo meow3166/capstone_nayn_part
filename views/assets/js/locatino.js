@@ -55,13 +55,26 @@ document.querySelectorAll('[data-filter]').forEach(btn => {
   function openModal() {
     modal.hidden = false;
     fab.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+    // 도킹형(dock) 챗봇은 페이지 스크롤을 막지 않음
+    if (!modal.classList.contains('dock')) {
+      document.body.style.overflow = 'hidden';
+    }
+    // 도킹형이면 애니메이션용 클래스 추가
+    if (modal.classList.contains('dock')) {
+      modal.classList.add('show');
+    }
     setTimeout(() => closeBtn?.focus(), 0);
   }
   function closeModal() {
     modal.hidden = true;
     fab.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    // 도킹형(dock) 챗봇은 스크롤 원복 불필요, 일반 모달만 원복
+    if (!modal.classList.contains('dock')) {
+      document.body.style.overflow = '';
+    }
+    if (modal.classList.contains('dock')) {
+      modal.classList.remove('show');
+    }
     fab.focus();
   }
 

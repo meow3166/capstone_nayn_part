@@ -138,10 +138,12 @@ body {
   overflow: auto;
   padding-right: 4px;
 }
+
 .item {
   display: flex;
   align-items: center;
-  gap: 10px; /* 사용자 기본 10px 마진 취향 반영 */
+  gap: 10px;
+  /* 사용자 기본 10px 마진 취향 반영 */
   padding: 12px;
   margin-bottom: 10px;
   border: 1px solid var(--line);
@@ -245,7 +247,7 @@ body {
     grid-template-columns: 92px 320px 1fr;
     grid-template-rows: 1fr;
     max-width: 1520px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     isolation: isolate;
     /* z-index 정리 */
   }
@@ -471,4 +473,4 @@ nav,
 .mainmenu .sub {
   z-index: 9999 !important;
   /* 지도 위로 강제 */
-}    
+}

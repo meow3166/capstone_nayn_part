@@ -121,6 +121,10 @@
                     <td></td>
                 </tr>
                 <tr>
+                    <td>폭투</td>
+                    <td></td>
+                </tr>
+                <tr>
                     <td>심판</td>
                     <td></td>
                 </tr>
@@ -609,6 +613,17 @@
 
         // ---------- 서버 데이터 접근 ----------
         function getScoreTable(d) { return d.scoreTable ?? d.payload?.scoreTable; }
+        // function getScoreTable(d) {
+        //     return (
+        //         pick(d, 'scoreTable.rows') ||
+        //         pick(d, 'payload.scoreTable.rows') ||
+        //         pick(d, 'tables.scoreTable.rows') ||
+        //         pick(d, 'payload.tables.scoreTable.rows') ||
+        //         // 혹시 rows 없이 바로 배열일 때
+        //         (Array.isArray(d?.scoreTable) ? d.scoreTable : null) ||
+        //         (Array.isArray(d?.payload?.scoreTable) ? d.payload.scoreTable : null)
+        //     );
+        // }
         function getSummaryTable(d) { return d.summaryTable ?? d.payload?.summaryTable; }
         function getHitterA(d) { return pick(d, 'tables.hitterA.rows') ?? pick(d, 'payload.tables.hitterA.rows'); }
         function getHitterB(d) { return pick(d, 'tables.hitterB.rows') ?? pick(d, 'payload.tables.hitterB.rows'); }
@@ -616,20 +631,160 @@
         function getPitcherB(d) { return pick(d, 'tables.pitcherB.rows') ?? pick(d, 'payload.tables.pitcherB.rows'); }
 
         // ---------- 팀명: payload 우선, 없으면 스코어보드에서 추출 ----------
+        // function getTeamNames(data) {
+        //     let A = data?.teamAName || '';
+        //     let B = data?.teamBName || '';
+        //     if (!A || !B) {
+        //         const tbl = $('.result_table table');
+        //         if (tbl) {
+        //             const trs = qsa('tr', tbl);
+        //             // 2행 2열 / 3행 2열
+        //             A = A || (trs[1]?.cells?.[1]?.textContent || '').trim();
+        //             B = B || (trs[2]?.cells?.[1]?.textContent || '').trim();
+        //         }
+        //     }
+        //     return { A: A || 'TeamA', B: B || 'TeamB' };
+        // }
+
+        
+        // ---------- 팀명: data → payload → scoreTable 순으로 탐색 ----------
         function getTeamNames(data) {
+            // 1) 루트에 바로 있는 경우
             let A = data?.teamAName || '';
             let B = data?.teamBName || '';
+
+            // 2) payload 안에 있는 경우
             if (!A || !B) {
-                const tbl = $('.result_table table');
-                if (tbl) {
-                    const trs = qsa('tr', tbl);
-                    // 2행 2열 / 3행 2열
-                    A = A || (trs[1]?.cells?.[1]?.textContent || '').trim();
-                    B = B || (trs[2]?.cells?.[1]?.textContent || '').trim();
+                A = A || data?.payload?.teamAName || '';
+                B = B || data?.payload?.teamBName || '';
+            }
+
+            // 3) scoreTable에서 추출 (루트 → payload 순)
+            const stRoot = data?.scoreTable;
+            const stPayload = data?.payload?.scoreTable;
+
+            if (!A || !B) {
+                if (stRoot?.[1]?.[1] && stRoot?.[2]?.[1]) {
+                    A = A || String(stRoot[1][1]).trim();
+                    B = B || String(stRoot[2][1]).trim();
+                } else if (stPayload?.[1]?.[1] && stPayload?.[2]?.[1]) {
+                    A = A || String(stPayload[1][1]).trim();
+                    B = B || String(stPayload[2][1]).trim();
                 }
             }
+
             return { A: A || 'TeamA', B: B || 'TeamB' };
         }
+
+        // 기존 함수 교체
+        // 완전 방탄 팀명 추출기 + 디버그 로그
+        // function getTeamNames(data) {
+        //     // 0) 안전 접근
+        //     const tryPick = (...paths) => {
+        //         for (const p of paths) {
+        //             const v = p && p.split('.').reduce((a, k) => a?.[k], data);
+        //             if (v != null && v !== '') return v;
+        //         }
+        //         return undefined;
+        //     };
+
+        //     // 1) 가장 흔한 경로들부터 빠르게 시도
+        //     let A =
+        //         tryPick('teamAName', 'scoreTable.teamA', 'payload.scoreTable.teamA',
+        //             'tables.scoreTable.teamA', 'payload.tables.scoreTable.teamA',
+        //             'summaryTable.teamA', 'payload.summaryTable.teamA',
+        //             'homeTeam', 'payload.homeTeam', 'teams.0.name',
+        //             'home', 'payload.home', 'home_name', 'teamA', 'A', 'A.name');
+
+        //     let B =
+        //         tryPick('teamBName', 'scoreTable.teamB', 'payload.scoreTable.teamB',
+        //             'tables.scoreTable.teamB', 'payload.tables.scoreTable.teamB',
+        //             'summaryTable.teamB', 'payload.summaryTable.teamB',
+        //             'awayTeam', 'payload.awayTeam', 'teams.1.name',
+        //             'away', 'payload.away', 'away_name', 'teamB', 'B', 'B.name');
+
+        //     // 2) summaryTable이 "키-값 페어" 형태일 때도 스캔
+        //     const kvCandidates = [];
+        //     const pushPair = (k, v) => { if (k != null && v != null) kvCandidates.push([String(k), String(v)]); };
+
+        //     const summary = data?.summaryTable ?? data?.payload?.summaryTable;
+        //     if (Array.isArray(summary)) {
+        //         // [[k,v], ...] 또는 [{key,label,value}, ...] 모두 대응
+        //         for (const row of summary) {
+        //             if (Array.isArray(row) && row.length >= 2) pushPair(row[0], row[1]);
+        //             else if (row && typeof row === 'object') pushPair(row.key ?? row.label ?? row.name, row.value ?? row.val ?? row.data);
+        //         }
+        //     } else if (summary && typeof summary === 'object') {
+        //         for (const [k, v] of Object.entries(summary)) pushPair(k, v);
+        //     }
+
+        //     const findFromPairs = (pairs, keys) => {
+        //         for (const [k, v] of pairs) {
+        //             const kk = k.trim().toLowerCase();
+        //             if (keys.some(key => kk.includes(key))) return v;
+        //         }
+        //         return undefined;
+        //     };
+
+        //     if (!A) A = findFromPairs(kvCandidates, ['teama', 'home', '홈', '홈팀', '삼성a']); // 한국어 키까지 커버
+        //     if (!B) B = findFromPairs(kvCandidates, ['teamb', 'away', '원정', '원정팀', '삼성b']);
+
+        //     // 3) 객체 전체를 깊게 훑어서 키 패턴으로 매칭 (home/away/teamA/teamB 등)
+        //     if (!A || !B) {
+        //         const wantA = /(teamA|^A$|homeTeam|home_name|^home$|홈팀|홈)$/i;
+        //         const wantB = /(teamB|^B$|awayTeam|away_name|^away$|원정팀|원정)$/i;
+
+        //         const dfs = (node) => {
+        //             if (!node) return;
+        //             if (Array.isArray(node)) { for (const it of node) dfs(it); return; }
+        //             if (typeof node === 'object') {
+        //                 for (const [k, v] of Object.entries(node)) {
+        //                     if (typeof v === 'string' || typeof v === 'number') {
+        //                         if (!A && wantA.test(k)) A = v;
+        //                         if (!B && wantB.test(k)) B = v;
+        //                     } else {
+        //                         dfs(v);
+        //                     }
+        //                 }
+        //             }
+        //         };
+        //         dfs(data);
+        //     }
+
+        //     // 4) 최후의 보루: 이미 채워진 DOM 테이블에서 보충
+        //     if (!A || !B) {
+        //         const tbl = document.querySelector('.result_table table');
+        //         if (tbl) {
+        //             const trs = Array.from(tbl.querySelectorAll('tr'));
+        //             // 첫 번째 열이 '팀명' 같은 헤더일 수도 있으니, 헤더 탐색 후 같은 행의 두 번째 열을 참조
+        //             const teamRow = trs.find(tr => /팀명|team/i.test((tr.cells?.[0]?.textContent || '').trim()));
+        //             if (teamRow) {
+        //                 // 예: [ '팀명', '삼성', ... ] 같은 형태
+        //                 A = A || (trs[1]?.cells?.[1]?.textContent || '').trim();
+        //                 B = B || (trs[2]?.cells?.[1]?.textContent || '').trim();
+        //             } else {
+        //                 // 기존 하드코딩 위치도 시도
+        //                 A = A || (trs[1]?.cells?.[1]?.textContent || '').trim();
+        //                 B = B || (trs[2]?.cells?.[1]?.textContent || '').trim();
+        //             }
+        //         }
+        //     }
+
+        //     const Aname = (A != null ? String(A).trim() : '') || '';
+        //     const Bname = (B != null ? String(B).trim() : '') || '';
+
+        //     if (!Aname || !Bname) {
+        //         console.warn('[TeamName][WARN] 일부 팀명이 비어 있음', {
+        //             Aname, Bname, dataPreview: {
+        //                 scoreTable: data?.scoreTable, summaryTable: data?.summaryTable, teams: data?.teams
+        //             }
+        //         });
+        //     } else {
+        //         console.debug('[TeamName][OK]', { Aname, Bname });
+        //     }
+        //     return { A: Aname || 'TeamA', B: Bname || 'TeamB' };
+        // }
+
 
         // ---------- 공통: 헤더 행 수 자동 감지(연속 th) ----------
         function headerRowsCount(table) {
@@ -860,11 +1015,13 @@
             if (scoreTbl) fillScoreboard(scoreTbl, getScoreTable(data), teamA, teamB);
 
             // 하단 요약표 (순서대로 채우기)
+            // const sumTbl = document.querySelector('.result_table_bottom table');
+            // if (sumTbl) {
+            //     const pairs = asPairs(getSummaryTable(data));
+            //     fillKVSequential(sumTbl, pairs, 0);
+            // }
             const sumTbl = document.querySelector('.result_table_bottom table');
-            if (sumTbl) {
-                const pairs = asPairs(getSummaryTable(data));
-                fillKVSequential(sumTbl, pairs, 0);
-            }
+            if (sumTbl) fillKVSequential(sumTbl, asPairs(getSummaryTable(data)), 0);
 
 
             // 타자/투수 4개 표 (헤더 1행 가정)
