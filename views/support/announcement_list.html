@@ -1,14 +1,14 @@
 {%include "include/header.html"%}
 <main class="announcement_list_container">
     <div class="page-head">
-        <h1 class="page-title">공지사항</h1>
-        <form class="notice-search" method="get" action="/support/announcement_list.html">
-            <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-            <button type="submit">검색</button>
+        <p class="page-title">공지사항</p>
+        <form class="notice-search" method="get" action="/announcements">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요" value="{{ keyword or '' }}" />
+            <button type="submit"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
         </form>
 
     </div>
-
+    <div class="line1"></div>
     <!-- 목록 영역: 실제 서비스에선 서버/JS로 동적 채움 -->
     <ul class="notice-list" id="noticeList">
         {% for n in notices %}
@@ -34,34 +34,40 @@
         {% else %}
         <li class="notice-item">
             <div class="row">
-                <div>표시할 공지가 없습니다.</div>
+                <div>
+                    {% if keyword %}
+                    검색 결과가 없습니다. (검색어: "{{ keyword }}")
+                    {% else %}
+                    표시할 공지가 없습니다.
+                    {% endif %}
+                </div>
             </div>
         </li>
         {% endfor %}
     </ul>
 
-
-    <!-- 페이지네이션 예시 -->
-    <ul class="notice-list"></ul>
+    <!-- 페이지네이션 -->
+    {% if totalPages > 1 %}
     <nav class="pagination" aria-label="공지 페이지 이동">
-        <a href="?page=1">이전</a>
-        <span>1 / 10</span>
-        <a href="?page=2">다음</a>
+        {% if currentPage > 1 %}
+        <a href="?page={{ currentPage - 1 }}{% if keyword %}&keyword={{ keyword }}{% endif %}" class="page-btn">이전</a>
+        {% else %}
+        <span class="page-btn disabled">이전</span>
+        {% endif %}
+        
+        <span class="page-info">{{ currentPage }} / {{ totalPages }}</span>
+        
+        {% if currentPage < totalPages %}
+        <a href="?page={{ currentPage + 1 }}{% if keyword %}&keyword={{ keyword }}{% endif %}" class="page-btn">다음</a>
+        {% else %}
+        <span class="page-btn disabled">다음</span>
+        {% endif %}
     </nav>
-    <!-- 목록이 비면 아래 블록만 보이도록 처리 -->
-    <p class="empty" id="emptyMsg" style="display:none;">표시할 공지가 없습니다.</p>
+    {% endif %}
 </main>
 
-<!-- 동적 바인딩을 위한 최소 스텁(선택) -->
 <script>
-    // 추후 서버 연동 시 교체: 쿼리스트링 유지, 빈 목록 처리 등
-    (function syncEmpty() {
-        var list = document.getElementById('noticeList');
-        var empty = document.getElementById('emptyMsg');
-        if (list && empty && list.children.length === 0) {
-            empty.style.display = 'block';
-        }
-    })();
+    // 빈 목록 처리는 서버에서 처리하므로 불필요
 </script>
 
 

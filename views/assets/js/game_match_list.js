@@ -1,6 +1,14 @@
 (function () {
   const tbody = document.getElementById("scheduleBody");
-
+  function getLocalDateString(isoDateString) {
+    if (!isoDateString) return '';
+    // '2025-09-03T...' 와 같은 문자열에서 T 이후를 제거하여 UTC가 아닌 로컬 시간으로 간주하게 함
+    const date = new Date(isoDateString.slice(0, 10));
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
   async function load() {
     try {
       tbody.innerHTML = `<tr><td colspan="7">불러오는 중...</td></tr>`;
@@ -20,11 +28,12 @@
           (r.note || '').includes('그라운드사정');
 
         // ⬇ 리뷰 버튼은 취소 경기가 아닐 때만 표시
-        const review =
-          (!isCanceled && r.review_url)
-            ? `<a href="${r.review_url}" class="btn2">리뷰</a>`
-            : '';
+        const reviewUrlBase = "http://localhost/gameinfo_result?id=";
 
+        const review =
+          (!isCanceled && r.game_page_id) // review_url 대신 game_page_id가 존재하는지 확인
+            ? `<a href="${reviewUrlBase}${r.game_page_id}" class="btn2">리뷰</a>`
+            : '';
         return `
           <tr>
             <td>${r.game_date.slice(0, 10)}(${r.game_day || ''})</td>

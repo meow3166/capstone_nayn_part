@@ -157,30 +157,33 @@ exports.getLineup = async (gameId, teamId) => {
 // 캘린더 - 검색용 키워드 추가 - 개발 완료 시 지울 예정
 exports.getSchedules = async (month) => {
     const sql = `
-        SELECT 
-            id as game_id,
-            game_date,
-            game_day,
-            game_time,
-            team_home,
-            team_away,
-            COALESCE(score_home, note) AS score_home,
-            COALESCE(score_away, note) AS score_away,
-            tv_channel,
-            stadium,
-            note,
-            result,
-            review_url,
+        SELECT
+            g.id AS game_id,
+            g.game_date,
+            g.game_day,
+            g.game_time,
+            g.team_home,
+            g.team_away,
+            COALESCE(g.score_home, g.note) AS score_home,
+            COALESCE(g.score_away, g.note) AS score_away,
+            g.tv_channel,
+            g.stadium,
+            g.note,
+            g.result,
+            -- gp.review_url 대신, game_page 테이블의 id를 가져옵니다.
+            gp.game_id AS game_page_id,
             CASE
-                WHEN result IN ('win', 'lose', 'draw') THEN 1
+                WHEN g.result IN ('win', 'lose', 'draw') THEN 1
                 ELSE 0
-            END as is_finished
-        FROM \`${DB}\`.game_schedule_list
-        WHERE DATE_FORMAT(game_date, '%Y-%m') = ?
-        ORDER BY game_date ASC, game_time ASC
+            END AS is_finished
+        FROM \`${DB}\`.game_schedule_list g
+        -- 날짜를 기준으로 game_page 테이블과 LEFT JOIN
+        LEFT JOIN \`${DB}\`.game_page gp ON g.game_date = gp.game_date 
+        WHERE DATE_FORMAT(g.game_date, '%Y-%m') = ?
+        ORDER BY g.game_date ASC, g.game_time ASC
     `;
     const [rows] = await pool.query(sql, [month]);
-    return rows;
+    return rows; // rows는 game_page_id 필드를 포함합니다.
 };
 
 exports.getLineup = async (gameId, teamId) => {

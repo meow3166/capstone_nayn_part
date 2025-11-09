@@ -14,8 +14,9 @@ main.support-page * {
 
 /* ================== 메인 영역 ================== */
 main.support-page {
-    width: min(1275px, 95%);
-    margin: 0 auto;
+    margin: 0 235px;
+    /* background-color: red; */
+    height: auto;
 }
 
 /* 구분선 */
@@ -177,7 +178,7 @@ main.support-page .faq-item.open .faq-answer {
         width: 100%;
         /* fit-content 해제 */
     }
-
+    
 
     main.support-page .container a {
         width: 100%;
@@ -208,8 +209,9 @@ main.support-page .faq-item.open .faq-answer {
     }
 
     main.support-page .munhee {
-        font-size: 22px;
+        font-size: 28px;
         margin-bottom: 6px;
+        margin-top: 0;
     }
 
     main.support-page .faq-item {

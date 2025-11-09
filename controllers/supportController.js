@@ -13,8 +13,26 @@ exports.redirectToAnnouncements = (req, res) => {
 /* ===== 공지 ===== */
 exports.announcementList = async (req, res, next) => {
   try {
-    const rows = await supportModel.getNotices({ limit: 100 });
-    res.render('support/announcement_list.html', { notices: rows, items: rows });
+    const keyword = req.query.keyword || '';
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = 10;
+    const offset = (page - 1) * limit;
+    
+    const [rows, total] = await Promise.all([
+      supportModel.getNotices({ limit, keyword, offset }),
+      supportModel.getNoticesCount({ keyword })
+    ]);
+    
+    const totalPages = Math.ceil(total / limit);
+    
+    res.render('support/announcement_list.html', { 
+      notices: rows, 
+      items: rows, 
+      keyword,
+      currentPage: page,
+      totalPages,
+      total
+    });
   } catch (e) { next(e); }
 };
 

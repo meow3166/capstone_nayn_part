@@ -3,20 +3,44 @@ const pool = require('../common/db');
 const DB = process.env.SVR_DB_NAME || process.env.DB_NAME || 'myapp_db';
 
 /* ===== 공지 ===== */
-exports.getNotices = async ({ limit = 100 } = {}) => {
-  const [rows] = await pool.query(
-    `SELECT notice_id, title, category, is_pinned, view_count,
+exports.getNotices = async ({ limit = 100, keyword = '', offset = 0 } = {}) => {
+  let sql = `SELECT notice_id, title, category, is_pinned, view_count,
             IFNULL(publish_at, created_at) AS published_at
        FROM \`${DB}\`.notices
       WHERE status='PUBLISHED'
-        AND (publish_at IS NULL OR publish_at <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '+09:00'))
-        AND (expire_at  IS NULL OR expire_at  >  CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '+09:00'))
-        AND deleted_at IS NULL
-      ORDER BY is_pinned DESC, published_at DESC, created_at DESC
-      LIMIT ?`,
-    [Number(limit)]
-  );
+        AND deleted_at IS NULL`;
+  
+  const params = [];
+  
+  if (keyword) {
+    sql += ` AND (title LIKE ? OR content_md LIKE ?)`;
+    const likeKeyword = `%${keyword}%`;
+    params.push(likeKeyword, likeKeyword);
+  }
+  
+  sql += ` ORDER BY is_pinned DESC, published_at DESC, created_at DESC LIMIT ? OFFSET ?`;
+  params.push(Number(limit), Number(offset));
+  
+  const [rows] = await pool.query(sql, params);
   return rows;
+};
+
+exports.getNoticesCount = async ({ keyword = '' } = {}) => {
+  let sql = `SELECT COUNT(*) as total
+       FROM \`${DB}\`.notices
+      WHERE status='PUBLISHED'
+        AND deleted_at IS NULL`;
+  
+  const params = [];
+  
+  if (keyword) {
+    sql += ` AND (title LIKE ? OR content_md LIKE ?)`;
+    const likeKeyword = `%${keyword}%`;
+    params.push(likeKeyword, likeKeyword);
+  }
+  
+  const [[row]] = await pool.query(sql, params);
+  return row ? row.total : 0;
 };
 
 exports.getNoticeById = async (id) => {
@@ -26,8 +50,6 @@ exports.getNoticeById = async (id) => {
        FROM \`${DB}\`.notices
       WHERE notice_id=?
         AND status='PUBLISHED'
-        AND (publish_at IS NULL OR publish_at <= CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '+09:00'))
-        AND (expire_at  IS NULL OR expire_at  >  CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '+09:00'))
         AND deleted_at IS NULL`,
     [id]
   );

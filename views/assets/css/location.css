@@ -182,14 +182,21 @@ body {
   font-size: 12px;
 }
 
+
 .badge {
   margin-left: auto;
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  flex-shrink: 0;
   padding: 4px 8px;
   border-radius: 8px;
   background: #eef3ff;
   color: var(--brand);
   font-size: 12px;
   border: 1px solid #dbe7ff;
+  box-sizing: border-box;
+  margin-left:auto;
 }
 
 /* 지도 */
@@ -340,7 +347,7 @@ body {
     font-size: 16px !important;
   }
 
-  .icon-search {
+  .icon-search { 
     left: 16px !important;
     width: 22px !important;
     height: 22px !important;
@@ -408,9 +415,9 @@ body {
 }
 
 /* 2) 본문 시작점을 헤더 아래로 내리기 (헤더 안 건드림) */
-body {
-  /* padding-top: var(--offset-top); */
-}
+/* body {
+  /* padding-top: var(--offset-top);
+} */
 
 /* 3) 위치페이지 레이아웃 높이 계산 */
 .page {
